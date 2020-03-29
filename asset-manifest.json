@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/qa_ebay_test/static/css/main.5f361e03.chunk.css",
+    "main.js": "/qa_ebay_test/static/js/main.cee6504a.chunk.js",
+    "main.js.map": "/qa_ebay_test/static/js/main.cee6504a.chunk.js.map",
+    "runtime-main.js": "/qa_ebay_test/static/js/runtime-main.44d0c10d.js",
+    "runtime-main.js.map": "/qa_ebay_test/static/js/runtime-main.44d0c10d.js.map",
+    "static/js/2.73b0fdfd.chunk.js": "/qa_ebay_test/static/js/2.73b0fdfd.chunk.js",
+    "static/js/2.73b0fdfd.chunk.js.map": "/qa_ebay_test/static/js/2.73b0fdfd.chunk.js.map",
+    "index.html": "/qa_ebay_test/index.html",
+    "precache-manifest.3ffcd381a7353ebf5aa72140d297063d.js": "/qa_ebay_test/precache-manifest.3ffcd381a7353ebf5aa72140d297063d.js",
+    "service-worker.js": "/qa_ebay_test/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/qa_ebay_test/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.73b0fdfd.chunk.js.LICENSE.txt": "/qa_ebay_test/static/js/2.73b0fdfd.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/qa_ebay_test/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.44d0c10d.js",
+    "static/js/2.73b0fdfd.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.cee6504a.chunk.js"
+  ]
+}
