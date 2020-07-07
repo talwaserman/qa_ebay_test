@@ -24,11 +24,11 @@ function InputField(_ref) {
       isChanged = _ref.isChanged,
       isDifferentValue = _ref.isDifferentValue;
   var styleClasses = "input-field-wrapper ".concat(isChanged && 'changed-value', " ").concat(isDifferentValue && 'different-value');
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: styleClasses
-  }, _react.default.createElement("strong", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("strong", null, /*#__PURE__*/_react.default.createElement("label", {
     className: "label"
-  }, label)), _react.default.createElement(_input.default, {
+  }, label)), /*#__PURE__*/_react.default.createElement(_input.default, {
     value: value,
     onChange: function onChange(e) {
       return updateValue(e.target.value);

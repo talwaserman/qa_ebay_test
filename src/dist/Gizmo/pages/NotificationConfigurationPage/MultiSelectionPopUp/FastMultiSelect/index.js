@@ -29,7 +29,7 @@ var _utils = require("../../../../utils");
 
 require("./style.less");
 
-var antIcon = _react.default.createElement(_icon.default, {
+var antIcon = /*#__PURE__*/_react.default.createElement(_icon.default, {
   type: "loading",
   style: {
     fontSize: 24
@@ -42,7 +42,8 @@ function FastMultiSelect(_ref) {
       selectedValues = _ref.selectedValues,
       onSelectChange = _ref.onSelectChange,
       width = _ref.width,
-      isLoading = _ref.isLoading;
+      isLoading = _ref.isLoading,
+      placeholder = _ref.placeholder;
 
   var _useState = (0, _react.useState)(''),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -58,6 +59,11 @@ function FastMultiSelect(_ref) {
       _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
       showOptions = _useState6[0],
       updateShowOptions = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(placeholder),
+      _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
+      inputPlaceHolder = _useState8[0],
+      setInputPlaceHolder = _useState8[1];
 
   (0, _react.useEffect)(function () {
     setSelected(selectedValues);
@@ -75,28 +81,28 @@ function FastMultiSelect(_ref) {
   var uniqueId = (0, _utils.uuid)();
 
   if (isLoading) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "fast-multi-select-spiner-wrapper"
-    }, _react.default.createElement(_spin.default, {
+    }, /*#__PURE__*/_react.default.createElement(_spin.default, {
       indicator: antIcon
     }), "Loading ...");
   }
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "fast-multi-select-wrapper",
     style: {
       width: "".concat(width, "px")
     }
-  }, _react.default.createElement("form", {
+  }, /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: handleSubmit
-  }, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("label", {
     className: "values-wrapper",
     htmlFor: "controlled-select-input-".concat(uniqueId)
   }, selected.map(function (item) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "selected-item",
       key: item.userId
-    }, item.display, _react.default.createElement("svg", {
+    }, item.display, /*#__PURE__*/_react.default.createElement("svg", {
       onClick: function onClick(e) {
         return handleDelete(e, item);
       },
@@ -107,40 +113,35 @@ function FastMultiSelect(_ref) {
       height: "1em",
       fill: "currentColor",
       "aria-hidden": "true"
-    }, _react.default.createElement("path", {
+    }, /*#__PURE__*/_react.default.createElement("path", {
       d: "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
     })));
-  }), _react.default.createElement("input", {
+  }), /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
     id: "controlled-select-input-".concat(uniqueId),
     value: inputVal,
     onChange: handleInputChange,
     onFocus: handleFocus,
-    onBlur: handleBlur
-  }), !shouldShowOptions && _react.default.createElement("span", {
+    onBlur: handleBlur,
+    placeholder: inputPlaceHolder
+  }), !shouldShowOptions && /*#__PURE__*/_react.default.createElement("span", {
     className: "down-arrow"
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "down"
-  })), shouldShowOptions && _react.default.createElement("span", {
+  })), shouldShowOptions && /*#__PURE__*/_react.default.createElement("span", {
     className: "down-arrow"
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "up"
-  })))), _react.default.createElement("ul", {
+  })))), /*#__PURE__*/_react.default.createElement("ul", {
     className: "options-wrapper ".concat(optionsStyle)
   }, filteredOptions.map(function (item) {
-    return _react.default.createElement("li", {
+    return /*#__PURE__*/_react.default.createElement("li", {
       key: "".concat(item.userId),
       onMouseDown: function onMouseDown(e) {
         return onSelectDropDownItem(item);
       }
     }, item.display);
   })));
-
-  function getSelectedData(id) {
-    return optionValues.find(function (item) {
-      return item.userId === id;
-    });
-  }
 
   function setSelectedValues(e) {
     e.preventDefault();
@@ -184,6 +185,7 @@ function FastMultiSelect(_ref) {
 
   function handleFocus() {
     updateShowOptions(true);
+    setInputPlaceHolder('');
   }
 
   function handleBlur(e) {
@@ -206,7 +208,10 @@ FastMultiSelect.propTypes = {
   width: _propTypes.default.string,
 
   /** isLoading - indication if the select is fetching data */
-  isLoading: _propTypes.default.bool
+  isLoading: _propTypes.default.bool,
+
+  /** placeholder - a short hint that describes the expected value of an input field */
+  placeholder: _propTypes.default.string
 };
 FastMultiSelect.defaultProps = {
   onSelectChange: function onSelectChange() {},

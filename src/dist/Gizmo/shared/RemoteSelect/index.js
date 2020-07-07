@@ -62,16 +62,16 @@ function RemoteSelect(_ref) {
       lastFetchId = _useState8[0],
       setLastFetchId = _useState8[1];
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "remote-select-wrapper"
-  }, _react.default.createElement(_select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_select.default, {
     mode: mode,
     showSearch: true,
     showArrow: false,
     labelInValue: true,
     value: value,
     placeholder: placeholder,
-    notFoundContent: fetching ? _react.default.createElement(_spin.default, {
+    notFoundContent: fetching ? /*#__PURE__*/_react.default.createElement(_spin.default, {
       size: "small"
     }) : null,
     filterOption: false,
@@ -84,7 +84,7 @@ function RemoteSelect(_ref) {
       whiteSpace: 'preWrap'
     }
   }, data.map(function (d) {
-    return _react.default.createElement(Option, {
+    return /*#__PURE__*/_react.default.createElement(Option, {
       key: d.value
     }, d.text);
   })));

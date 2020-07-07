@@ -17,6 +17,10 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
+require("antd/es/icon/style/css");
+
+var _icon = _interopRequireDefault(require("antd/es/icon"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
 var _react = _interopRequireWildcard(require("react"));
@@ -27,18 +31,22 @@ var _get = _interopRequireDefault(require("lodash/get"));
 
 var _SelectionPopUp = _interopRequireDefault(require("../../shared/SelectionPopUp"));
 
+var _GenericModal = _interopRequireDefault(require("../../shared/GenericModal"));
+
 var _services = require("./services");
 
 require("./style.less");
 
 function EditProductViewPage(_ref) {
-  var closeModal = _ref.closeModal,
-      taskType = _ref.taskType,
+  var taskType = _ref.taskType,
       epid = _ref.epid,
-      assignee = _ref.assignee;
+      assignee = _ref.assignee,
+      isModalVisible = _ref.isModalVisible,
+      onModalOk = _ref.onModalOk,
+      onModalCancel = _ref.onModalCancel;
 
   var _useState = (0, _react.useState)({
-    configurationNames: null,
+    configurationNames: [],
     isFetchingConfigurations: true,
     jobId: null,
     isFetchingJobId: false
@@ -46,6 +54,19 @@ function EditProductViewPage(_ref) {
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       statData = _useState2[0],
       setStatData = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(isModalVisible),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      shouldBeVisible = _useState4[0],
+      setShouldBeVisible = _useState4[1];
+
+  var antIcon = /*#__PURE__*/_react.default.createElement(_icon.default, {
+    type: "loading",
+    style: {
+      fontSize: 24
+    },
+    spin: true
+  });
 
   (0, _react.useEffect)(function () {
     function fetchData() {
@@ -81,23 +102,31 @@ function EditProductViewPage(_ref) {
 
     fetchData();
   }, [taskType]);
+  (0, _react.useEffect)(function () {
+    setShouldBeVisible(isModalVisible);
+  }, [isModalVisible]);
   var configurationNames = statData.configurationNames,
       isFetchingConfigurations = statData.isFetchingConfigurations,
       isFetchingJobId = statData.isFetchingJobId;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "edit-product-view-page-wrapper"
-  }, isFetchingConfigurations ? _react.default.createElement(_spin.default, null) : _react.default.createElement(_SelectionPopUp.default, {
-    handleClose: function handleClose() {
-      return onCloseClick();
-    },
-    selectPlaceHolder: 'Configuration',
-    dropDownValuesArray: configurationNames,
-    inputLabel: 'Task Name',
-    dropDownKeyLabel: 'taskId',
-    onClickHandler: function onClickHandler(selectionPopData) {
-      return _onClickHandler(selectionPopData);
-    },
-    loading: isFetchingJobId
+  }, isFetchingJobId ? /*#__PURE__*/_react.default.createElement(_spin.default, {
+    indicator: antIcon
+  }) : /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
+    isOkDisabledInitialValue: true,
+    width: 605,
+    modalTitle: 'update EPID',
+    onCancel: onCancel,
+    onOk: onOk,
+    okText: 'Ok',
+    modalContent: /*#__PURE__*/_react.default.createElement(_SelectionPopUp.default, {
+      selectPlaceHolder: 'Configuration',
+      dropDownValuesArray: configurationNames,
+      inputLabel: 'Task Name',
+      dropDownKeyLabel: 'taskId',
+      loading: isFetchingConfigurations
+    }),
+    modalVisibleState: shouldBeVisible
   }));
 
   function extractConfigurationNames(res) {
@@ -111,20 +140,47 @@ function EditProductViewPage(_ref) {
     return configurationNames;
   }
 
-  function onCloseClick() {
-    closeModal();
+  function onCancel() {
+    setShouldBeVisible(false);
+    onModalCancel();
   }
 
-  function _onClickHandler(_x) {
-    return _onClickHandler2.apply(this, arguments);
+  function onOk(_x) {
+    return _onOk.apply(this, arguments);
   }
 
-  function _onClickHandler2() {
-    _onClickHandler2 = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(selectionPopData) {
-      var formRequest;
+  function _onOk() {
+    _onOk = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(data) {
       return _regenerator.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return onClickHandler(data);
+
+            case 2:
+              onModalOk();
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+    return _onOk.apply(this, arguments);
+  }
+
+  function onClickHandler(_x2) {
+    return _onClickHandler.apply(this, arguments);
+  }
+
+  function _onClickHandler() {
+    _onClickHandler = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(selectionPopData) {
+      var formRequest;
+      return _regenerator.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               setStatData({
                 configurationNames: statData.configurationNames,
@@ -133,50 +189,50 @@ function EditProductViewPage(_ref) {
                 isFetchingJobId: true
               });
               formRequest = createFormRequest(selectionPopData);
-              _context2.next = 4;
+              _context3.next = 4;
               return callProductCuration(formRequest);
 
             case 4:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }));
-    return _onClickHandler2.apply(this, arguments);
+    return _onClickHandler.apply(this, arguments);
   }
 
-  function callProductCuration(_x2) {
+  function callProductCuration(_x3) {
     return _callProductCuration.apply(this, arguments);
   }
 
   function _callProductCuration() {
-    _callProductCuration = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(formRequest) {
+    _callProductCuration = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(formRequest) {
       var response;
-      return _regenerator.default.wrap(function _callee3$(_context3) {
+      return _regenerator.default.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
+              _context4.prev = 0;
+              _context4.next = 3;
               return (0, _services.initProductCuration)(formRequest);
 
             case 3:
-              response = _context3.sent;
+              response = _context4.sent;
               setStatData({
                 configurationNames: statData.configurationNames,
                 jobId: response.jobId,
                 isFetchingConfigurations: statData.isLoading,
                 isFetchingJobId: false
               });
-              closeModal();
+              setShouldBeVisible(false);
               openProductCurationPage(response, formRequest);
-              _context3.next = 12;
+              _context4.next = 12;
               break;
 
             case 9:
-              _context3.prev = 9;
-              _context3.t0 = _context3["catch"](0);
+              _context4.prev = 9;
+              _context4.t0 = _context4["catch"](0);
               setStatData({
                 configurationNames: statData.configurationNames,
                 jobId: null,
@@ -186,10 +242,10 @@ function EditProductViewPage(_ref) {
 
             case 12:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3, null, [[0, 9]]);
+      }, _callee4, null, [[0, 9]]);
     }));
     return _callProductCuration.apply(this, arguments);
   }
@@ -234,6 +290,6 @@ EditProductViewPage.propTypes = {
   /**  assignee- assignee id query field for creating jobId*/
   assignee: _propTypes.default.string.isRequired,
 
-  /**  closeModal - external Function which close modal */
-  closeModal: _propTypes.default.func.isRequired
+  /**  isModalVisible- state if modal is visible or not*/
+  isModalVisible: _propTypes.default.bool.isRequired
 };

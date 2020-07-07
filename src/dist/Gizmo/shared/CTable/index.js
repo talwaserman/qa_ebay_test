@@ -43,6 +43,8 @@ var _OrderBy = _interopRequireDefault(require("./OrderBy"));
 
 var _OrderType = _interopRequireDefault(require("./OrderType"));
 
+var _moment = _interopRequireDefault(require("moment"));
+
 require("./style.less");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -63,7 +65,10 @@ function CTable(_ref) {
       sessionStorageIdentifier = _ref.sessionStorageIdentifier,
       selectedRowsValidator = _ref.selectedRowsValidator,
       externalReloadFlag = _ref.externalReloadFlag,
-      rowKey = _ref.rowKey;
+      rowKey = _ref.rowKey,
+      expandedRowRender = _ref.expandedRowRender,
+      expandIcon = _ref.expandIcon,
+      expandedRowKeys = _ref.expandedRowKeys;
   // Get saved data from sessionStorage
   var window = window || {};
   var storedFilters;
@@ -122,7 +127,7 @@ function CTable(_ref) {
   var tableLoading = {
     spinning: loading,
     size: 'large',
-    indicator: _react.default.createElement(_icon.default, {
+    indicator: /*#__PURE__*/_react.default.createElement(_icon.default, {
       type: "loading"
     })
   };
@@ -178,8 +183,7 @@ function CTable(_ref) {
   }, [orderBy, orderType, currentPage, JSON.stringify(filteredData), reloadFlag, externalReloadFlag]);
   var inputEl = (0, _react.useRef)(null);
 
-  var getColumnSearchProps = function getColumnSearchProps(dataIndex) {
-    var filterType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'text';
+  var getColumnSearchProps = function getColumnSearchProps(dataIndex, filterType) {
     var filterKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     var filterOperation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     var isEqual = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
@@ -190,15 +194,56 @@ function CTable(_ref) {
             selectedKeys = _ref2.selectedKeys,
             confirm = _ref2.confirm,
             clearFilters = _ref2.clearFilters;
-        return _react.default.createElement("div", null, filterType === 'text' && _react.default.createElement(_filterTypes.TextFilter, {
+        return /*#__PURE__*/_react.default.createElement("div", null, filterType === 'text' && /*#__PURE__*/_react.default.createElement(_filterTypes.TextFilter, {
           setSelectedKeys: setSelectedKeys,
           selectedKeys: selectedKeys,
           confirm: confirm,
           clearFilters: clearFilters,
           dataIndex: dataIndex,
           filterTable: filterTable,
-          removeFilter: removeFilter
-        }), filterType === 'date' && _react.default.createElement(_filterTypes.DateFilter, {
+          removeFilter: removeFilter,
+          filterOperation: 'contains',
+          serverFilterType: 'text'
+        }), filterType === 'text-equal' && /*#__PURE__*/_react.default.createElement(_filterTypes.TextFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterTable: filterTable,
+          removeFilter: removeFilter,
+          filterOperation: 'equal',
+          serverFilterType: 'text'
+        }), filterType === 'int' && /*#__PURE__*/_react.default.createElement(_filterTypes.TextFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterTable: filterTable,
+          removeFilter: removeFilter,
+          filterOperation: 'equal',
+          serverFilterType: 'int'
+        }), filterType === 'long' && /*#__PURE__*/_react.default.createElement(_filterTypes.TextFilter, (0, _defineProperty2.default)({
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterTable: filterTable,
+          removeFilter: removeFilter,
+          filterOperation: 'equal',
+          serverFilterType: 'long'
+        }, "removeFilter", removeFilter)), filterType === 'text-equal' && /*#__PURE__*/_react.default.createElement(_filterTypes.TextFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterTable: filterTable,
+          removeFilter: removeFilter,
+          filterOperation: 'equal'
+        }), filterType === 'date' && /*#__PURE__*/_react.default.createElement(_filterTypes.DateFilter, {
           setSelectedKeys: setSelectedKeys,
           selectedKeys: selectedKeys,
           confirm: confirm,
@@ -207,7 +252,7 @@ function CTable(_ref) {
           filterOperation: filterOperation,
           filterTable: filterTable,
           removeFilter: removeFilter
-        }), filterType === 'single-select' && _react.default.createElement(_filterTypes.SingleSelectFilter, {
+        }), filterType === 'single-select' && /*#__PURE__*/_react.default.createElement(_filterTypes.SingleSelectFilter, {
           setSelectedKeys: setSelectedKeys,
           selectedKeys: selectedKeys,
           confirm: confirm,
@@ -217,23 +262,60 @@ function CTable(_ref) {
           filterOperation: filterOperation,
           filterTable: filterTable,
           removeFilter: removeFilter,
-          optionHash: optionHash
-        }), filterType === 'single-select-equal' && _react.default.createElement(_filterTypes.SingleSelectFilter, {
+          optionHash: optionHash,
+          serverFilterType: 'text'
+        }), filterType === 'single-select-equal' && /*#__PURE__*/_react.default.createElement(_filterTypes.SingleSelectFilter, {
           setSelectedKeys: setSelectedKeys,
           selectedKeys: selectedKeys,
           confirm: confirm,
           clearFilters: clearFilters,
           dataIndex: dataIndex,
           filterKey: filterKey,
-          isEqual: true,
           filterOperation: filterOperation,
           filterTable: filterTable,
           removeFilter: removeFilter,
-          optionHash: optionHash
+          optionHash: optionHash,
+          serverFilterType: 'text-equal'
+        }), filterType === 'single-select-equal-int' && /*#__PURE__*/_react.default.createElement(_filterTypes.SingleSelectFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterKey: filterKey,
+          filterOperation: 'equal',
+          filterTable: filterTable,
+          removeFilter: removeFilter,
+          optionHash: optionHash,
+          serverFilterType: 'int'
+        }), filterType === 'single-select-boolean-equal' && /*#__PURE__*/_react.default.createElement(_filterTypes.SingleSelectFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterKey: filterKey,
+          filterOperation: 'equal',
+          filterTable: filterTable,
+          removeFilter: removeFilter,
+          optionHash: optionHash,
+          serverFilterType: 'boolean'
+        }), filterType === 'single-select-multiJsonValue-equal' && /*#__PURE__*/_react.default.createElement(_filterTypes.SingleSelectMultiFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterKey: filterKey,
+          filterOperation: 'equal',
+          multiFiltersTable: multiFiltersTable,
+          removeFilters: removeFilters,
+          optionHash: optionHash,
+          serverFilterType: 'text-equal'
         }));
       },
       filterIcon: function filterIcon(filtered) {
-        return _react.default.createElement(_icon.default, {
+        return /*#__PURE__*/_react.default.createElement(_icon.default, {
           type: "search",
           style: {
             color: filtered ? '#1890ff' : undefined
@@ -255,38 +337,44 @@ function CTable(_ref) {
         }
       },
       render: function render(text) {
-        return _react.default.createElement("div", null, text);
+        return renderValue(text, filterType);
       }
     };
   };
 
   var columns = columnConfig.map(function (item) {
     if (item.filterType) {
-      return _objectSpread({}, item, {}, getColumnSearchProps(item.dataIndex, item.filterType, item.filterKey, item.filterOperation), {}, {
+      return _objectSpread(_objectSpread(_objectSpread({}, item), getColumnSearchProps(item.dataIndex, item.filterType, item.filterKey, item.filterOperation)), {
         key: 'ctable_' + item.dataIndex.toLowerCase()
       });
     } else {
-      return _objectSpread({}, item, {}, {
+      return _objectSpread(_objectSpread({}, item), {
         key: 'ctable_' + item.dataIndex.toLowerCase()
       });
     }
   });
   var rowSelection = {
     columnTitle: ' ',
-    onSelect: function onSelect(selectedRow, isSelected, onSelectedRowKeys) {
-      var tempCheckBoxData = Object.assign({}, checkBoxData);
+    onSelect: function onSelect(selectedRow, isSelected, allSelectedRows) {
+      var allSelectedRowIds = Object.assign({}, checkBoxData);
       var selectedRowId = (0, _get.default)(selectedRow, checkBoxIdentifier, null);
 
       if (isSelected) {
-        tempCheckBoxData[currentPage] = checkBoxData[currentPage] ? [].concat((0, _toConsumableArray2.default)(checkBoxData[currentPage]), [selectedRowId]) : [selectedRowId];
+        allSelectedRowIds[currentPage] = checkBoxData[currentPage] ? [].concat((0, _toConsumableArray2.default)(checkBoxData[currentPage]), [selectedRowId]) : [selectedRowId];
       } else {
-        tempCheckBoxData[currentPage] = tempCheckBoxData[currentPage].filter(function (item) {
+        allSelectedRowIds[currentPage] = allSelectedRowIds[currentPage].filter(function (item) {
           return item !== selectedRowId;
         });
       }
 
-      selectedRowsValidator && selectedRowsValidator(onSelectedRowKeys);
-      setCheckBoxData(tempCheckBoxData);
+      selectedRowsValidator && selectedRowsValidator(allSelectedRows); //allSelectedRowIds - object that the keys are the pages in the table, and the value for
+      //each key is an array of ckecked rows, the values are based on the checkbox identifier
+      //allSelectedRows - object of all checked rows that contain all the data for each row and not only ids.
+
+      setCheckBoxData({
+        allSelectedRowIds: allSelectedRowIds,
+        allSelectedRows: allSelectedRows
+      });
     },
     getCheckboxProps: function getCheckboxProps(record) {
       if (checkBoxData[currentPage]) {
@@ -302,29 +390,29 @@ function CTable(_ref) {
       }
     }
   };
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "ctable-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "filter-wrapper"
-  }, _react.default.createElement("label", null, "Order By:"), _react.default.createElement(_OrderBy.default, {
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Order By:"), /*#__PURE__*/_react.default.createElement(_OrderBy.default, {
     options: columnConfig,
     placeholder: 'Order By',
     orderByChange: onOrderByChange,
     defaultValue: orderBy
-  }), _react.default.createElement("label", null, "Order Type:"), _react.default.createElement(_OrderType.default, {
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Order Type:"), /*#__PURE__*/_react.default.createElement(_OrderType.default, {
     orderTypeChange: onOrderTypeChange,
     defaultValue: orderType,
     width: 100,
     ascendValue: 'ASC',
     descendValue: 'DESC'
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "reload-table-button"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "reload",
     onClick: function onClick() {
       updateReloadFlage(reloadFlag + 1);
     }
-  }))), _react.default.createElement(_table.default, {
+  }))), /*#__PURE__*/_react.default.createElement(_table.default, {
     onRow: function onRow(record, rowIndex) {
       return {
         onDoubleClick: function onDoubleClick(event) {
@@ -344,7 +432,10 @@ function CTable(_ref) {
       current: currentPage,
       total: numOfpages * 15,
       onChange: onPageChange
-    }
+    },
+    expandedRowRender: expandedRowRender,
+    expandIcon: expandIcon,
+    expandedRowKeys: expandedRowKeys
   }));
 
   function filterTable(newFilter) {
@@ -354,10 +445,28 @@ function CTable(_ref) {
     setFilterdData(temp);
   }
 
+  function multiFiltersTable(newFilters) {
+    var temp = _objectSpread({}, filteredData);
+
+    newFilters.forEach(function (newFilter) {
+      temp[newFilter.fieldName] = newFilter;
+    });
+    setFilterdData(temp);
+  }
+
   function removeFilter(filterName) {
     var temp = _objectSpread({}, filteredData);
 
     delete temp[filterName];
+    setFilterdData(temp);
+  }
+
+  function removeFilters(filtersName) {
+    var temp = _objectSpread({}, filteredData);
+
+    filtersName.forEach(function (filterName) {
+      delete temp[filterName];
+    });
     setFilterdData(temp);
   }
 
@@ -371,6 +480,11 @@ function CTable(_ref) {
 
   function onOrderTypeChange(orderType) {
     setOrderType(orderType);
+  }
+
+  function renderValue(text, filterType) {
+    var dateFormat = 'YYYY-MM-DD';
+    return filterType === 'date' && text && typeof text === 'number' ? /*#__PURE__*/_react.default.createElement("div", null, (0, _moment.default)(text).format(dateFormat).toString()) : /*#__PURE__*/_react.default.createElement("div", null, text);
   }
 }
 
@@ -406,7 +520,16 @@ CTable.propTypes = {
   externalReloadFlag: _propTypes.default.number,
 
   /** rowKey - an identifier for the key of each record */
-  rowKey: _propTypes.default.string
+  rowKey: _propTypes.default.string,
+
+  /** expandedRowRender - the component of an expandable row */
+  expandedRowRender: _propTypes.default.any,
+
+  /** expandIcon - the icon for expanding a row */
+  expandIcon: _propTypes.default.any,
+
+  /** expandedRowKeys - an array of the expanded rows */
+  expandedRowKeys: _propTypes.default.array
 };
 CTable.defaultProps = {
   checkBoxData: {},
@@ -414,5 +537,8 @@ CTable.defaultProps = {
   checkboxDisabledIdentifier: null,
   doubleClickCB: function doubleClickCB() {},
   sessionStorageIdentifier: null,
-  rowSelectionId: null
+  rowSelectionId: null,
+  expandedRowRender: null,
+  expandIcon: null,
+  expandedRowKeys: []
 };

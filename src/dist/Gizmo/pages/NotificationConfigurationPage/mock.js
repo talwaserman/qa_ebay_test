@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteNotificationResponse = exports.getNotificationTypeResponse = exports.getUsersResponse = exports.addNotificationResponse = exports.notificationsListMock = void 0;
+exports.deleteNotificationResponse = exports.getNotificationTypeResponse = exports.getUsersResponse = exports.addNotificationMockResponse = exports.notificationsListMock = void 0;
 var notificationsListMock = {
   notifications: [{
     type: 'externalTask',
@@ -55,8 +55,8 @@ var notificationsListMock = {
   }]
 };
 exports.notificationsListMock = notificationsListMock;
-var addNotificationResponse = {};
-exports.addNotificationResponse = addNotificationResponse;
+var addNotificationMockResponse = {};
+exports.addNotificationMockResponse = addNotificationMockResponse;
 var deleteNotificationResponse = {};
 exports.deleteNotificationResponse = deleteNotificationResponse;
 var getUsersResponse = {

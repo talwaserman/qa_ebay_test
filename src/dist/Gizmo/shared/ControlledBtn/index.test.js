@@ -9,7 +9,7 @@ var _reactTestRenderer = _interopRequireDefault(require("react-test-renderer"));
 var _index = _interopRequireDefault(require("./index"));
 
 it('gizmo shared - ControlledBtn - not loading', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     loading: false,
     iconImage: '',
     btnText: 'click me',
@@ -21,7 +21,7 @@ it('gizmo shared - ControlledBtn - not loading', function () {
   expect(tree).toMatchSnapshot();
 });
 it('gizmo shared - ControlledBtn - loading', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     loading: true,
     iconImage: '',
     btnText: 'click me',
@@ -33,7 +33,7 @@ it('gizmo shared - ControlledBtn - loading', function () {
   expect(tree).toMatchSnapshot();
 });
 it('gizmo shared - ControlledBtn - disabled', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     loading: false,
     iconImage: '',
     btnText: 'click me',
@@ -45,7 +45,7 @@ it('gizmo shared - ControlledBtn - disabled', function () {
   expect(tree).toMatchSnapshot();
 });
 it('gizmo shared - ControlledBtn - with no loading delay', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     loading: false,
     iconImage: '',
     btnText: 'click me',

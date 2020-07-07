@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SingleTextInput - SingleTextInput when currentData is empty 1`] = `
+<div
+  className="single-text-input-wrapper"
+>
+  <div
+    className="input-label"
+  >
+    testLabel
+  </div>
+  <div
+    className="configuration-input"
+  >
+    <input
+      className="ant-input"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+</div>
+`;
+
+exports[`SingleTextInput - SingleTextInput when currentData is with Data 1`] = `
+<div
+  className="single-text-input-wrapper"
+>
+  <div
+    className="input-label"
+  >
+    testLabel
+  </div>
+  <div
+    className="configuration-input"
+  >
+    <input
+      className="ant-input"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      type="text"
+      value="name1"
+    />
+  </div>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+</div>
+`;

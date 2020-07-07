@@ -63,28 +63,28 @@ function ControlledSelect(_ref) {
   var shouldShowOptions = filteredOptions.length > 0 && showOptions;
   var optionsStyle = shouldShowOptions ? 'show' : 'hide';
   var uniqueId = (0, _utils.uuid)();
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "controlled-select-wrapper",
     style: {
       width: "".concat(width, "px")
     }
-  }, _react.default.createElement("form", {
+  }, /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: handleSubmit
-  }, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("label", {
     className: "values-wrapper",
     htmlFor: "controlled-select-input-".concat(uniqueId)
   }, selected.map(function (item) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "selected-item",
       key: item
-    }, _react.default.createElement("span", {
+    }, /*#__PURE__*/_react.default.createElement("span", {
       className: "copy-icon",
       onClick: function onClick(e) {
         return handleCopy(item);
       }
-    }, _react.default.createElement(_icon.default, {
+    }, /*#__PURE__*/_react.default.createElement(_icon.default, {
       type: "copy"
-    })), getHtmlElement(item), _react.default.createElement("svg", {
+    })), getHtmlElement(item), /*#__PURE__*/_react.default.createElement("svg", {
       onClick: function onClick(e) {
         return handleDelete(e, item);
       },
@@ -95,28 +95,28 @@ function ControlledSelect(_ref) {
       height: "1em",
       fill: "currentColor",
       "aria-hidden": "true"
-    }, _react.default.createElement("path", {
+    }, /*#__PURE__*/_react.default.createElement("path", {
       d: "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
     })));
-  }), _react.default.createElement("input", {
+  }), /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
     id: "controlled-select-input-".concat(uniqueId),
     value: inputVal,
     onChange: handleInputChange,
     onFocus: handleFocus,
     onBlur: handleBlur
-  }), !shouldShowOptions && _react.default.createElement("span", {
+  }), !shouldShowOptions && /*#__PURE__*/_react.default.createElement("span", {
     className: "down-arrow"
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "down"
-  })), shouldShowOptions && _react.default.createElement("span", {
+  })), shouldShowOptions && /*#__PURE__*/_react.default.createElement("span", {
     className: "down-arrow"
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "up"
-  })))), _react.default.createElement("ul", {
+  })))), /*#__PURE__*/_react.default.createElement("ul", {
     className: "options-wrapper ".concat(optionsStyle)
   }, filteredOptions.map(function (item) {
-    return _react.default.createElement("li", {
+    return /*#__PURE__*/_react.default.createElement("li", {
       key: item,
       onMouseDown: function onMouseDown(e) {
         return onSelectDropDownItem(item);
@@ -145,21 +145,21 @@ function ControlledSelect(_ref) {
   }
 
   function getHtmlElement(item) {
-    return optionValues.includes(item) ? _react.default.createElement("span", {
+    return optionValues.includes(item) ? /*#__PURE__*/_react.default.createElement("span", {
       className: "info-circle-wrapper"
-    }, _react.default.createElement(_tooltip.default, {
+    }, /*#__PURE__*/_react.default.createElement(_tooltip.default, {
       placement: "top",
       title: item
-    }, _react.default.createElement("span", {
+    }, /*#__PURE__*/_react.default.createElement("span", {
       className: "text-wrapper"
-    }, item))) : _react.default.createElement("span", {
+    }, item))) : /*#__PURE__*/_react.default.createElement("span", {
       className: "info-circle-wrapper"
-    }, _react.default.createElement(_icon.default, {
+    }, /*#__PURE__*/_react.default.createElement(_icon.default, {
       type: "info-circle"
-    }), _react.default.createElement(_tooltip.default, {
+    }), /*#__PURE__*/_react.default.createElement(_tooltip.default, {
       placement: "top",
       title: item
-    }, _react.default.createElement("span", {
+    }, /*#__PURE__*/_react.default.createElement("span", {
       className: "text-wrapper"
     }, item)));
   }

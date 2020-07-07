@@ -23,14 +23,14 @@ require("./style.less");
 
 function ActionsButton(_ref) {
   var content = _ref.content;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "action-btn-wrapper"
-  }, _react.default.createElement(_popover.default, {
+  }, /*#__PURE__*/_react.default.createElement(_popover.default, {
     content: content,
     title: "",
     trigger: "click",
     placement: "topLeft"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "setting",
     size: "small"
   })));

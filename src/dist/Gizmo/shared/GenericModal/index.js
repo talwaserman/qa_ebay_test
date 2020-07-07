@@ -41,7 +41,9 @@ function GenericModal(_ref) {
       onOk = _ref.onOk,
       okText = _ref.okText,
       width = _ref.width,
-      isOkDisabledInitialValue = _ref.isOkDisabledInitialValue;
+      isOkDisabledInitialValue = _ref.isOkDisabledInitialValue,
+      isOkButtonVisible = _ref.isOkButtonVisible,
+      isCancelButtonVisible = _ref.isCancelButtonVisible;
 
   var _useState = (0, _react.useState)(modalVisibleState),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -60,8 +62,9 @@ function GenericModal(_ref) {
 
   (0, _react.useEffect)(function () {
     setVisible(modalVisibleState);
-  }, [modalVisibleState]);
-  return _react.default.createElement("div", null, _react.default.createElement(_modal.default, {
+    updateOkBtnDisabled(isOkDisabledInitialValue);
+  }, [modalVisibleState, isOkDisabledInitialValue]);
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_modal.default, {
     title: modalTitle,
     visible: visible,
     onOk: handleOk,
@@ -69,9 +72,17 @@ function GenericModal(_ref) {
     width: width,
     okText: okText,
     okButtonProps: {
-      disabled: isOkDisabled
+      disabled: isOkDisabled,
+      style: {
+        display: isOkButtonVisible ? 'visible' : 'none'
+      }
+    },
+    cancelButtonProps: {
+      style: {
+        display: isCancelButtonVisible ? 'visible' : 'none'
+      }
     }
-  }, _react.default.createElement(_react.Fragment, null, _react.default.cloneElement(modalContent, {
+  }, /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.cloneElement(modalContent, {
     handleModalChange: handleModalChange
   }))));
 
@@ -115,12 +126,20 @@ GenericModal.propTypes = {
   isOkDisabledInitialValue: _propTypes.default.bool,
 
   /** width - the width of the modal */
-  width: _propTypes.default.number
+  width: _propTypes.default.number,
+
+  /** isCancelButtonVisible - boolean value to show / hide Cancel Button */
+  isCancelButtonVisible: _propTypes.default.bool,
+
+  /** isOkButtonVisible - boolean value to show / hide Ok Button */
+  isOkButtonVisible: _propTypes.default.bool
 };
 GenericModal.defaultProps = {
   modalVisibleState: false,
   modalTitle: '',
   width: 520,
   okText: 'OK',
-  isOkDisabledInitialValue: false
+  isOkDisabledInitialValue: false,
+  isCancelButtonVisible: true,
+  isOkButtonVisible: true
 };

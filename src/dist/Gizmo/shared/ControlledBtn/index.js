@@ -32,7 +32,7 @@ function ControlledBtn(_ref) {
       isLoading = _useState2[0],
       setLoading = _useState2[1];
 
-  return _react.default.createElement(_button.default, {
+  return /*#__PURE__*/_react.default.createElement(_button.default, {
     disabled: isDisabled,
     loading: isLoading,
     icon: iconImage,

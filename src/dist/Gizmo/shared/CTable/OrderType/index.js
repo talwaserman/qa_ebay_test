@@ -28,7 +28,7 @@ function OrderType(_ref) {
     orderTypeChange(value);
   }
 
-  return _react.default.createElement(_select.default, {
+  return /*#__PURE__*/_react.default.createElement(_select.default, {
     style: {
       width: width
     },
@@ -38,10 +38,10 @@ function OrderType(_ref) {
     filterOption: function filterOption(input, option) {
       return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     }
-  }, _react.default.createElement(Option, {
+  }, /*#__PURE__*/_react.default.createElement(Option, {
     key: 'DESC',
     value: descendValue
-  }, "DESC"), _react.default.createElement(Option, {
+  }, "DESC"), /*#__PURE__*/_react.default.createElement(Option, {
     key: 'ASC',
     value: ascendValue
   }, "ASC"));

@@ -16,17 +16,20 @@ require("./style.less");
 function LinkField(_ref) {
   var label = _ref.label,
       value = _ref.value,
+      onClickCallBack = _ref.onClickCallBack,
       url = _ref.url,
       isDifferentValue = _ref.isDifferentValue;
   var styleClasses = isDifferentValue ? 'link-field-wrapper different-value' : 'link-field-wrapper';
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: styleClasses
-  }, _react.default.createElement("strong", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("strong", null, /*#__PURE__*/_react.default.createElement("label", {
     className: "label"
-  }, label)), _react.default.createElement("a", {
+  }, label)), url && /*#__PURE__*/_react.default.createElement("a", {
     href: url,
     target: "_blank",
     rel: "noopener noreferrer"
+  }, value), onClickCallBack && /*#__PURE__*/_react.default.createElement("a", {
+    onClick: onClickCallBack
   }, value));
 }
 
@@ -38,11 +41,16 @@ LinkField.propTypes = {
   value: _propTypes.default.string.isRequired,
 
   /** url - used to redirect user onclick */
-  url: _propTypes.default.string.isRequired,
+  url: _propTypes.default.string,
 
   /** isDifferentValue - indicate if the value is different from the compared value*/
-  isDifferentValue: _propTypes.default.bool
+  isDifferentValue: _propTypes.default.bool,
+
+  /** onClickCallBack - callback function for clicking on the a link */
+  onClickCallBack: _propTypes.default.func
 };
 LinkField.defaultProps = {
-  isDifferentValue: false
+  isDifferentValue: false,
+  url: '',
+  onClickCallBack: null
 };

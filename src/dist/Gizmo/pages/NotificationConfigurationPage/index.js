@@ -11,6 +11,10 @@ exports.default = NotificationConfigurationPage;
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
+require("antd/es/icon/style/css");
+
+var _icon = _interopRequireDefault(require("antd/es/icon"));
+
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
 require("antd/es/button/style/css");
@@ -18,6 +22,10 @@ require("antd/es/button/style/css");
 var _button = _interopRequireDefault(require("antd/es/button"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+require("antd/es/modal/style/css");
+
+var _modal = _interopRequireDefault(require("antd/es/modal"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
@@ -109,6 +117,7 @@ function NotificationConfigurationPage() {
       filterInfo = _useState20[0],
       setFilterInfo = _useState20[1];
 
+  var confirm = _modal.default.confirm;
   (0, _react.useEffect)(function () {
     setLoadingData(true);
 
@@ -144,7 +153,8 @@ function NotificationConfigurationPage() {
                   sortOrder: sortedInfo.columnKey === 'type' && sortedInfo.order,
                   onFilter: function onFilter(value, record) {
                     return record.type.includes(value);
-                  }
+                  },
+                  filterType: 'text'
                 }, {
                   title: 'Activity',
                   dataIndex: 'activity',
@@ -158,7 +168,8 @@ function NotificationConfigurationPage() {
                   sortOrder: sortedInfo.columnKey === 'activity' && sortedInfo.order,
                   onFilter: function onFilter(value, record) {
                     return record.activity.includes(value);
-                  }
+                  },
+                  filterType: 'text'
                 }, {
                   title: 'User Assigned',
                   dataIndex: 'users',
@@ -171,30 +182,32 @@ function NotificationConfigurationPage() {
                   },
                   sortOrder: sortedInfo.columnKey === 'activity' && sortedInfo.order,
                   render: function render(assingedUsers) {
-                    return _react.default.createElement("p", null, assingedUsers.map(function (assignedUser) {
-                      return assignedUser.display + ' ';
-                    }));
+                    return assingedUsers.map(function (assignedUser, index) {
+                      return (index ? ', ' : '') + assignedUser.display;
+                    });
                   },
                   onFilter: function onFilter(value, record) {
                     return record.users.some(function (user) {
                       return user.display === value;
                     });
-                  }
+                  },
+                  filterType: 'text'
                 }, {
                   title: '',
                   dataIndex: '',
+                  filterType: '',
                   render: function render(record) {
-                    return _react.default.createElement("div", {
+                    return /*#__PURE__*/_react.default.createElement("div", {
                       className: "notification-configuration-control"
-                    }, _react.default.createElement(_button.default, {
+                    }, /*#__PURE__*/_react.default.createElement(_button.default, {
                       icon: "edit",
                       onClick: function onClick() {
                         return onClickEditIcon(record);
                       }
-                    }), _react.default.createElement(_button.default, {
+                    }), /*#__PURE__*/_react.default.createElement(_button.default, {
                       icon: "delete",
                       onClick: function onClick() {
-                        return onClickDeleteIcon(record);
+                        return onDeleteConfirm(record);
                       }
                     }));
                   }
@@ -258,8 +271,8 @@ function NotificationConfigurationPage() {
       },
       sortOrder: sortedInfo.columnKey === 'activity' && sortedInfo.order,
       render: function render(assingedUsers) {
-        return _react.default.createElement("p", null, assingedUsers.map(function (assignedUser) {
-          return assignedUser.display + ' ';
+        return /*#__PURE__*/_react.default.createElement("p", null, assingedUsers.map(function (assignedUser, index) {
+          return (index ? ', ' : '') + assignedUser.display;
         }));
       },
       onFilter: function onFilter(value, record) {
@@ -271,37 +284,39 @@ function NotificationConfigurationPage() {
       title: '',
       dataIndex: '',
       render: function render(record) {
-        return _react.default.createElement("div", {
+        return /*#__PURE__*/_react.default.createElement("div", {
           className: "notification-configuration-control"
-        }, _react.default.createElement(_button.default, {
+        }, /*#__PURE__*/_react.default.createElement(_button.default, {
           icon: "edit",
           onClick: function onClick() {
             return onClickEditIcon(record);
           }
-        }), _react.default.createElement(_button.default, {
+        }), /*#__PURE__*/_react.default.createElement(_button.default, {
           icon: "delete",
           onClick: function onClick() {
-            return onClickDeleteIcon(record);
+            return onDeleteConfirm(record);
           }
         }));
       }
     }]);
   }, [sortedInfo]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "notification-configuration-wrapper"
-  }, _react.default.createElement(_CBreadcrumb.default, {
-    path: ['Task Management', 'Notification', 'Notifications Configuration']
-  }), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_CBreadcrumb.default, {
+    path: ['Task Management', 'Notification', 'Configuration']
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: "flex-wrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "table-wrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "notification-configuration-actions-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "notification-configuration-actions"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     icon: "plus",
     onClick: onNotificationHandler
-  }, "Add Configuration"))), _react.default.createElement("div", {
-    className: "table-wrapper"
-  }, _react.default.createElement(_CGTable.default, {
+  }, "Add Configuration"))), /*#__PURE__*/_react.default.createElement(_CGTable.default, {
     columnConfig: columnConfig,
     tableData: tableData,
     size: 'small',
@@ -312,14 +327,19 @@ function NotificationConfigurationPage() {
       return _onSortInfoChange(sortInfoData);
     },
     reloadTable: reloadTable
-  })), shouldBeVisible && _react.default.createElement(_GenericModal.default, {
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "right-side-explainer"
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
+    type: "notification",
+    className: "notification-icon"
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("p", null, "Notify people when activities are done by assigning them to the required activity.", /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("br", null), "When adding new configuration you can select from the list activities and then add the required assignee")), shouldBeVisible && /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
     isOkDisabledInitialValue: true,
     width: 605,
     modalTitle: 'Add New Notification',
     onCancel: onCancel,
     onOk: onOk,
     okText: 'Save',
-    modalContent: _react.default.createElement(_MultiSelectionPopUp.default, {
+    modalContent: /*#__PURE__*/_react.default.createElement(_MultiSelectionPopUp.default, {
       multiSelectionPopUpData: configurationPopUpData,
       dropDownKeyLabel1: 'ktype',
       dropDownKeyLabel2: 'kactivity',
@@ -330,14 +350,14 @@ function NotificationConfigurationPage() {
       existingData: tableData
     }),
     modalVisibleState: shouldBeVisible
-  }) || editShouldBeVisible && _react.default.createElement(_GenericModal.default, {
+  }) || editShouldBeVisible && /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
     isOkDisabledInitialValue: true,
     width: 605,
     modalTitle: 'Edit Notification',
     onCancel: onCancel,
     onOk: onOk,
     okText: 'Save',
-    modalContent: _react.default.createElement(_MultiSelectionPopUp.default, {
+    modalContent: /*#__PURE__*/_react.default.createElement(_MultiSelectionPopUp.default, {
       multiSelectionPopUpData: configurationPopUpData,
       dropDownKeyLabel1: 'ktype',
       dropDownKeyLabel2: 'kactivity',
@@ -351,7 +371,7 @@ function NotificationConfigurationPage() {
       editSelectedData: editRecord
     }),
     modalVisibleState: editShouldBeVisible
-  }));
+  })));
 
   function _onSortInfoChange(sortInfoData) {
     setSortedInfo(sortInfoData);
@@ -434,7 +454,7 @@ function NotificationConfigurationPage() {
 
             case 2:
               usersDataResponse = _context4.sent;
-              sortedUsersDataResponse = (0, _cloneDeep.default)((0, _get.default)(usersDataResponse, 'users', null));
+              sortedUsersDataResponse = (0, _cloneDeep.default)((0, _get.default)(usersDataResponse, 'users', {}));
               sortedUsersDataResponse = (0, _sortBy.default)(sortedUsersDataResponse, function (value) {
                 return value.display.toUpperCase();
               });
@@ -466,7 +486,7 @@ function NotificationConfigurationPage() {
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.next = 2;
-              return saveConfigurationData(_objectSpread({}, data, {
+              return saveConfigurationData(_objectSpread(_objectSpread({}, data), {}, {
                 users: data.users.map(function (item) {
                   return {
                     id: item.id
@@ -489,30 +509,49 @@ function NotificationConfigurationPage() {
     return _onOk.apply(this, arguments);
   }
 
-  function onClickDeleteIcon(_x2) {
-    return _onClickDeleteIcon.apply(this, arguments);
+  function onDeleteConfirm(_x2) {
+    return _onDeleteConfirm.apply(this, arguments);
   }
 
-  function _onClickDeleteIcon() {
-    _onClickDeleteIcon = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee6(record) {
-      return _regenerator.default.wrap(function _callee6$(_context6) {
+  function _onDeleteConfirm() {
+    _onDeleteConfirm = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee7(record) {
+      return _regenerator.default.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
-              _context6.next = 2;
-              return callDeleteNotification(record);
+              confirm({
+                title: 'Are you sure, you want to delete this notification?',
+                onOk: function onOk() {
+                  return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee6() {
+                    return _regenerator.default.wrap(function _callee6$(_context6) {
+                      while (1) {
+                        switch (_context6.prev = _context6.next) {
+                          case 0:
+                            _context6.next = 2;
+                            return callDeleteNotification(record);
 
-            case 2:
-              reloadTable();
+                          case 2:
+                            reloadTable();
 
-            case 3:
+                          case 3:
+                          case "end":
+                            return _context6.stop();
+                        }
+                      }
+                    }, _callee6);
+                  }))();
+                },
+                onCancel: function onCancel() {}
+              });
+
+            case 1:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }));
-    return _onClickDeleteIcon.apply(this, arguments);
+    return _onDeleteConfirm.apply(this, arguments);
   }
 
   function onClickEditIcon(record) {
@@ -522,30 +561,6 @@ function NotificationConfigurationPage() {
       activity: record.activity,
       users: record.users
     });
-    return _react.default.createElement(_GenericModal.default, {
-      isOkDisabledInitialValue: true,
-      width: 605,
-      modalTitle: 'Add New Notification',
-      onCancel: onCancel,
-      onOk: onOk,
-      okText: 'Save',
-      modalContent: _react.default.createElement(_MultiSelectionPopUp.default, {
-        multiSelectionPopUpData: configurationPopUpData,
-        dropDownKeyLabel1: 'ktype',
-        dropDownKeyLabel2: 'kactivity',
-        dropDownKeyLabel3: 'kassignees',
-        componentTitle: 'Add New Notification',
-        multiSelectionTitle: 'Assignees',
-        multiSelectionData: getSortedUsersData,
-        existingData: tableData,
-        isDisabledFirstSelection: true,
-        isDisabledSecondSelection: true,
-        firstSelectionInitialValue: record.type,
-        secondSelectionInitialValue: record.activity,
-        MultSelectionInitialValue: record.users
-      }),
-      modalVisibleState: editShouldBeVisible
-    });
   }
 
   function callDeleteNotification(_x3) {
@@ -553,12 +568,12 @@ function NotificationConfigurationPage() {
   }
 
   function _callDeleteNotification() {
-    _callDeleteNotification = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee7(record) {
-      return _regenerator.default.wrap(function _callee7$(_context7) {
+    _callDeleteNotification = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee8(record) {
+      return _regenerator.default.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
-              _context7.next = 2;
+              _context8.next = 2;
               return (0, _services.deleteNotification)({
                 type: record.type,
                 activity: record.activity
@@ -566,10 +581,10 @@ function NotificationConfigurationPage() {
 
             case 2:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }));
     return _callDeleteNotification.apply(this, arguments);
   }
@@ -579,12 +594,12 @@ function NotificationConfigurationPage() {
   }
 
   function _saveConfigurationData() {
-    _saveConfigurationData = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee8(selectedData) {
-      return _regenerator.default.wrap(function _callee8$(_context8) {
+    _saveConfigurationData = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee9(selectedData) {
+      return _regenerator.default.wrap(function _callee9$(_context9) {
         while (1) {
-          switch (_context8.prev = _context8.next) {
+          switch (_context9.prev = _context9.next) {
             case 0:
-              _context8.next = 2;
+              _context9.next = 2;
               return (0, _services.addNotification)({
                 notification: {
                   type: selectedData.type,
@@ -595,10 +610,10 @@ function NotificationConfigurationPage() {
 
             case 2:
             case "end":
-              return _context8.stop();
+              return _context9.stop();
           }
         }
-      }, _callee8);
+      }, _callee9);
     }));
     return _saveConfigurationData.apply(this, arguments);
   }

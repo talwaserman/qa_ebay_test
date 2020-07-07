@@ -34,31 +34,31 @@ var sectionStyle = {
 };
 
 function PopupContent() {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: containerStyle
-  }, _react.default.createElement("section", {
+  }, /*#__PURE__*/_react.default.createElement("section", {
     style: sectionStyle
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "edit"
-  }), _react.default.createElement(_button.default, {
+  }), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "bar-chart"
-  }, "Statistics"), _react.default.createElement(_select.default, {
+  }, "Statistics"), /*#__PURE__*/_react.default.createElement(_select.default, {
     placeholder: "QA",
     style: {
       width: 260
     },
     onChange: handleQAChange
-  }, _react.default.createElement(Option, {
+  }, /*#__PURE__*/_react.default.createElement(Option, {
     value: "create_qa_task"
-  }, "Create QA task")), _react.default.createElement(_button.default, {
+  }, "Create QA task")), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "wechat"
-  }, "Comment"), _react.default.createElement(_button.default, {
+  }, "Comment"), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "eye"
-  }, "Viewer"), _react.default.createElement(_button.default, {
+  }, "Viewer"), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "profile"
-  }, "Category Assignment")), _react.default.createElement("section", {
+  }, "Category Assignment")), /*#__PURE__*/_react.default.createElement("section", {
     style: sectionStyle
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "delete"
   })));
 
@@ -72,12 +72,12 @@ function PopupContent() {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     content: PopupContent()
   }));
 }, {

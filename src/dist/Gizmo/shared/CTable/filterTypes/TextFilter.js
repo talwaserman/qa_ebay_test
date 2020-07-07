@@ -26,16 +26,18 @@ function TextFilter(_ref) {
       clearFilters = _ref.clearFilters,
       dataIndex = _ref.dataIndex,
       filterTable = _ref.filterTable,
-      removeFilter = _ref.removeFilter;
+      removeFilter = _ref.removeFilter,
+      filterOperation = _ref.filterOperation,
+      serverFilterType = _ref.serverFilterType;
   var inputEl = (0, _react.useRef)(null);
 
   var handleSearch = function handleSearch(selectedKeys, confirm) {
     confirm();
     filterTable({
       fieldName: dataIndex,
-      filterType: 'text',
+      filterType: serverFilterType,
       fieldValue: selectedKeys,
-      filterOperation: 'contains'
+      filterOperation: filterOperation ? filterOperation : 'contains'
     });
   };
 
@@ -44,11 +46,11 @@ function TextFilter(_ref) {
     removeFilter(dataIndex);
   };
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       padding: 8
     }
-  }, _react.default.createElement(_input.default, {
+  }, /*#__PURE__*/_react.default.createElement(_input.default, {
     ref: inputEl,
     placeholder: "Search ".concat(dataIndex),
     value: selectedKeys[0],
@@ -63,7 +65,7 @@ function TextFilter(_ref) {
       marginBottom: 8,
       display: 'block'
     }
-  }), _react.default.createElement(_button.default, {
+  }), /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     onClick: function onClick() {
       return handleSearch(selectedKeys, confirm);
@@ -75,7 +77,7 @@ function TextFilter(_ref) {
       width: 90,
       marginRight: 8
     }
-  }, "Search"), _react.default.createElement(_button.default, {
+  }, "Search"), /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: function onClick() {
       return handleReset(clearFilters);
     },

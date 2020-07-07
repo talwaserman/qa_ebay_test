@@ -17,7 +17,7 @@ var options = [{
 }];
 var title = 'Delete reason';
 it('Gizmo shared - DeleteBtnWithPopOver', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     options: options,
     selectReason: function selectReason(value) {
       alert(value);

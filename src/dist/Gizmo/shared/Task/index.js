@@ -16,9 +16,9 @@ var _react = _interopRequireDefault(require("react"));
 require("./style.less");
 
 function Task() {
-  return _react.default.createElement("div", null, _react.default.createElement(_button.default, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary"
-  }, "testing"), _react.default.createElement("div", {
+  }, "testing"), /*#__PURE__*/_react.default.createElement("div", {
     className: "test-text"
   }, "this is a test"));
 }

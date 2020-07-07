@@ -22,25 +22,43 @@ var _addonInfo = require("@storybook/addon-info");
 
 var _addonKnobs = require("@storybook/addon-knobs");
 
-var _services = require("../services");
-
 require("../../../../../../.storybook/global-style.less");
 
-var _index = _interopRequireDefault(require("./index"));
+var _services = require("../services");
 
-var notificationsListMock = {
-  notifications: [{
-    type: 'externalTask',
-    activity: 'activity ended',
-    users: [{
-      id: 'userId',
-      display: 'Adam'
-    }, {
-      id: 'userId2',
-      display: ''
-    }]
+var _index = _interopRequireDefault(require("../index"));
+
+var mockTableData = [{
+  type: 'externalTask',
+  activity: 'activity ended',
+  users: [{
+    id: 'userId',
+    display: 'BigBoss'
+  }, {
+    id: 'userId3',
+    display: 'Mister Corona'
   }]
-};
+}, {
+  type: 'curation',
+  activity: 'activity1 ended',
+  users: [{
+    id: 'userId',
+    display: 'BigBoss'
+  }, {
+    id: 'userId3',
+    display: 'Mister Corona'
+  }]
+}, {
+  type: 'valueApproval',
+  activity: 'activity2 ended',
+  users: [{
+    id: 'userId',
+    display: 'Admin2'
+  }, {
+    id: '5745aa02437fd1caebf2309b',
+    display: 'Admin1'
+  }]
+}];
 var multiSelectionPopUpData = {
   placeHolder1: 'Type',
   placeHolder2: 'Activity',
@@ -50,45 +68,8 @@ var multiSelectionPopUpData = {
       'PRP Feedback': ['new feedback'],
       Duplicate: ['new external task', 'new external task2']
     }
-  },
-  multiSelectionData: [{
-    display: 'Admin Admin',
-    userId: '5745aa02437fd1caebf2309b'
-  }, {
-    display: 'Admin 2',
-    userId: '5745aa02437fd1caebf2309b'
-  }, {
-    display: 'Lee Azaria',
-    userId: '57481a852c04751b35802557'
-  }, {
-    display: 'Lee',
-    userId: '57481a852c04751b35802547'
-  }, {
-    display: 'Oded Goldberg',
-    userId: '57481a852c04751b35802558'
-  }]
+  }
 };
-var getUsersResponse = [{
-  userId: '5745aa02437fd1caebf2309b',
-  userName: 'Admin',
-  display: 'Admin Admin'
-}, {
-  userId: '57481a852c04751b35802557',
-  userName: 'lazaria',
-  display: 'Lee Azaria'
-}, {
-  userId: '5767ada82c047563b1d82f0d',
-  userName: 'avigal',
-  display: 'avigal avigal'
-}, {
-  userId: '5767adb72c047563b1d82f12',
-  userName: 'etene',
-  display: 'Ely Tene'
-}, {
-  userId: '574d2df72c047549ed7959c6',
-  userName: 'ziv',
-  display: 'ziv ziv'
-}];
 
 function getSortedUsersData() {
   return _getSortedUsersData.apply(this, arguments);
@@ -106,13 +87,13 @@ function _getSortedUsersData() {
 
           case 2:
             usersDataResponse = _context.sent;
-            sortedUsersDataResponse = (0, _cloneDeep.default)((0, _get.default)(usersDataResponse, 'users', null)); // sortedUsersDataResponse = sortBy(sortedUsersDataResponse, value =>
-            //   value.display.toUpperCase()
-            // );
-
+            sortedUsersDataResponse = (0, _cloneDeep.default)((0, _get.default)(usersDataResponse, 'users', null));
+            sortedUsersDataResponse = (0, _sortBy.default)(sortedUsersDataResponse, function (value) {
+              return value.display.toUpperCase();
+            });
             return _context.abrupt("return", sortedUsersDataResponse);
 
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -126,12 +107,12 @@ function _getSortedUsersData() {
   viewport: {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
-}).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+}).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('add configuration', function () {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     multiSelectionPopUpData: multiSelectionPopUpData,
     dropDownKeyLabel1: 'ktype',
     dropDownKeyLabel2: 'kactivity',
@@ -147,4 +128,33 @@ function _getSortedUsersData() {
   }));
 }, {
   notes: 'MultiSelectionPopUp - for creating new two dropdowns with multi selection'
+});
+(0, _react2.storiesOf)('Gizmo/pages/NotificationConfigurationPage/MultiSelectionPopUp', module).addParameters({
+  viewport: {
+    viewports: _addonViewport.INITIAL_VIEWPORTS
+  }
+}).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('edit configuration', function () {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
+    multiSelectionPopUpData: multiSelectionPopUpData,
+    dropDownKeyLabel1: 'ktype',
+    dropDownKeyLabel2: 'kactivity',
+    dropDownKeyLabel3: 'kassignees',
+    componentTitle: 'Edit Notification',
+    multiSelectionTitle: 'Assignees',
+    multiSelectionData: getSortedUsersData,
+    existingData: mockTableData,
+    isDisabledFirstSelection: true,
+    isDisabledSecondSelection: true,
+    editSelectedData: {
+      type: mockTableData[0].type,
+      activity: mockTableData[0].activity,
+      users: mockTableData[0].users
+    }
+  }));
+}, {
+  notes: 'MultiSelectionPopUp - for editing multi selection only while keeping selections dropdown with choosed value'
 });

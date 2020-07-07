@@ -40,22 +40,22 @@ function DecisionPopOver(_ref) {
   (0, _react.useEffect)(function () {
     updateInnerComment(comment);
   }, [comment]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "decision-popup-content"
-  }, _react.default.createElement("label", null, "Comment:", _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Comment:", /*#__PURE__*/_react.default.createElement("span", {
     className: "mandatory"
-  }, "*")), _react.default.createElement(TextArea, {
+  }, "*")), /*#__PURE__*/_react.default.createElement(TextArea, {
     rows: 4,
     value: innerComment,
     onChange: function onChange(e) {
       return updateComment(e.target.value);
     }
-  }), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("section", {
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("section", {
     className: "action-btn"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: innerHandleClose,
     size: "small"
-  }, "Cancel"), _react.default.createElement(_button.default, {
+  }, "Cancel"), /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     size: "small",
     onClick: innerHandleSave,

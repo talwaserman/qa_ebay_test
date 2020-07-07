@@ -19,12 +19,12 @@ function ReasonSelect(_ref) {
   var changeReason = _ref.changeReason,
       options = _ref.options,
       title = _ref.title;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "reason-select-wrapper"
-  }, _react.default.createElement("div", null, title), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", null, title), /*#__PURE__*/_react.default.createElement("div", {
     className: "delete-btn-wrapper"
   }, options.map(function (item) {
-    return _react.default.createElement(_button.default, {
+    return /*#__PURE__*/_react.default.createElement(_button.default, {
       key: item.value,
       type: "default",
       onClick: function onClick(e) {

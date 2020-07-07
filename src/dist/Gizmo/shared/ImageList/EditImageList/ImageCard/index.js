@@ -52,57 +52,57 @@ function ImageCard(_ref) {
       setDeletePopoverVisible = _useState2[1];
 
   var imageSize = (0, _get.default)(imageData, 'imageSizeContract', null) ? "".concat(imageData.imageSizeContract.heightSize, "x").concat(imageData.imageSizeContract.widthSize) : '';
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "image-card-wrapper"
-  }, _react.default.createElement(_avatar.default, {
+  }, /*#__PURE__*/_react.default.createElement(_avatar.default, {
     className: "image-avatar",
     shape: "square",
     size: 141,
     src: imageData.imageUrl,
     alt: imageData.copyright
-  }), _react.default.createElement(_button.default, {
+  }), /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     className: "image-number"
-  }, index + 1), index !== 0 ? _react.default.createElement(_button.default, {
+  }, index + 1), index !== 0 ? /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: function onClick(e) {
       return changePosition(index, '-');
     },
     className: "image-navigation-arrow-left",
     shape: "circle",
     icon: "left"
-  }) : '', index !== arraySize - 1 ? _react.default.createElement(_button.default, {
+  }) : '', index !== arraySize - 1 ? /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: function onClick(e) {
       return changePosition(index, '+');
     },
     className: "image-navigation-arrow-right",
     shape: "circle",
     icon: "right"
-  }) : '', _react.default.createElement("div", {
+  }) : '', /*#__PURE__*/_react.default.createElement("div", {
     className: "image-footer-section"
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: "image-size-details"
-  }, imageSize), _react.default.createElement(_popover.default, {
+  }, imageSize), /*#__PURE__*/_react.default.createElement(_popover.default, {
     trigger: "click",
-    content: _react.default.createElement("img", {
+    content: /*#__PURE__*/_react.default.createElement("img", {
       src: imageData.imageUrl,
       alt: 'image_card'
     })
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     className: "image-search-icon",
     type: "search"
-  })), _react.default.createElement(_popover.default, {
+  })), /*#__PURE__*/_react.default.createElement(_popover.default, {
     trigger: "click",
     placement: "top",
     visible: isDeletePopoverVisible,
     onVisibleChange: deletePopoverVisibleChange,
-    content: _react.default.createElement(_DeleteImagePopover.default, {
+    content: /*#__PURE__*/_react.default.createElement(_DeleteImagePopover.default, {
       title: "Delete Image",
       okText: "Save",
       selectedReasons: (0, _cloneDeep.default)(imageData.imageDecisionContract.rejectReasons),
       handleSave: saveBtn,
       handleCancel: cancelBtn
     })
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     className: "image-delete-icon",
     type: "delete"
   }))));

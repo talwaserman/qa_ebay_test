@@ -27,31 +27,31 @@ function callback(key) {
 
 var TreeNode = _index.Tree.TreeNode;
 (0, _react2.storiesOf)('AntD/DataEntry', module).add('Tree', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper"
-  }, _react.default.createElement(_index.Tree, {
+  }, /*#__PURE__*/_react.default.createElement(_index.Tree, {
     showIcon: true,
     defaultExpandAll: true,
     defaultSelectedKeys: ['0-0-0'],
-    switcherIcon: _react.default.createElement(_Icon.default, {
+    switcherIcon: /*#__PURE__*/_react.default.createElement(_Icon.default, {
       type: "down"
     })
-  }, _react.default.createElement(TreeNode, {
-    icon: _react.default.createElement(_Icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(TreeNode, {
+    icon: /*#__PURE__*/_react.default.createElement(_Icon.default, {
       type: "smile-o"
     }),
     title: "parent 1",
     key: "0-0"
-  }, _react.default.createElement(TreeNode, {
-    icon: _react.default.createElement(_Icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(TreeNode, {
+    icon: /*#__PURE__*/_react.default.createElement(_Icon.default, {
       type: "meh-o"
     }),
     title: "leaf",
     key: "0-0-0"
-  }), _react.default.createElement(TreeNode, {
+  }), /*#__PURE__*/_react.default.createElement(TreeNode, {
     icon: function icon(_ref) {
       var selected = _ref.selected;
-      return _react.default.createElement(_Icon.default, {
+      return /*#__PURE__*/_react.default.createElement(_Icon.default, {
         type: selected ? 'frown' : 'frown-o'
       });
     },

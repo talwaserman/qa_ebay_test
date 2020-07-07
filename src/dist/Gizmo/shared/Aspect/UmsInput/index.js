@@ -29,9 +29,9 @@ function UmsInput(_ref) {
     return item.value;
   })))));
   checkAspectValuesDifference(suggestedValues);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "ums-input-wrapper"
-  }, _react.default.createElement(_ControlledSelect.default, {
+  }, /*#__PURE__*/_react.default.createElement(_ControlledSelect.default, {
     optionValues: distinctValuesUmsValues,
     selectedValues: suggestedValues.map(function (item) {
       return item.value;

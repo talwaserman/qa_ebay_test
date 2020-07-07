@@ -1,31 +1,51 @@
 .notification-configuration-wrapper {
-  margin: 10px 14px;
-  position: relative;
-  display: inline-block;
-  width: calc(~'100% - 28px');
-  border: 1px solid #ccc;
-  background: #fff;
+  .flex-wrapper {
+    margin: 10px 14px;
+    // position: relative;
+    // display: inline-block;
+    //width: calc(~'100% - 28px');
+    border: 1px solid #ccc;
+    background: #fff;
+    display: flex; /* or inline-flex */
+    justify-content: space-between;
 
-  .table-wrapper {
-    padding: 10px;
-  }
+    .table-wrapper {
+      padding: 10px;
+      width: 70%;
+      position: relative;
+      display: inline-block;
 
-  .notification-configuration-actions-wrapper {
-    position: relative;
-
-    .notification-configuration-actions {
-      position: absolute;
-      top: 15px;
-      left: 10px;
-
-      button {
-        margin-right: 10px;
+      .notification-configuration-actions-wrapper {
+        position: absolute;
+        top: 17px;
+        left: 10px;
+        .notification-configuration-actions {
+          button {
+            margin-right: 10px;
+          }
+        }
       }
+    }
+
+    .right-side-explainer {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      width: 30%;
+      height: 340px;
+      margin: 21px 20px;
+      text-align: center;
+      padding: 10px;
+      .notification-icon {
+        font-size: 100px;
+        color:#999;
+      }
+      > p {
+        text-align: left;
+      }
+    }
+
+    .notification-configuration-control > button {
+      margin: 0px 8px 0 0;
     }
   }
 }
-
-.notification-configuration-control > button {
-  margin: 0px 8px 0 0;
-}
-

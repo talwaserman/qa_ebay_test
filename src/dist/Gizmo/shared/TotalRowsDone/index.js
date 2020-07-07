@@ -16,9 +16,9 @@ require("./style.less");
 function TotalRowsDone(_ref) {
   var today = _ref.today,
       total = _ref.total;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "total-rows-done-wrapper"
-  }, "Total rows done: ".concat(total), _react.default.createElement("div", {
+  }, "Total rows done: ".concat(total), /*#__PURE__*/_react.default.createElement("div", {
     className: "vertical-seperator"
   }), "Total done today: ".concat(today));
 }

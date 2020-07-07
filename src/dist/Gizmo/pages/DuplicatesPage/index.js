@@ -15,6 +15,8 @@ var _spin = _interopRequireDefault(require("antd/es/spin"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 require("antd/es/icon/style/css");
@@ -29,13 +31,21 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _get = _interopRequireDefault(require("lodash/get"));
 
+var _has = _interopRequireDefault(require("lodash/has"));
+
 var _shared = require("../../shared");
 
 var _Duplicates = _interopRequireDefault(require("./Duplicates"));
 
 var _services = require("./services");
 
+var _configuration = require("./configuration");
+
 require("./style.less");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function DuplicatesPage(_ref) {
   var workMode = _ref.workMode,
@@ -43,9 +53,7 @@ function DuplicatesPage(_ref) {
       rowId = _ref.rowId;
 
   var _useState = (0, _react.useState)({
-    survivorData: null,
-    vArray: null,
-    escalatedInfo: null,
+    clusterData: null,
     decisions: null,
     isLoading: true,
     rowsDone: null,
@@ -58,7 +66,12 @@ function DuplicatesPage(_ref) {
       data = _useState2[0],
       setData = _useState2[1];
 
-  var antIcon = _react.default.createElement(_icon.default, {
+  var _useState3 = (0, _react.useState)(0),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      FetchNextCounter = _useState4[0],
+      setFetchNextClusterCounter = _useState4[1];
+
+  var antIcon = /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "loading",
     style: {
       fontSize: 46
@@ -73,80 +86,96 @@ function DuplicatesPage(_ref) {
 
     function _fetchData() {
       _fetchData = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var jobHeader, jobConfiguration, loggedInUser, res, survivorData, vArray, escalatedInfo, sendToSupervisor, rowsDone, additionalInformationDataList;
+        var jobHeader, jobConfiguration, loggedInUser, clusterData, sendToSupervisor, rowsDone;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                setData(_objectSpread(_objectSpread({}, data), {
+                  isLoading: true
+                }));
+
                 if (jobId) {
-                  _context.next = 2;
+                  _context.next = 3;
                   break;
                 }
 
                 return _context.abrupt("return");
 
-              case 2:
-                _context.next = 4;
+              case 3:
+                _context.next = 5;
                 return (0, _services.getJobHeader)(jobId);
 
-              case 4:
+              case 5:
                 jobHeader = _context.sent;
-                _context.next = 7;
-                return (0, _services.getJobConfiguration)(jobHeader.typeConfiguration.selectedDuplicateConfigurationId);
+                jobConfiguration = null;
 
-              case 7:
-                jobConfiguration = _context.sent;
-                _context.next = 10;
-                return (0, _services.getLoggedInUser)();
-
-              case 10:
-                loggedInUser = _context.sent;
-                res = null;
-
-                if (!(workMode === 'edit')) {
-                  _context.next = 18;
+                if (!(0, _has.default)(jobHeader, 'typeConfiguration.selectedDuplicateConfigurationId')) {
+                  _context.next = 13;
                   break;
                 }
 
-                _context.next = 15;
-                return (0, _services.getRowById)({
-                  rowId: rowId,
-                  type: 'Duplicates'
-                });
+                _context.next = 10;
+                return (0, _services.getJobConfiguration)(jobHeader.typeConfiguration.selectedDuplicateConfigurationId);
 
-              case 15:
-                res = _context.sent;
-                _context.next = 21;
+              case 10:
+                jobConfiguration = _context.sent;
+                _context.next = 16;
                 break;
 
+              case 13:
+                _context.next = 15;
+                return (0, _services.getJobConfiguration)(jobHeader.typeConfiguration.taskId);
+
+              case 15:
+                jobConfiguration = _context.sent;
+
+              case 16:
+                _context.next = 18;
+                return (0, _services.getLoggedInUser)();
+
               case 18:
-                _context.next = 20;
-                return (0, _services.getNextRow)(jobId);
+                loggedInUser = _context.sent;
+                clusterData = null;
 
-              case 20:
-                res = _context.sent;
+                if (!(workMode === 'edit')) {
+                  _context.next = 26;
+                  break;
+                }
 
-              case 21:
-                survivorData = (0, _get.default)(res, 'nextRowContract.entities', []).shift() || null;
-                vArray = (0, _get.default)(res, 'nextRowContract.entities', null);
-                escalatedInfo = (0, _get.default)(res, 'nextRowContract.escalationInfo', null);
+                _context.next = 23;
+                return (0, _services.getRowById)({
+                  rowId: rowId,
+                  type: (0, _get.default)(jobConfiguration, 'taskConfiguration.type')
+                });
+
+              case 23:
+                clusterData = _context.sent;
+                _context.next = 29;
+                break;
+
+              case 26:
+                _context.next = 28;
+                return (0, _services.getNextRow)(jobId, (0, _get.default)(jobConfiguration, 'taskConfiguration.type'));
+
+              case 28:
+                clusterData = _context.sent;
+
+              case 29:
                 sendToSupervisor = null;
-                rowsDone = (0, _get.default)(res, 'doneRowsContract', null);
-                additionalInformationDataList = (0, _get.default)(res, 'nextRowContract.additionalInformationContract.additionalInformationDataList', []);
+                rowsDone = (0, _get.default)(clusterData, 'doneRowsContract', null);
                 setData({
-                  survivorData: survivorData,
-                  vArray: vArray,
-                  escalatedInfo: escalatedInfo,
+                  clusterData: clusterData,
                   rowsDone: rowsDone,
                   isLoading: false,
-                  rowId: (0, _get.default)(res, 'nextRowContract.rowId', null),
-                  decisions: getInitialDecisionsArray(survivorData, vArray, additionalInformationDataList, sendToSupervisor),
+                  rowId: (0, _get.default)(clusterData, 'nextRowContract.comparedEntityRowContracts.rowId', null),
+                  decisions: getInitialArray(clusterData, sendToSupervisor, jobConfiguration),
                   jobId: jobId || null,
                   jobTypeConfiguration: jobConfiguration,
                   loggedInUser: loggedInUser
                 });
 
-              case 28:
+              case 32:
               case "end":
                 return _context.stop();
             }
@@ -157,77 +186,93 @@ function DuplicatesPage(_ref) {
     }
 
     fetchData();
-  }, []); // option 1 - yes
-  // option 2 - skip
-  // option 3 - no
-
-  var duplicateReasons = {
-    option1: ['Only Identical UPI(s)', 'Only Identical Title', 'Only Identical DATA'],
-    option2: ['Cant Validate - prod1', 'Cant Validate - prod2', 'Cant Validate - both products', 'Insufficient - prod1', 'Insufficient - prod2', 'Merged - prod1', 'Merged - prod2', 'Merged - Both products', 'Deleted - prod1', 'Deleted - prod2', 'Deleted - Both products'],
-    option3: ['Different Attribute', 'Different Products', 'Different Granularity', 'Conflict Data - prod1', 'Conflict Data - prod2', 'Conflict Data - both products', 'Mixed Results - prod1', 'Mixed Results - prod2', 'Mixed Results - Both Products', 'Invalid - prod1', 'Invalid - prod2', 'Invalid - Both products']
-  };
-  return _react.default.createElement("div", {
+  }, [FetchNextCounter]);
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "duplication-page-wrapper"
-  }, data.isLoading && _react.default.createElement("div", {
+  }, data.isLoading && /*#__PURE__*/_react.default.createElement("div", {
     className: "loading-spinner"
-  }, _react.default.createElement(_spin.default, {
+  }, /*#__PURE__*/_react.default.createElement(_spin.default, {
     indicator: antIcon
-  })), !data.isLoading && data.survivorData && _react.default.createElement(_Duplicates.default, {
-    survivorData: data.survivorData,
-    victimArray: data.vArray,
-    escalatedInfo: data.escalatedInfo,
+  })), !data.isLoading && (0, _get.default)(data, 'clusterData.nextRowContract.comparedEntityRowContracts[0]', null) && /*#__PURE__*/_react.default.createElement(_Duplicates.default, {
+    clusterData: data.clusterData,
+    updateClusterData: updateClusterData,
     rowsDone: data.rowsDone,
     decisions: data.decisions,
-    reasons: duplicateReasons,
-    rowId: data.rowId,
+    reasons: getReasonsFromConfiguration(data.jobTypeConfiguration),
     saveTask: handleSaveTask,
     changeCategory: handleChangeCategory,
     jobId: jobId,
     jobTypeConfiguration: data.jobTypeConfiguration,
     workMode: workMode,
-    loggedInUser: data.loggedInUser
-  }), !data.isLoading && !data.survivorData && _react.default.createElement("div", {
+    loggedInUser: data.loggedInUser,
+    fetchNextCluster: fetchNextCluster,
+    currentPage: data.currentPage ? data.currentPage : 0
+  }), !data.isLoading && !(0, _get.default)(data, 'clusterData.nextRowContract.comparedEntityRowContracts[0]', null) && /*#__PURE__*/_react.default.createElement("div", {
     className: "finished-queue-message"
-  }, _react.default.createElement(_shared.CBreadcrumb, {
+  }, /*#__PURE__*/_react.default.createElement(_shared.CBreadcrumb, {
     path: ['Duplications']
-  }), _react.default.createElement("i", {
-    class: "fa fa-check-circle end-of-queue-circle"
-  }), _react.default.createElement("label", {
+  }), /*#__PURE__*/_react.default.createElement("i", {
+    className: "fa fa-check-circle end-of-queue-circle"
+  }), /*#__PURE__*/_react.default.createElement("label", {
     className: "endOfQueueHeader"
-  }, "You are done!"), _react.default.createElement("label", {
+  }, "You are done!"), /*#__PURE__*/_react.default.createElement("label", {
     className: "endOfQueueBody"
   }, "No more items to consume from the queue")));
 
-  function handleSaveTask(_x) {
+  function getReasonsFromConfiguration(jobTypeConfiguration) {
+    var reasons;
+    var jobType = (0, _get.default)(jobTypeConfiguration, 'taskConfiguration.type', '').toLowerCase() || 'duplicates';
+
+    if (jobType === 'duplicates') {
+      reasons = (0, _get.default)(jobTypeConfiguration, 'configurationResponse.executionRulesConfigurationContract.reasonCodeContracts', []);
+    } else {
+      reasons = _configuration.configuration[jobType].reasons;
+    }
+
+    return reasons;
+  }
+
+  function fetchNextCluster() {
+    setFetchNextClusterCounter(FetchNextCounter + 1);
+  }
+
+  function updateClusterData(updatedClusterData) {
+    setData(_objectSpread(_objectSpread({}, data), {}, {
+      clusterData: updatedClusterData
+    }));
+  }
+
+  function handleSaveTask(_x, _x2) {
     return _handleSaveTask.apply(this, arguments);
   }
 
   function _handleSaveTask() {
-    _handleSaveTask = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(updatedTaskObject) {
-      var res, survivorData, vArray, escalatedInfo, rowsDone, additionalInformationDataList;
+    _handleSaveTask = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(shouldGetNextCluster, updatedTaskObject) {
+      var clusterData, rowsDone;
       return _regenerator.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              setData({
-                survivorData: null,
-                vArray: null,
-                escalatedInfo: null,
-                decisions: null,
-                isLoading: true,
-                rowsDone: null,
-                rowId: null,
-                jobId: null
-              });
+              setData(_objectSpread(_objectSpread({}, data), {
+                isLoading: true
+              }));
 
-              if (!(workMode === 'edit')) {
+              if (!(workMode === 'edit' || !shouldGetNextCluster)) {
                 _context2.next = 6;
                 break;
               }
 
               updatedTaskObject.nextRow = false;
               (0, _services.saveTask)(updatedTaskObject);
-              window.history.back();
+
+              if (workMode === 'edit') {
+                window.history.back();
+              } else {
+                setData(_objectSpread(_objectSpread({}, data), {
+                  isLoading: false
+                }));
+              }
+
               return _context2.abrupt("return");
 
             case 6:
@@ -235,25 +280,19 @@ function DuplicatesPage(_ref) {
               return (0, _services.saveTask)(updatedTaskObject);
 
             case 8:
-              res = _context2.sent;
-              survivorData = (0, _get.default)(res, 'nextRowContract.entities', []).shift() || null;
-              vArray = (0, _get.default)(res, 'nextRowContract.entities', null);
-              escalatedInfo = (0, _get.default)(res, 'nextRowContract.escalationInfo', null);
-              rowsDone = (0, _get.default)(res, 'doneRowsContract', null);
-              additionalInformationDataList = (0, _get.default)(res, 'nextRowContract.additionalInformationContract.additionalInformationDataList', []);
+              clusterData = _context2.sent;
+              rowsDone = (0, _get.default)(clusterData, 'doneRowsContract', null);
               setData({
-                survivorData: survivorData,
-                vArray: vArray,
-                escalatedInfo: escalatedInfo,
+                clusterData: clusterData,
                 rowsDone: rowsDone,
                 isLoading: false,
-                rowId: (0, _get.default)(res, 'nextRowContract.rowId', null),
-                decisions: getInitialDecisionsArray(survivorData, vArray, additionalInformationDataList),
+                rowId: (0, _get.default)(clusterData, 'nextRowContract.comparedEntityRowContracts.rowId', null),
+                decisions: getInitialArray(clusterData, false, data.jobTypeConfiguration),
                 jobId: jobId || null,
                 jobTypeConfiguration: data.jobTypeConfiguration
               });
 
-            case 15:
+            case 11:
             case "end":
               return _context2.stop();
           }
@@ -263,47 +302,38 @@ function DuplicatesPage(_ref) {
     return _handleSaveTask.apply(this, arguments);
   }
 
-  function handleChangeCategory(_x2) {
+  function handleChangeCategory(_x3, _x4, _x5) {
     return _handleChangeCategory.apply(this, arguments);
   }
 
   function _handleChangeCategory() {
-    _handleChangeCategory = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(updatedTaskObject) {
-      var res, survivorData, vArray, rowsDone, additionalInformationDataList;
+    _handleChangeCategory = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(updatedTaskObject, currentPage, decisionsData) {
+      var updatedCluster;
       return _regenerator.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              setData({
-                survivorData: null,
-                vArray: null,
-                decisions: null,
+              setData(_objectSpread(_objectSpread({}, data), {
                 isLoading: true,
-                rowsDone: null,
-                rowId: null,
-                jobId: null,
-                jobTypeConfiguration: null
-              });
+                currentPage: currentPage
+              }));
               _context3.next = 3;
               return (0, _services.changeCategory)(updatedTaskObject);
 
             case 3:
-              res = _context3.sent;
-              survivorData = (0, _get.default)(res, 'nextRowContract.entities', []).shift() || null;
-              vArray = (0, _get.default)(res, 'nextRowContract.entities', null);
-              rowsDone = (0, _get.default)(res, 'doneRowsContract', null);
-              additionalInformationDataList = (0, _get.default)(res, 'nextRowContract.additionalInformationContract.additionalInformationDataList', []);
+              updatedCluster = _context3.sent;
               setData({
-                survivorData: survivorData,
-                vArray: vArray,
-                rowsDone: rowsDone,
+                clusterData: updatedCluster,
+                currentPage: currentPage,
+                rowsDone: data.rowsDone,
                 isLoading: false,
-                rowId: (0, _get.default)(res, 'nextRowContract.rowId', null),
-                decisions: getInitialDecisionsArray(survivorData, vArray, additionalInformationDataList),
-                jobId: jobId || null
+                rowId: (0, _get.default)(updatedCluster, 'nextRowContract.comparedEntityRowContracts.rowId', null),
+                decisions: decisionsData,
+                jobId: data.jobId,
+                jobTypeConfiguration: data.jobTypeConfiguration
               });
 
-            case 9:
+            case 5:
             case "end":
               return _context3.stop();
           }
@@ -313,37 +343,164 @@ function DuplicatesPage(_ref) {
     return _handleChangeCategory.apply(this, arguments);
   }
 
-  function getInitialDecisionsArray(survivorData, vArray, additionalInformationDataList, sendToSupervisor) {
-    var decisionsOptionsMap = {
-      DUPLICATES: 'op-1',
-      SKIP: 'op-2',
-      NON_DUPLICATES: 'op-3',
-      NOT_FOUND: null
-    };
-    return [{
-      survivorEpid: (0, _get.default)(survivorData, 'product.productDefinition.entityId', null),
-      victimEpid: (0, _get.default)(vArray, '[0].product.productDefinition.entityId', null),
-      selectedOption: decisionsOptionsMap[(0, _get.default)(vArray, '[0].prodDec.productDuplicateAction', 'NOT_FOUND')],
-      decisionInfo: {
-        reason: {
-          value: (0, _get.default)(vArray, '[0].prodDec.decisionContract.reason', null),
-          mandatory: false
-        },
-        comment: {
-          value: (0, _get.default)(vArray, '[0].prodDec.decisionContract.comment', null),
-          mandatory: false
-        },
-        urls: [{
-          name: 'url1',
-          url: (0, _get.default)(vArray, '[0].prodDec.decisionContract.urls[0].url', null)
-        }, {
-          name: 'url2',
-          url: (0, _get.default)(vArray, '[0].prodDec.decisionContract.urls[1].url', null)
-        }],
-        additionalInfo: additionalInformationDataList,
-        sendToSupervisor: sendToSupervisor
-      }
-    }];
+  function getInitialArray(clusterData, sendToSupervisor, jobConfiguration) {
+    switch ((0, _get.default)(jobConfiguration, 'taskConfiguration.type')) {
+      case 'Duplicates':
+        return getInitialDuplicationDecisionsArray(clusterData, sendToSupervisor, jobConfiguration);
+
+      case 'Matching':
+        return getInitialMatchingDecisionsArray(clusterData, sendToSupervisor, jobConfiguration);
+
+      default:
+        return null;
+    }
+  }
+
+  function getInitialDuplicationDecisionsArray(clusterData, sendToSupervisor, jobConfiguration) {
+    var decisionsOptionsMap = getDecisionsOptionsMap(jobConfiguration);
+    return clusterData.nextRowContract.comparedEntityRowContracts.map(function (item) {
+      return {
+        leftEntityId: (0, _get.default)(item, 'entities[0].entityId', ''),
+        rightEntityId: (0, _get.default)(item, 'entities[1].entityId', ''),
+        selectedOption: decisionsOptionsMap[(0, _get.default)(item, 'entities[1].prodDec.productDuplicateAction', 'NOT_FOUND')],
+        decisionInfo: {
+          reason: {
+            value: (0, _get.default)(item, 'entities[1].prodDec.decisionContract.reason', ''),
+            mandatory: false
+          },
+          reasonDetails: {
+            value: (0, _get.default)(item, 'entities[1].prodDec.decisionContract.reasonDetails', []),
+            mandatory: false
+          },
+          observation: {
+            value: (0, _get.default)(item, 'entities[1].prodDec.decisionContract.observation', ''),
+            mandatory: true
+          },
+          comment: {
+            value: (0, _get.default)(item, 'entities[1].prodDec.decisionContract.comment', ''),
+            mandatory: false
+          },
+          urls: generateDuplicateUrls((0, _get.default)(item, 'entities[1].prodDec.decisionContract.urls')),
+          additionalInfo: (0, _get.default)(item, 'additionalInformationContract.additionalInformationDataList', []),
+          sendToSupervisor: sendToSupervisor,
+          checkedAsQa: evaluateCheckedAsQa(item)
+        }
+      };
+    });
+  }
+
+  function generateMatchingUrls(urls) {
+    if (urls) {
+      return urls.map(function (urlData) {
+        return {
+          name: urlData.name || '',
+          url: urlData.url || ''
+        };
+      });
+    } else {
+      return [{
+        name: 'URL 1',
+        url: ''
+      }, {
+        name: 'URL 2',
+        url: ''
+      }];
+    }
+  }
+
+  function generateDuplicateUrls(urls) {
+    if (urls) {
+      return urls.map(function (urlData) {
+        return {
+          name: urlData.name || '',
+          url: urlData.url || '',
+          indication: urlData.indication || ''
+        };
+      });
+    } else {
+      return [{
+        name: 'URL 1',
+        url: '',
+        indication: 'undifined'
+      }, {
+        name: 'URL 2',
+        url: '',
+        indication: 'undifined'
+      }];
+    }
+  }
+
+  function getInitialMatchingDecisionsArray(clusterData, sendToSupervisor, jobConfiguration) {
+    var decisionsOptionsMap = getDecisionsOptionsMap(jobConfiguration);
+    return clusterData.nextRowContract.comparedEntityRowContracts.map(function (item) {
+      var itemPoisiton = getItemIndex(jobConfiguration.configurationResponse.groupByType);
+      return {
+        leftEntityId: (0, _get.default)(item, 'entities[0].entityId', ''),
+        rightEntityId: (0, _get.default)(item, 'entities[1].entityId', ''),
+        selectedOption: decisionsOptionsMap[(0, _get.default)(item.entities[itemPoisiton], 'itemDecision.itemAction', 'NOT_FOUND')],
+        decisionInfo: {
+          reason: {
+            value: (0, _get.default)(item.entities[itemPoisiton], 'itemDecision.reason', ''),
+            mandatory: false
+          },
+          reasonDetails: {
+            value: (0, _get.default)(item.entities[itemPoisiton], 'itemDecision.reasonDetails', ''),
+            mandatory: false
+          },
+          comment: {
+            value: (0, _get.default)(item.entities[itemPoisiton], 'itemDecision.comment', ''),
+            mandatory: false
+          },
+          urls: generateMatchingUrls((0, _get.default)(item.entities[itemPoisiton], 'itemDecision.urls', '')),
+          additionalInfo: (0, _get.default)(item, 'additionalInformationContract.additionalInformationDataList', []),
+          sendToSupervisor: sendToSupervisor,
+          checkedAsQa: evaluateCheckedAsQa(item)
+        }
+      };
+    });
+  }
+
+  function getItemIndex(groupByType) {
+    switch (groupByType) {
+      case 'Item':
+        return 0;
+
+      case 'Product':
+        return 1;
+
+      case 'None':
+        return 1;
+
+      default:
+        return null;
+    }
+  }
+
+  function getDecisionsOptionsMap(jobConfiguration) {
+    switch ((0, _get.default)(jobConfiguration, 'taskConfiguration.type')) {
+      case 'Duplicates':
+        return {
+          DUPLICATES: 'option1',
+          SKIP: 'option2',
+          NON_DUPLICATES: 'option3',
+          NOT_FOUND: null
+        };
+
+      case 'Matching':
+        return {
+          CORRECT: 'option1',
+          SKIP: 'option2',
+          WRONG: 'option3',
+          NOT_FOUND: null
+        };
+
+      default:
+        return null;
+    }
+  }
+
+  function evaluateCheckedAsQa(item) {
+    return item.comparedEntityRowQaContract ? item.comparedEntityRowQaContract.qaed ? true : false : false;
   }
 }
 
@@ -352,15 +509,8 @@ DuplicatesPage.propTypes = {
   workMode: _propTypes.default.string,
 
   /** jobId - a string identifier of the task displayed in this screen */
-  jobId: _propTypes.default.string.isRequired,
-
-  /** rowId - a string that indicate the task row identifier */
-  rowId: _propTypes.default.string.isRequired,
-
-  /** escalatedInfo - object used to show or hide the escelated by string */
-  escalatedInfo: _propTypes.default.object
+  jobId: _propTypes.default.string.isRequired
 };
 DuplicatesPage.defaultProps = {
-  workMode: 'regular',
-  escalatedInfo: {}
+  workMode: 'regular'
 };

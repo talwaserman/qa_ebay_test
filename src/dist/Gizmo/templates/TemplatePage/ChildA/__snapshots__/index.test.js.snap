@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gizmo shared - ChildA 1`] = `
+<div
+  className="child-a-wrapper"
+>
+  <strong>
+    List of todos:
+  </strong>
+  <div>
+    buy dinner
+  </div>
+  <div>
+    run 5 km
+  </div>
+  <div>
+    finish work
+  </div>
+</div>
+`;

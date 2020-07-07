@@ -21,9 +21,9 @@ var sizeOptions = ['small', 'large'];
     text: 'AntD Button'
   }
 }).add('Button', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper"
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     onClick: (0, _addonActions.action)('clicked example button'),
     type: (0, _addonKnobs.select)('type', typeOptions, 'primary'),
     size: (0, _addonKnobs.select)('size', sizeOptions, 'small'),

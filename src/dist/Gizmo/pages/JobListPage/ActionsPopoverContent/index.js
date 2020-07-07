@@ -23,24 +23,24 @@ require("./style.less");
 var Option = _select.default.Option;
 
 function ActionsPopoverContent() {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "actions-popover-content-wrapper"
-  }, _react.default.createElement("section", null, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "edit"
-  }), _react.default.createElement(_button.default, {
+  }), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "bar-chart"
-  }, "Statistics"), _react.default.createElement(_select.default, {
+  }, "Statistics"), /*#__PURE__*/_react.default.createElement(_select.default, {
     placeholder: "QA",
     onChange: handleQAChange
-  }, _react.default.createElement(Option, {
+  }, /*#__PURE__*/_react.default.createElement(Option, {
     value: "create_qa_task"
-  }, "Create QA task")), _react.default.createElement(_button.default, {
+  }, "Create QA task")), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "wechat"
-  }, "Comment"), _react.default.createElement(_button.default, {
+  }, "Comment"), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "eye"
-  }, "Viewer"), _react.default.createElement(_button.default, {
+  }, "Viewer"), /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "profile"
-  }, "Category Assignment")), _react.default.createElement("section", null, _react.default.createElement(_button.default, {
+  }, "Category Assignment")), /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "delete"
   })));
 

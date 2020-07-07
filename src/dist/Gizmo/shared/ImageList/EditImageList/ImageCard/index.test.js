@@ -22,7 +22,7 @@ var imageDataMock = {
   subcopyright: null
 };
 it('gizmo shared - ImageCard', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     imageData: imageDataMock,
     changePosition: function changePosition() {},
     index: 0,

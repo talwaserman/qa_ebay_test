@@ -21,12 +21,12 @@ function getRowsByJobId(_x) {
 
 function _getRowsByJobId() {
   _getRowsByJobId = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {
-    var jobId, pageNumber, orderType, orderBy, dataFilterContracts;
+    var jobId, jobType, pageNumber, orderType, orderBy, dataFilterContracts;
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            jobId = _ref.jobId, pageNumber = _ref.pageNumber, orderType = _ref.orderType, orderBy = _ref.orderBy, dataFilterContracts = _ref.dataFilterContracts;
+            jobId = _ref.jobId, jobType = _ref.jobType, pageNumber = _ref.pageNumber, orderType = _ref.orderType, orderBy = _ref.orderBy, dataFilterContracts = _ref.dataFilterContracts;
             _context.next = 3;
             return (0, _serviceAdapter.postAdapter)({
               url: "/common-task/get-filtered-rows",
@@ -35,10 +35,10 @@ function _getRowsByJobId() {
                 orderBy: orderBy || 'survivorEpid',
                 orderType: orderType || 'ASC',
                 pageNumber: pageNumber,
-                jobType: 'Duplicates',
+                jobType: jobType,
                 jobId: jobId
               },
-              mockResponse: _mock.getRowsByJob
+              mockResponse: jobType === 'Duplicates' ? _mock.getRowsByJob : _mock.getRowsByMatchingJob
             });
 
           case 3:

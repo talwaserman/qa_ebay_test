@@ -1,0 +1,98 @@
+.aspect-properties-wrapper {
+  display: flex;
+  position: relative;
+  background-color: #ffffff;
+  height: auto;
+  padding: 15px 15px 5px 15px;
+
+  .column-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-right: 20px;
+    margin-bottom: 10px;
+
+    .property-row {
+      margin-bottom: 8px;
+
+      .property-name-left-label {
+        display: inline-block;
+        font-weight: 600;
+        margin-right: 10px;
+        width: 135px;
+      }
+
+      .property-name-left-label-tags-input {
+        display: inline-block;
+        font-weight: 600;
+        margin-right: 10px;
+        width: 135px;
+        vertical-align: top;
+      }
+
+      .property-name-right-label {
+        display: inline-block;
+        font-weight: 600;
+        width: 120px;
+      }
+
+      .property-values-wrapper {
+        display: inline-block;
+        margin-right: 10px;
+
+        button {
+          font-size: 12px;
+          height: auto;
+          width: auto;
+          margin-right: 5px;
+        }
+
+        input {
+          width: 220px;
+        }
+
+        .valid-values-input {
+          width: 320px;
+          .ant-select-selection--multiple {
+            height: 113px;
+            overflow-y: auto;
+          }
+        }
+      }
+
+      .recommendation {
+        display: inline-block;
+        color: #9999a1;
+        font-size: 12px;
+        min-width: 65px;
+      }
+
+      .textarea-label {
+        font-weight: 600;
+      }
+
+      #save-button {
+        margin-top: 21px;
+      }
+
+      .selected-value {
+        background-color: #1890ff;
+        color: #fff;
+      }
+    }
+  }
+
+  .help-text-column-wrapper {
+    font-weight: 600;
+    margin-bottom: 10px;
+    textarea {
+      border: 1px solid #d9d9d9;
+      resize: none;
+      width: 200px;
+    }
+  }
+
+  .extra-margin-top {
+    margin-top: 10px;
+  }
+}

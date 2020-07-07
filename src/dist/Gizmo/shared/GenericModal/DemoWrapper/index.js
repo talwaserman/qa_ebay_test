@@ -21,15 +21,16 @@ function DemoContainer() {
       isModalVisible = _useState2[0],
       setModalVisible = _useState2[1];
 
-  return _react.default.createElement(_react.Fragment, null, _react.default.createElement("button", {
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
     onClick: clickHandler
-  }, "open modal"), _react.default.createElement(_GenericModal.default, {
+  }, "open modal"), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
     modalVisibleState: isModalVisible,
     modalTitle: 'modal title',
-    modalContent: _react.default.createElement("div", null, "modal content element"),
+    modalContent: /*#__PURE__*/_react.default.createElement("div", null, "modal content element"),
     onCancel: onCancel,
     onOk: onOk,
-    width: 520
+    width: 520,
+    isOkDisabledInitialValue: true
   }));
 
   function clickHandler() {

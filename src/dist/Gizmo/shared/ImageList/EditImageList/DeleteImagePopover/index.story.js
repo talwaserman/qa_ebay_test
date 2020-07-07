@@ -21,14 +21,14 @@ var _index = _interopRequireDefault(require("./index"));
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '26%',
       margin: '0 auto',
       marginTop: '40px'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     selectedReasons: ['Background', 'Box'],
     title: 'Delete Image',
     okText: 'Save',

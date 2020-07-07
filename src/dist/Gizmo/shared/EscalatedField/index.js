@@ -19,11 +19,11 @@ require("./style.less");
 
 function EscalatedField(_ref) {
   var escalator = _ref.escalator;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "escalated-field-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "escalated-field-wrapper-flag"
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "flag"
   })), "Record was escalated by: ".concat(escalator));
 }

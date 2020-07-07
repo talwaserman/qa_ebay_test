@@ -23,9 +23,17 @@ Object.defineProperty(exports, "DateFilter", {
     return _DateFilter.default;
   }
 });
+Object.defineProperty(exports, "SingleSelectMultiFilter", {
+  enumerable: true,
+  get: function get() {
+    return _SingleSelectMultiFillter.default;
+  }
+});
 
 var _TextFilter = _interopRequireDefault(require("./TextFilter"));
 
 var _SingleSelectFilter = _interopRequireDefault(require("./SingleSelectFilter"));
 
 var _DateFilter = _interopRequireDefault(require("./DateFilter"));
+
+var _SingleSelectMultiFillter = _interopRequireDefault(require("./SingleSelectMultiFillter"));

@@ -24,7 +24,7 @@ function parseDataFunction(res) {
 }
 
 it('gizmo shared - RemoteSelect', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     placeholder: 'enter search value',
     mode: 'default',
     parseDataFunction: parseDataFunction,

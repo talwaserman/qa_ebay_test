@@ -15,52 +15,27 @@ var _shared = require("../../shared");
 
 var _utils = require("../../utils");
 
+var _columnConfig = require("../WorkHistoryPage/columnConfig");
+
 var _services = require("./services");
 
 require("./style.less");
 
-var columnConfig = [{
-  title: 'Epid 1',
-  dataIndex: 'survivorEpid',
-  filterType: 'text'
-}, {
-  title: 'Title Epid 1',
-  dataIndex: 'survivorTitle',
-  filterType: 'text'
-}, {
-  title: 'Epid 2',
-  dataIndex: 'victimEpid',
-  filterType: 'text'
-}, {
-  title: 'Title Epid 2',
-  dataIndex: 'victimTitle',
-  filterType: 'text'
-}, {
-  title: 'Decision',
-  dataIndex: 'decision',
-  filterKey: 'productDuplicateActions',
-  filterType: 'single-select-equal',
-  filterOperation: 'text-dropdown'
-}, {
-  title: 'Assignee',
-  dataIndex: 'assignee',
-  filterKey: 'users',
-  filterType: 'single-select-equal',
-  filterOperation: 'text-dropdown'
-}];
-
 function WorkHistoryPage(_ref) {
-  var historyView = _ref.historyView;
-  return _react.default.createElement("div", {
+  var historyView = _ref.historyView,
+      jobType = _ref.jobType;
+  var columnConfig = jobType === 'Duplicates' ? _columnConfig.duplicatesColumnConfig : _columnConfig.matchingColumnConfig;
+  var initialOrderBy = jobType === 'Duplicates' ? 'survivorEpid' : 'epid';
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "work-history-page-wrapper"
-  }, _react.default.createElement(_shared.CBreadcrumb, {
-    path: ['Duplicates', 'Work History']
-  }), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_shared.CBreadcrumb, {
+    path: [jobType, 'Work History']
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "table-wrapper"
-  }, _react.default.createElement(_shared.CTable, {
+  }, /*#__PURE__*/_react.default.createElement(_shared.CTable, {
     columnConfig: columnConfig,
     fetchData: _services.getRowsByJobId,
-    initialOrderBy: 'survivorEpid',
+    initialOrderBy: initialOrderBy,
     filterData: filterData,
     extractData: extractData,
     doubleClickCB: doubleClickCB,
@@ -73,6 +48,7 @@ function WorkHistoryPage(_ref) {
     });
     var dataObj = {
       jobId: (0, _utils.queryParam)('jobId'),
+      jobType: (0, _utils.queryParam)('jobType') || 'Duplicates',
       dataFilterContracts: filterArray,
       orderBy: orderBy || '',
       orderType: orderType || 'DESC',
@@ -92,5 +68,6 @@ function WorkHistoryPage(_ref) {
 
 WorkHistoryPage.propTypes = {
   /** historyView - call back function to show duplicates in history view  */
-  historyView: _propTypes.default.func.isRequired
+  historyView: _propTypes.default.func.isRequired,
+  jobType: _propTypes.default.string.isRequired
 };

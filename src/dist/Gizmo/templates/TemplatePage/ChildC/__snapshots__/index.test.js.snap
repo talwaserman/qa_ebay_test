@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gizmo shared - ChildC 1`] = `
+<div
+  className="child-c-wrapper"
+>
+  child c - not connected to context
+</div>
+`;

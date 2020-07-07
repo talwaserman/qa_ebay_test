@@ -21,14 +21,14 @@ var _index = _interopRequireDefault(require("./index"));
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%',
       textAlign: 'left'
     }
-  }, _react.default.createElement(_index.default, {
-    closeModal: function closeModal() {},
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
+    isModalVisible: true,
     taskType: 'Task Type',
     assignee: '59db20197b651913627144ad',
     epid: '1703474934'

@@ -13,11 +13,11 @@ require("antd/es/table/style/css");
 
 var _table = _interopRequireDefault(require("antd/es/table"));
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
 require("antd/es/button/style/css");
 
 var _button = _interopRequireDefault(require("antd/es/button"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 require("antd/es/icon/style/css");
 
@@ -32,6 +32,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _OrderBy = _interopRequireDefault(require("../CTable/OrderBy"));
 
 var _OrderType = _interopRequireDefault(require("../CTable/OrderType"));
+
+var _filterTypes = require("../CTable/filterTypes");
 
 require("./style.less");
 
@@ -50,7 +52,9 @@ function CGTable(_ref) {
       reloadTable = _ref.reloadTable,
       defaultPageSize = _ref.defaultPageSize,
       rowSelection = _ref.rowSelection,
-      expandedRowRender = _ref.expandedRowRender;
+      expandedRowRender = _ref.expandedRowRender,
+      doubleClickCB = _ref.doubleClickCB,
+      handleRowClassName = _ref.handleRowClassName;
 
   var _useState = (0, _react.useState)(1),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -65,40 +69,51 @@ function CGTable(_ref) {
       sortInfoData = _useState4[0],
       setSortInfoData = _useState4[1];
 
+  (0, _react.useEffect)(function () {
+    onSortInfoChange(sortInfoData);
+  }, [sortInfoData]);
   var tableLoading = {
     spinning: loadingData,
     size: 'large',
-    indicator: _react.default.createElement(_icon.default, {
+    indicator: /*#__PURE__*/_react.default.createElement(_icon.default, {
       type: "loading"
     })
   };
-  (0, _react.useEffect)(function () {
-    onSortInfoChange(sortInfoData);
-  }, [sortInfoData, onSortInfoChange]);
-  return _react.default.createElement("div", {
+  var updatedColumnConfig = columnConfig.map(function (item) {
+    return _objectSpread(_objectSpread({}, item), getColumnSearchProps(item.dataIndex, item.filterType, item.filterKey, item.filterOperation));
+  });
+  var inputEl = (0, _react.useRef)(null);
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "cgtable-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "filter-wrapper"
-  }, _react.default.createElement("label", null, "Order By:"), _react.default.createElement(_OrderBy.default, {
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Order By:"), /*#__PURE__*/_react.default.createElement(_OrderBy.default, {
     options: columnConfig,
     orderByChange: onChangeOrderBy,
     defaultValue: initialOrderBy
-  }), _react.default.createElement("label", null, "Order Type:"), _react.default.createElement(_OrderType.default, {
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Order Type:"), /*#__PURE__*/_react.default.createElement(_OrderType.default, {
     orderTypeChange: onChangeOrderType,
     defaultValue: initialOrderType,
     width: 100,
     ascendValue: 'ascend',
     descendValue: 'descend'
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "reload-table-button"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     icon: "reload",
     onClick: reloadTable
-  }))), _react.default.createElement(_table.default, {
-    columns: columnConfig,
+  }))), /*#__PURE__*/_react.default.createElement(_table.default, {
+    onRow: function onRow(record, rowIndex) {
+      return {
+        onDoubleClick: function onDoubleClick(event) {
+          doubleClickCB(record);
+        }
+      };
+    },
+    columns: updatedColumnConfig,
     expandedRowRender: expandedRowRender,
     dataSource: tableData.map(function (item, index) {
-      return _objectSpread({}, item, {}, {
+      return _objectSpread(_objectSpread({}, item), {
         id: index
       });
     }),
@@ -113,7 +128,8 @@ function CGTable(_ref) {
       onChange: onPageChange
     },
     onChange: handleChange,
-    rowSelection: rowSelection
+    rowSelection: rowSelection,
+    rowClassName: handleRowClassName
   }));
 
   function onPageChange(pageNumber) {
@@ -139,6 +155,58 @@ function CGTable(_ref) {
   function handleChange(pagination, filters, sorter) {
     onSortInfoChange(sorter);
   }
+
+  function getColumnSearchProps(dataIndex) {
+    var filterType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'text';
+    var filterKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var filterOperation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+    var isEqual = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+    return {
+      filterDropdown: function filterDropdown(_ref2) {
+        var setSelectedKeys = _ref2.setSelectedKeys,
+            selectedKeys = _ref2.selectedKeys,
+            confirm = _ref2.confirm,
+            clearFilters = _ref2.clearFilters;
+        return /*#__PURE__*/_react.default.createElement("div", null, filterType === 'text' && /*#__PURE__*/_react.default.createElement(_filterTypes.TextFilter, {
+          setSelectedKeys: setSelectedKeys,
+          selectedKeys: selectedKeys,
+          confirm: confirm,
+          clearFilters: clearFilters,
+          dataIndex: dataIndex,
+          filterTable: function filterTable() {},
+          removeFilter: function removeFilter() {}
+        }));
+      },
+      filterIcon: function filterIcon(filtered) {
+        return filterType !== '' ? /*#__PURE__*/_react.default.createElement(_icon.default, {
+          type: "search",
+          style: {
+            color: filtered ? '#1890ff' : undefined
+          }
+        }) : /*#__PURE__*/_react.default.createElement("div", null);
+      },
+      onFilter: function onFilter(value, record) {
+        var configItem = columnConfig.find(function (item) {
+          return item.dataIndex === dataIndex;
+        });
+
+        if (configItem.render) {
+          // if the configuration for this column is with a render function
+          // we use that render function to get the ajusted value that we can search for
+          return configItem.render(record[dataIndex]).toString().toLowerCase().includes(value.toLowerCase());
+        } else {
+          return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase());
+        }
+      },
+      onFilterDropdownVisibleChange: function onFilterDropdownVisibleChange(visible) {
+        if (visible) {
+          setTimeout(function () {
+            return inputEl.current;
+          });
+        }
+      }
+    };
+  }
 }
 
 CGTable.propTypes = {
@@ -163,6 +231,12 @@ CGTable.propTypes = {
   /** initialOrderType - initializion value for OrderType component */
   initialOrderType: _propTypes.default.string.isRequired,
 
+  /** doubleClickCB - call back function that will be used when the user double click on  row in the table */
+  doubleClickCB: _propTypes.default.func,
+
+  /** handleRowClassName - call back function that will used for class injection upon clicking on row in the table*/
+  handleRowClassName: _propTypes.default.func.isRequired,
+
   /** reloadTable - callback function for reloading the table */
   reloadTable: _propTypes.default.func.isRequired,
 
@@ -170,9 +244,11 @@ CGTable.propTypes = {
   defaultPageSize: _propTypes.default.number,
 
   /** rowSelection - used to indeicate which rows where selected in the table */
-  rowSelection: _propTypes.default.object
+  rowSelection: _propTypes.default.oneOfType([_propTypes.default.object, _propTypes.default.bool])
 };
 CGTable.defaultProps = {
   defaultPageSize: 15,
-  rowSelection: false
+  rowSelection: false,
+  doubleClickCB: function doubleClickCB() {},
+  handleRowClassName: function handleRowClassName() {}
 };

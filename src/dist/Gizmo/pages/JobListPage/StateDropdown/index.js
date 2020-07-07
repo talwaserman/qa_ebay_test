@@ -17,11 +17,11 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 require("antd/es/select/style/css");
 
@@ -31,17 +31,23 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var Option = _select.default.Option; // i used a class component and not a function component
 // because the antd table does not allow to use hooks inside of the row.
 
 var StateDropdown = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(StateDropdown, _Component);
 
+  var _super = _createSuper(StateDropdown);
+
   function StateDropdown(props) {
     var _this;
 
     (0, _classCallCheck2.default)(this, StateDropdown);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(StateDropdown).call(this, props));
+    _this = _super.call(this, props);
     _this.state = {
       showModal: false,
       currentstate: props.currentstate,
@@ -75,7 +81,7 @@ var StateDropdown = /*#__PURE__*/function (_Component) {
         Initializing: ['Initializing']
       };
       return possibleStates[currentstate].map(function (item) {
-        return _react.default.createElement(Option, {
+        return /*#__PURE__*/_react.default.createElement(Option, {
           value: item
         }, item);
       });
@@ -89,15 +95,15 @@ var StateDropdown = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         className: "state-select"
-      }, _react.default.createElement(_select.default, {
+      }, /*#__PURE__*/_react.default.createElement(_select.default, {
         onChange: this.handleStateChange,
         value: this.state.currentstate,
         size: "small",
         disabled: this.state.currentstate === 'Initializing',
         loading: this.state.currentstate === 'Initializing'
-      }, this.getOptions(this.state.currentstate)), _react.default.createElement(_modal.default, {
+      }, this.getOptions(this.state.currentstate)), /*#__PURE__*/_react.default.createElement(_modal.default, {
         title: "Change state for Job ".concat(this.props.rowId),
         visible: this.state.showModal,
         onOk: function onOk() {
@@ -117,7 +123,7 @@ var StateDropdown = /*#__PURE__*/function (_Component) {
             showModal: false
           });
         }
-      }, _react.default.createElement("div", null, "You are about to change job state from", ' ', _react.default.createElement("strong", null, this.state.currentstate), " to", ' ', _react.default.createElement("strong", null, this.state.newJobState), " are you sure?")));
+      }, /*#__PURE__*/_react.default.createElement("div", null, "You are about to change job state from", ' ', /*#__PURE__*/_react.default.createElement("strong", null, this.state.currentstate), " to", ' ', /*#__PURE__*/_react.default.createElement("strong", null, this.state.newJobState), " are you sure?")));
     }
   }]);
   return StateDropdown;

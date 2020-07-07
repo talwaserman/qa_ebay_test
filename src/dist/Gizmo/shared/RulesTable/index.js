@@ -132,7 +132,7 @@ function RulesTable(_ref) {
         return record.type.includes(value);
       },
       render: function render(param) {
-        return _react.default.createElement("div", null, param.attributeName);
+        return /*#__PURE__*/_react.default.createElement("div", null, param.attributeName);
       },
       ellipsis: true
     }, {
@@ -142,8 +142,8 @@ function RulesTable(_ref) {
         return record.type.includes(value);
       },
       render: function render(param) {
-        return _react.default.createElement("div", null, param.attributeValues.map(function (attribute) {
-          return _react.default.createElement("div", null, attribute);
+        return /*#__PURE__*/_react.default.createElement("div", null, param.attributeValues.map(function (attribute) {
+          return /*#__PURE__*/_react.default.createElement("div", null, attribute);
         }));
       },
       ellipsis: true
@@ -157,18 +157,15 @@ function RulesTable(_ref) {
     //   ),
     //   ellipsis: true
     // },
+    // {
+    //   title: 'Identifier',
+    //   dataIndex: 'identifier',
+    //   sorter: (a, b) => a.identifier.length - b.identifier.length,
+    //   sortOrder: sortedInfo.columnKey === 'identifier' && sortedInfo.order,
+    //   onFilter: (value, record) => record.type.includes(value),
+    //   ellipsis: true
+    // },
     {
-      title: 'Identifier',
-      dataIndex: 'identifier',
-      sorter: function sorter(a, b) {
-        return a.identifier.length - b.identifier.length;
-      },
-      sortOrder: sortedInfo.columnKey === 'identifier' && sortedInfo.order,
-      onFilter: function onFilter(value, record) {
-        return record.type.includes(value);
-      },
-      ellipsis: true
-    }, {
       title: 'Source',
       dataIndex: 'source',
       sorter: function sorter(a, b) {
@@ -179,18 +176,15 @@ function RulesTable(_ref) {
         return record.type.includes(value);
       },
       ellipsis: true
-    }, {
-      title: 'Locale',
-      dataIndex: 'locale',
-      sorter: function sorter(a, b) {
-        return a.locale.length - b.locale.length;
-      },
-      sortOrder: sortedInfo.columnKey === 'locale' && sortedInfo.order,
-      onFilter: function onFilter(value, record) {
-        return record.type.includes(value);
-      },
-      ellipsis: true
-    }, {
+    }, // {
+    //   title: 'Locale',
+    //   dataIndex: 'locale',
+    //   sorter: (a, b) => a.locale.length - b.locale.length,
+    //   sortOrder: sortedInfo.columnKey === 'locale' && sortedInfo.order,
+    //   onFilter: (value, record) => record.type.includes(value),
+    //   ellipsis: true
+    // },
+    {
       title: 'Tenant',
       dataIndex: 'tenant',
       sorter: function sorter(a, b) {
@@ -201,18 +195,15 @@ function RulesTable(_ref) {
         return record.type.includes(value);
       },
       ellipsis: true
-    }, {
-      title: 'Language',
-      dataIndex: 'language',
-      sorter: function sorter(a, b) {
-        return a.language.length - b.language.length;
-      },
-      sortOrder: sortedInfo.columnKey === 'language' && sortedInfo.order,
-      onFilter: function onFilter(value, record) {
-        return record.type.includes(value);
-      },
-      ellipsis: true
     } // {
+    //   title: 'Language',
+    //   dataIndex: 'language',
+    //   sorter: (a, b) => a.language.length - b.language.length,
+    //   sortOrder: sortedInfo.columnKey === 'language' && sortedInfo.order,
+    //   onFilter: (value, record) => record.type.includes(value),
+    //   ellipsis: true
+    // }
+    // {
     //   title: 'Class',
     //   dataIndex: 'ruleParams',
     //   sorter: (a, b) => a.class.length - b.class.length,
@@ -230,19 +221,19 @@ function RulesTable(_ref) {
     onChange: onSelectChange
   };
   var disableDeleteBtn = selectedRows.length === 0;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "rules-table-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "action-wrapper"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     icon: "delete",
     onClick: deleteSelectedRows,
     disabled: disableDeleteBtn
-  }, "Delete Rules")), _react.default.createElement(_shared.CGTable, {
+  }, "Delete Rules")), /*#__PURE__*/_react.default.createElement(_shared.CGTable, {
     columnConfig: columnConfig,
     expandedRowRender: function expandedRowRender(record) {
-      return _react.default.createElement("div", null, _react.default.createElement("p", null, _react.default.createElement("strong", null, "Description: "), record.description), _react.default.createElement("p", null, _react.default.createElement("strong", null, "Class: "), record.ruleParams.class));
+      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", null, "Description: "), record.description), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", null, "Class: "), record.ruleParams.class), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", null, "Identifier: "), record.identifier), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", null, "Local: "), record.local), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", null, "Language: "), record.language));
     },
     tableData: (0, _get.default)(tableData, 'productRulesResponseContract.rules', []),
     size: 'small',

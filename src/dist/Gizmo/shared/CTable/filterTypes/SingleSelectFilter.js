@@ -32,7 +32,7 @@ function SingleSelectFilter(_ref) {
       filterTable = _ref.filterTable,
       removeFilter = _ref.removeFilter,
       optionHash = _ref.optionHash,
-      isEqual = _ref.isEqual;
+      serverFilterType = _ref.serverFilterType;
 
   var onChange = function onChange(value) {
     setSelectedKeys(value ? [value] : []);
@@ -42,7 +42,7 @@ function SingleSelectFilter(_ref) {
     confirm();
     filterTable({
       fieldName: dataIndex,
-      filterType: isEqual ? 'text-equal' : 'text',
+      filterType: serverFilterType,
       fieldValue: selectedKeys,
       filterOperation: filterOperation
     });
@@ -55,11 +55,11 @@ function SingleSelectFilter(_ref) {
   };
 
   var showOptions = optionHash && optionHash[filterKey] && Object.keys(optionHash).length > 0;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       padding: 8
     }
-  }, _react.default.createElement(_select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_select.default, {
     showSearch: true,
     style: {
       width: 188,
@@ -74,11 +74,11 @@ function SingleSelectFilter(_ref) {
       return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     }
   }, showOptions && optionHash[filterKey].map(function (item) {
-    return _react.default.createElement(Option, {
+    return /*#__PURE__*/_react.default.createElement(Option, {
       key: item.value,
       value: item.value
     }, item.name);
-  })), _react.default.createElement(_button.default, {
+  })), /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     onClick: function onClick() {
       return handleSearch(selectedKeys, confirm);
@@ -90,7 +90,7 @@ function SingleSelectFilter(_ref) {
       width: 90,
       marginRight: 8
     }
-  }, "Search"), _react.default.createElement(_button.default, {
+  }, "Search"), /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: function onClick() {
       return handleReset(clearFilters);
     },
@@ -120,8 +120,8 @@ SingleSelectFilter.propTypes = {
   /* filterKey - the key used in select options that contain all of the options for a select input*/
   filterKey: _propTypes.default.string,
 
-  /* isEqual - should we filter with text equal or text contains */
-  isEqual: _propTypes.default.bool,
+  /* serverFilterType - inner filter type text value which send to the server.   */
+  serverFilterType: _propTypes.default.string.isRequired,
 
   /* filterOperation - the operation is used by antd to indicate which component to use for the selected filter*/
   filterOperation: _propTypes.default.string,

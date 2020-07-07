@@ -102,28 +102,5 @@ exports[`Gizmo shared - SelectionPopUp 1`] = `
       </div>
     </div>
   </div>
-  <section
-    className="action-btn"
-  >
-    <button
-      className="ant-btn ant-btn-primary"
-      disabled={true}
-      onClick={[Function]}
-      type="button"
-    >
-      <span>
-        Ok
-      </span>
-    </button>
-    <button
-      className="ant-btn"
-      onClick={[Function]}
-      type="button"
-    >
-      <span>
-        Cancel
-      </span>
-    </button>
-  </section>
 </div>
 `;

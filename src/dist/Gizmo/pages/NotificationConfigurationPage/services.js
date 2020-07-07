@@ -62,7 +62,7 @@ function _addNotification() {
             return (0, _serviceAdapter.postAdapter)({
               url: "/notification/add",
               payload: notificationData,
-              mockResponse: _mock.addNotificationResponse
+              mockResponse: _mock.addNotificationMockResponse
             });
 
           case 2:

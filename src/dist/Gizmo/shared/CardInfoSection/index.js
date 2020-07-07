@@ -17,16 +17,16 @@ function CardInfoSection(_ref) {
   var infoData = _ref.infoData;
 
   if (!infoData) {
-    return _react.default.createElement("div", null);
+    return /*#__PURE__*/_react.default.createElement("div", null);
   }
 
-  return _react.default.createElement("section", {
+  return /*#__PURE__*/_react.default.createElement("section", {
     className: "card-info-section-wrapper"
   }, infoData.map(function (item) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "info-item",
       key: item.label
-    }, _react.default.createElement("label", null, item.label), _react.default.createElement("span", null, item.value));
+    }, /*#__PURE__*/_react.default.createElement("label", null, item.label), /*#__PURE__*/_react.default.createElement("span", null, item.value));
   }));
 }
 

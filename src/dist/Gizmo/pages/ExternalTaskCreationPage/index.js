@@ -42,7 +42,10 @@ var confirm = _modal.default.confirm;
 function ExternalTaskCreationPage(_ref) {
   var downloadUrlPrefix = _ref.downloadUrlPrefix;
 
-  var _useState = (0, _react.useState)({}),
+  var _useState = (0, _react.useState)({
+    allSelectedRowIds: {},
+    allSelectedRows: {}
+  }),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       checkBoxData = _useState2[0],
       setCheckBoxData = _useState2[1];
@@ -67,8 +70,8 @@ function ExternalTaskCreationPage(_ref) {
     dataIndex: 'taskType',
     filterType: 'text'
   }, {
-    title: 'Audit Id',
-    dataIndex: 'taskId',
+    title: 'Sample Name',
+    dataIndex: 'sampleName',
     filterType: 'text'
   }, {
     title: 'Audit Sub ID',
@@ -116,34 +119,34 @@ function ExternalTaskCreationPage(_ref) {
     filterType: 'single-select',
     filterOperation: 'text-dropdown'
   }];
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "external-task-creation-page-wrapper"
-  }, _react.default.createElement(_shared.CBreadcrumb, {
+  }, /*#__PURE__*/_react.default.createElement(_shared.CBreadcrumb, {
     path: ['Task Management', 'Settings', 'External Task Creation']
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "external-task-actions-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "external-task-actions"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     icon: "plus",
     disabled: checkBoxDataValues().length === 0 || validationError,
     onClick: createTaskHandler
-  }, "Create Task"), _react.default.createElement(_button.default, {
+  }, "Create Task"), /*#__PURE__*/_react.default.createElement(_button.default, {
     loading: deletingTask,
     type: "danger",
     icon: "delete",
     disabled: checkBoxDataValues().length === 0 || validationError,
     onClick: deleteTaskHandler
-  }, "Delete Task"), validationError === true && _react.default.createElement("div", {
+  }, "Delete Task"), validationError === true && /*#__PURE__*/_react.default.createElement("div", {
     className: "duplicate-message"
-  }, 'Selection of different Task Types are not allowed'))), _react.default.createElement("div", {
+  }, 'Selection of different Task Types are not allowed'))), /*#__PURE__*/_react.default.createElement("div", {
     className: "table-wrapper"
-  }, _react.default.createElement(_shared.CTable, {
+  }, /*#__PURE__*/_react.default.createElement(_shared.CTable, {
     columnConfig: columnConfig,
     fetchData: _services.fetchData,
     initialOrderBy: 'creationDate',
-    checkBoxData: checkBoxData,
+    checkBoxData: checkBoxData.allSelectedRowIds,
     setCheckBoxData: setCheckBoxData,
     checkBoxIdentifier: 'rowId',
     checkboxDisabledIdentifier: 'gizmoTaskId',
@@ -173,17 +176,19 @@ function ExternalTaskCreationPage(_ref) {
   }
 
   function checkBoxDataValues() {
-    return Object.values(checkBoxData).flat(1);
+    return Object.values(checkBoxData.allSelectedRowIds).flat(1);
   }
 
   function createTaskHandler() {
-    window.location.href = "/#/vendor-management/new-job?taskType=Duplicates&externalTaskIds=".concat(checkBoxData[1].join());
+    var taskType = checkBoxData.allSelectedRows[0].taskType; // taking from position 0, since only same tasktype is allowed to be selected
+
+    window.location.href = "/#/vendor-management/new-job?taskType=".concat(taskType, "&externalTaskIds=").concat(checkBoxData.allSelectedRowIds[1].join());
   }
 
   function deleteTaskHandler() {
     confirm({
       title: 'Are you sure you want to delete the selected tasks?',
-      icon: _react.default.createElement(_icon.default, {
+      icon: /*#__PURE__*/_react.default.createElement(_icon.default, {
         type: "warning"
       }),
       content: '',
@@ -214,7 +219,10 @@ function ExternalTaskCreationPage(_ref) {
 
             case 4:
               setDeletingTask(false);
-              setCheckBoxData({});
+              setCheckBoxData({
+                allSelectedRowIds: {},
+                allSelectedRows: {}
+              });
               setExternalReloadFlag(externalReloadFlag + 1);
 
             case 7:
@@ -236,7 +244,10 @@ function ExternalTaskCreationPage(_ref) {
       setValidationError(false);
     } else if (!isUniq(taskTypeValues)) {
       setValidationError(true);
-      setCheckBoxData({});
+      setCheckBoxData({
+        allSelectedRowIds: {},
+        allSelectedRows: {}
+      });
     } else {
       setValidationError(false);
     }
@@ -247,22 +258,22 @@ function ExternalTaskCreationPage(_ref) {
   }
 
   function renderDownloadInputLink(actionButtons, data) {
-    return data ? _react.default.createElement("div", {
+    return data ? /*#__PURE__*/_react.default.createElement("div", {
       className: 'external-task-download-wrapper'
-    }, _react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement("a", {
       rel: "noopener noreferrer",
       target: "_blank",
       href: "".concat(downloadUrlPrefix, "/external-task/download-file/").concat(data.rowId, "/", 'input')
-    }, "Download")) : _react.default.createElement("div", null);
+    }, "Download")) : /*#__PURE__*/_react.default.createElement("div", null);
   }
 
   function renderDownloadOutputLink(actionButtons, data) {
-    return data && data.gimzoTaskStatus === 'DONE' ? _react.default.createElement("div", {
+    return data && data.gimzoTaskStatus === 'DONE' ? /*#__PURE__*/_react.default.createElement("div", {
       className: 'external-task-download-wrapper'
-    }, _react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement("a", {
       rel: "noopener noreferrer",
       target: "_blank",
       href: "".concat(downloadUrlPrefix, "/external-task/download-file/").concat(data.rowId, "/", 'output')
-    }, "Download")) : _react.default.createElement("div", null);
+    }, "Download")) : /*#__PURE__*/_react.default.createElement("div", null);
   }
 }

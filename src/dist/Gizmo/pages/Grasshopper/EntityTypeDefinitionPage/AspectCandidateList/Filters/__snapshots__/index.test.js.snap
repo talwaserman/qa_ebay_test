@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gizmo grasshopper - Filters in candidate list 1`] = `
+<div
+  className="filters-wrapper"
+>
+  <button
+    className="ant-btn ant-btn-sm"
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onTouchStart={[Function]}
+    type="button"
+  >
+    <span>
+      Filters
+    </span>
+  </button>
+</div>
+`;

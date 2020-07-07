@@ -13,12 +13,12 @@ require("./style.less");
 
 function CBreadcrumb(_ref) {
   var path = _ref.path;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "breadcrumb-style"
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: "path-items"
   }, path.map(function (item) {
-    return _react.default.createElement("span", {
+    return /*#__PURE__*/_react.default.createElement("span", {
       key: item
     }, item, " ");
   })));

@@ -30,16 +30,16 @@ function onChange(date, dateString) {
     text: 'AntD date picker'
   }
 }).add('DatePicker', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper"
-  }, _react.default.createElement("div", null, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_index.default, {
     onChange: onChange
-  }), _react.default.createElement("br", null), _react.default.createElement(MonthPicker, {
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(MonthPicker, {
     onChange: onChange,
     placeholder: "Select month"
-  }), _react.default.createElement("br", null), _react.default.createElement(RangePicker, {
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(RangePicker, {
     onChange: onChange
-  }), _react.default.createElement("br", null), _react.default.createElement(WeekPicker, {
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(WeekPicker, {
     onChange: onChange,
     placeholder: "Select week"
   })));

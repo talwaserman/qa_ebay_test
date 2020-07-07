@@ -19,15 +19,15 @@ require("./style.less");
 
 function CategoryInput(_ref) {
   var categoryPath = _ref.categoryPath;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "category-input-wrapper"
-  }, _react.default.createElement("label", null, "Category"), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Category"), /*#__PURE__*/_react.default.createElement("div", {
     className: "category-path"
   }, categoryPath.map(function (item) {
-    return _react.default.createElement("span", {
+    return /*#__PURE__*/_react.default.createElement("span", {
       key: item
     }, item, " ");
-  })), _react.default.createElement(_button.default, {
+  })), /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     icon: "edit"
   }));

@@ -1,0 +1,479 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gizmo shared - DrawerContentMatching - job matching 1`] = `
+<div
+  className="drawer-content-wrapper"
+>
+  <div
+    className="left-section"
+  >
+    <section>
+      <div>
+        <b>
+          Decision:
+        </b>
+        <span>
+          <span
+            className="mandatory"
+          >
+            *
+          </span>
+        </span>
+      </div>
+      <div
+        className="decision-btns"
+      >
+        <div
+          className="left"
+        >
+          <button
+            className="ant-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            <span>
+              Correct
+            </span>
+          </button>
+          <button
+            className="ant-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            <span>
+              Skip
+            </span>
+          </button>
+          <button
+            className="ant-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            <span>
+              Wrong
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div>
+        <b>
+          Reason:
+        </b>
+        <span>
+          <span
+            className="mandatory"
+          >
+            *
+          </span>
+        </span>
+      </div>
+      <div
+        className="observation"
+      >
+        <div
+          className="reason-select-wrapper"
+        >
+          <div
+            className="ant-select ant-select-enabled"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseOut={[Function]}
+            onMouseUp={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "width": 200,
+              }
+            }
+          >
+            <div
+              aria-autocomplete="list"
+              aria-controls="test-uuid"
+              aria-expanded={false}
+              aria-haspopup="true"
+              className="ant-select-selection
+            ant-select-selection--single"
+              onKeyDown={[Function]}
+              role="combobox"
+              tabIndex={0}
+            >
+              <div
+                className="ant-select-selection__rendered"
+              >
+                <div
+                  className="ant-select-selection__placeholder"
+                  onClick={[Function]}
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "WebkitUserSelect": "none",
+                      "display": "none",
+                      "userSelect": "none",
+                    }
+                  }
+                  unselectable="on"
+                >
+                  Select a reason
+                </div>
+                <div
+                  className="ant-select-selection-selected-value"
+                  style={
+                    Object {
+                      "display": "block",
+                      "opacity": 1,
+                    }
+                  }
+                  title=""
+                />
+                <div
+                  className="ant-select-search ant-select-search--inline"
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-select-search__field__wrap"
+                  >
+                    <input
+                      autoComplete="off"
+                      className="ant-select-search__field"
+                      disabled={false}
+                      onChange={[Function]}
+                      onKeyDown={[Function]}
+                      value=""
+                    />
+                    <span
+                      className="ant-select-search__field__mirror"
+                    >
+                      
+                       
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <span
+                className="ant-select-arrow"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "WebkitUserSelect": "none",
+                    "userSelect": "none",
+                  }
+                }
+                unselectable="on"
+              >
+                <i
+                  aria-label="icon: down"
+                  className="anticon anticon-down ant-select-arrow-icon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className=""
+                    data-icon="down"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                    />
+                  </svg>
+                </i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <button
+          className="ant-btn submit-btn"
+          disabled={true}
+          onClick={[Function]}
+          type="button"
+        >
+          <span>
+            Submit
+          </span>
+        </button>
+      </div>
+    </section>
+  </div>
+  <div
+    className="right-section"
+  >
+    <section>
+      <b>
+        Comment:
+      </b>
+      <span>
+        <span
+          className="mandatory"
+        >
+          *
+        </span>
+      </span>
+      <textarea
+        className="ant-input"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        onMouseLeave={[Function]}
+        rows={4}
+        style={
+          Object {
+            "resize": "none",
+          }
+        }
+        value=""
+      />
+      <div
+        className="checkbox-wrapper"
+      >
+        <label
+          className="ant-checkbox-wrapper"
+        >
+          <span
+            className="ant-checkbox"
+            style={Object {}}
+          >
+            <input
+              checked={false}
+              className="ant-checkbox-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="ant-checkbox-inner"
+            />
+          </span>
+          <span>
+            Send to supervisor
+          </span>
+        </label>
+      </div>
+      <div
+        className="checkbox-wrapper"
+      />
+    </section>
+    <section>
+      <b>
+        Urls:
+      </b>
+      <button
+        className="ant-btn add-urls ant-btn-circle ant-btn-sm ant-btn-icon-only"
+        onClick={[Function]}
+        type="button"
+      >
+        <i
+          aria-label="icon: plus"
+          className="anticon anticon-plus"
+        >
+          <svg
+            aria-hidden="true"
+            className=""
+            data-icon="plus"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+            />
+            <path
+              d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+            />
+          </svg>
+        </i>
+      </button>
+      <div
+        className="url-list"
+      >
+        <div
+          className="item"
+        >
+          <span>
+            URL 1
+            :
+          </span>
+          <input
+            className="ant-input"
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          className="item"
+        >
+          <span>
+            URL 2
+            :
+          </span>
+          <input
+            className="ant-input"
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </section>
+    <section>
+      <b>
+        Additional Information:
+      </b>
+      <div
+        className="additional-info-list"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="additional-field-select-wrapper"
+          >
+            <div
+              className="label-name"
+            >
+              <label
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+              >
+                info1
+                :
+                <span
+                  className="mandatory"
+                >
+                  *
+                </span>
+              </label>
+            </div>
+            <input
+              className="ant-input"
+              onChange={[Function]}
+              onKeyDown={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="item"
+        >
+          <div
+            className="additional-field-select-wrapper"
+          >
+            <div
+              className="label-name"
+            >
+              <label
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+              >
+                info2
+                :
+                 
+              </label>
+            </div>
+            <div
+              className="ant-select ant-select-enabled"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onMouseDown={[Function]}
+              onMouseOut={[Function]}
+              onMouseUp={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                aria-autocomplete="list"
+                aria-controls="test-uuid"
+                aria-expanded={false}
+                aria-haspopup="true"
+                className="ant-select-selection
+            ant-select-selection--single"
+                onKeyDown={[Function]}
+                role="combobox"
+                tabIndex={0}
+              >
+                <div
+                  className="ant-select-selection__rendered"
+                >
+                  <div
+                    className="ant-select-selection__placeholder"
+                    onClick={[Function]}
+                    onMouseDown={[Function]}
+                    style={
+                      Object {
+                        "WebkitUserSelect": "none",
+                        "display": "none",
+                        "userSelect": "none",
+                      }
+                    }
+                    unselectable="on"
+                  >
+                    select value
+                  </div>
+                  <div
+                    className="ant-select-selection-selected-value"
+                    style={
+                      Object {
+                        "display": "block",
+                        "opacity": 1,
+                      }
+                    }
+                    title=""
+                  >
+                    
+                  </div>
+                </div>
+                <span
+                  className="ant-select-arrow"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "WebkitUserSelect": "none",
+                      "userSelect": "none",
+                    }
+                  }
+                  unselectable="on"
+                >
+                  <i
+                    aria-label="icon: down"
+                    className="anticon anticon-down ant-select-arrow-icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                      />
+                    </svg>
+                  </i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+`;

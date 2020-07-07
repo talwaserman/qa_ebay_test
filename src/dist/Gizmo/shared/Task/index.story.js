@@ -29,18 +29,18 @@ var actions = {
   onArchiveTask: (0, _addonActions.action)('onArchiveTask')
 };
 (0, _react2.storiesOf)('Gizmo/shared/Task', module).add('default', function () {
-  return _react.default.createElement(_index.default, (0, _extends2.default)({
+  return /*#__PURE__*/_react.default.createElement(_index.default, (0, _extends2.default)({
     task: task
   }, actions));
 }).add('pinned', function () {
-  return _react.default.createElement(_index.default, (0, _extends2.default)({
-    task: _objectSpread({}, task, {
+  return /*#__PURE__*/_react.default.createElement(_index.default, (0, _extends2.default)({
+    task: _objectSpread(_objectSpread({}, task), {}, {
       state: 'TASK_PINNED'
     })
   }, actions));
 }).add('archived', function () {
-  return _react.default.createElement(_index.default, (0, _extends2.default)({
-    task: _objectSpread({}, task, {
+  return /*#__PURE__*/_react.default.createElement(_index.default, (0, _extends2.default)({
+    task: _objectSpread(_objectSpread({}, task), {}, {
       state: 'TASK_ARCHIVED'
     })
   }, actions));

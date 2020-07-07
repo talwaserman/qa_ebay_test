@@ -23,6 +23,7 @@ var _ProductInfoCard = _interopRequireDefault(require("./ProductInfoCard"));
 
 require("./style.less");
 
+/* eslint-disable */
 function EditImageList(_ref) {
   var imagesData = _ref.imagesData,
       suggestedImagesData = _ref.suggestedImagesData,
@@ -44,15 +45,16 @@ function EditImageList(_ref) {
   (0, _react.useEffect)(function () {
     updateImagesArray(imagesData);
     updateSuggestedImagesArray(suggestedImagesData);
+    handleModalChange(imagesArray.concat(suggestedImagesArray));
   }, [imagesData, suggestedImagesData]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "image-card-list-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "primary-section-header"
-  }, "Primary"), showCurrentImageList && _react.default.createElement("div", {
+  }, "Primary"), showCurrentImageList && /*#__PURE__*/_react.default.createElement("div", {
     className: "image-list-container"
   }, imagesArray.map(function (image, index) {
-    return _react.default.createElement(_ImageCard.default, {
+    return /*#__PURE__*/_react.default.createElement(_ImageCard.default, {
       key: "selected-img-".concat(index),
       imageData: image,
       changePosition: changePosition,
@@ -62,16 +64,16 @@ function EditImageList(_ref) {
         return updateImageRejectReasons(index, selectedReasonss);
       }
     });
-  })), !showCurrentImageList && _react.default.createElement("div", null, _react.default.createElement("img", {
+  })), !showCurrentImageList && /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
     alt: "edit_image_list_item",
     className: "noPrimaryImage",
     src: 'https://ir.ebaystatic.com/cr/v/c1/no_image.png'
-  })), showSuggestions && _react.default.createElement("div", {
+  })), showSuggestions && /*#__PURE__*/_react.default.createElement("div", {
     className: "suggested-section-header"
-  }, "Suggested Images"), _react.default.createElement("div", {
+  }, "Suggested Images"), /*#__PURE__*/_react.default.createElement("div", {
     className: "image-list-container"
   }, suggestedImagesArray.map(function (image, index) {
-    return _react.default.createElement(_SuggestedImageCard.default, {
+    return /*#__PURE__*/_react.default.createElement(_SuggestedImageCard.default, {
       key: "suggested-img-".concat(index),
       imageData: image,
       index: index,
@@ -80,11 +82,11 @@ function EditImageList(_ref) {
         return updateSuggestedImageRejectReasons(index, selectedReasonss);
       }
     });
-  })), _react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: "product-info-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "product-info-card-header"
-  }, "Product Info"), _react.default.createElement(_ProductInfoCard.default, {
+  }, "Product Info"), /*#__PURE__*/_react.default.createElement(_ProductInfoCard.default, {
     productData: productData,
     productImages: imagesArray
   })));

@@ -11,7 +11,7 @@ var _addonKnobs = require("@storybook/addon-knobs");
 var _index = _interopRequireDefault(require("./index"));
 
 (0, _react2.storiesOf)('Gizmo/shared/CBreadcrumb', module).addDecorator(_addonKnobs.withKnobs).add('default', function () {
-  return _react.default.createElement(_index.default, {
+  return /*#__PURE__*/_react.default.createElement(_index.default, {
     path: (0, _addonKnobs.array)('path', ['test', 'test2', 'test3'])
   });
 });

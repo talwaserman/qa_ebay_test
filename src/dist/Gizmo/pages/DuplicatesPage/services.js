@@ -21,18 +21,18 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _serviceAdapter = require("../../../serviceAdapter");
 
-var _mock = require("./Duplicates/mock");
+var _mockDuplicates = require("./Duplicates/mockDuplicates.mock");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function getNextRow(_x) {
+function getNextRow(_x, _x2) {
   return _getNextRow.apply(this, arguments);
 }
 
 function _getNextRow() {
-  _getNextRow = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(jobId) {
+  _getNextRow = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(jobId, type) {
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -42,9 +42,9 @@ function _getNextRow() {
               url: "/common-task/get-next-row",
               payload: {
                 jobId: jobId,
-                type: 'Duplicates'
+                type: type
               },
-              mockResponse: _mock.realMockData
+              mockResponse: _mockDuplicates.clusterMockData
             });
 
           case 2:
@@ -60,7 +60,7 @@ function _getNextRow() {
   return _getNextRow.apply(this, arguments);
 }
 
-function getRowById(_x2) {
+function getRowById(_x3) {
   return _getRowById.apply(this, arguments);
 }
 
@@ -77,7 +77,7 @@ function _getRowById() {
               url: "common-task/get-row-by-id",
               payload: {
                 rowId: rowId || '',
-                type: type || 'Duplicates'
+                type: type
               },
               mockResponse: null
             });
@@ -95,7 +95,7 @@ function _getRowById() {
   return _getRowById.apply(this, arguments);
 }
 
-function saveTask(_x3) {
+function saveTask(_x4) {
   return _saveTask.apply(this, arguments);
 }
 
@@ -125,7 +125,7 @@ function _saveTask() {
   return _saveTask.apply(this, arguments);
 }
 
-function changeCategory(_x4) {
+function changeCategory(_x5) {
   return _changeCategory.apply(this, arguments);
 }
 
@@ -155,7 +155,7 @@ function _changeCategory() {
   return _changeCategory.apply(this, arguments);
 }
 
-function getJobHeader(_x5) {
+function getJobHeader(_x6) {
   return _getJobHeader.apply(this, arguments);
 }
 
@@ -168,7 +168,7 @@ function _getJobHeader() {
             _context5.next = 2;
             return (0, _serviceAdapter.getAdapter)({
               url: "/job-header/get-job-header?jobId=".concat(jobId),
-              mockResponse: _mock.mockJobHeader
+              mockResponse: _mockDuplicates.mockJobHeader
             });
 
           case 2:
@@ -184,7 +184,7 @@ function _getJobHeader() {
   return _getJobHeader.apply(this, arguments);
 }
 
-function getJobConfiguration(_x6) {
+function getJobConfiguration(_x7) {
   return _getJobConfiguration.apply(this, arguments);
 }
 
@@ -197,7 +197,7 @@ function _getJobConfiguration() {
             _context6.next = 2;
             return (0, _serviceAdapter.getAdapter)({
               url: "/task/get-task-configuration?taskId=".concat(configurationId),
-              mockResponse: _mock.mockConfigurationAllEnabled
+              mockResponse: _mockDuplicates.mockConfigurationAllEnabled
             });
 
           case 2:
@@ -237,7 +237,7 @@ function _getLoggedInUser() {
             _context7.next = 5;
             return (0, _serviceAdapter.getAdapter)({
               url: "/user/getLoginUser",
-              mockResponse: _mock.mockAgent
+              mockResponse: _mockDuplicates.mockAgent
             });
 
           case 5:

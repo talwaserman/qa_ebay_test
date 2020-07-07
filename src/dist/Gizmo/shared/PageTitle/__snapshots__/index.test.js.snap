@@ -4,14 +4,12 @@ exports[`gizmo shared - PageTitle 1`] = `
 <div
   className="page-title-wrapper"
 >
-  <div>
-    <label>
-      Product Duplicate
-    </label>
+  <label>
+    Product Duplicate
+  </label>
+  <label>
      - 
-    <span>
-      Nike shoes task
-    </span>
-  </div>
+    Nike shoes task
+  </label>
 </div>
 `;

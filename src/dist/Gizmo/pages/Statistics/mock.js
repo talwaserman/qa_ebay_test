@@ -51,7 +51,7 @@ var apiResponseMock = {
     type: 'Task',
     parts: [{
       label: 'In Progress',
-      value: 0
+      value: 2
     }, {
       label: 'Done',
       value: 8
@@ -62,10 +62,21 @@ var apiResponseMock = {
     type: 'Task',
     parts: [{
       label: 'In Progress',
-      value: 0
+      value: 3
     }, {
       label: 'Done',
-      value: 8
+      value: 5
+    }]
+  }, {
+    label: 'Curated Task Statistics',
+    total: 9,
+    type: 'Task',
+    parts: [{
+      label: 'Curated',
+      value: 3
+    }, {
+      label: 'Not Curated',
+      value: 6
     }]
   }],
   assignmentStatisticsContract: {

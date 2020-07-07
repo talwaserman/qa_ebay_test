@@ -50,7 +50,7 @@ function MultiSelectionPopUp(_ref) {
       activityData = _useState2[0],
       setActivityData = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(),
+  var _useState3 = (0, _react.useState)((0, _get.default)(editSelectedData, 'activity', undefined)),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
       activityInitValue = _useState4[0],
       setActivityInitValue = _useState4[1];
@@ -106,51 +106,50 @@ function MultiSelectionPopUp(_ref) {
     }
 
     fetchUsers();
-  }, []);
-  return _react.default.createElement("div", {
+  }, [multiSelectionData]);
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "multi-selection-popup-wrapper"
-  }, _react.default.createElement("div", {
-    className: 'add-notification-label'
-  }, multiSelectionPopUpData.placeHolder1), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "add-activity-label"
+  }, multiSelectionPopUpData.placeHolder1), /*#__PURE__*/_react.default.createElement("div", {
     className: "notification-type-select"
-  }, _react.default.createElement(_select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_select.default, {
     placeholder: multiSelectionPopUpData.placeHolder1,
     onChange: onChangeNotficationType,
     disabled: isDisabledFirstSelection,
-    defaultValue: (0, _get.default)(editSelectedData, 'type', undefined),
-    value: (0, _get.default)(selectedData, 'type', undefined)
+    defaultValue: editSelectedData.type === null ? undefined : (0, _get.default)(editSelectedData, 'type', undefined)
   }, Object.keys((0, _get.default)(multiSelectionPopUpData, 'selectionData.typeToActivities', [])).map(function (item) {
-    return _react.default.createElement(Option, {
+    return /*#__PURE__*/_react.default.createElement(Option, {
       key: (0, _get.default)(item, dropDownKeyLabel1, null),
       value: item
     }, item);
-  }))), _react.default.createElement("div", {
-    className: 'add-activity-label'
-  }, multiSelectionPopUpData.placeHolder2), _react.default.createElement("div", {
+  }))), /*#__PURE__*/_react.default.createElement("div", {
+    className: "add-activity-label"
+  }, multiSelectionPopUpData.placeHolder2), /*#__PURE__*/_react.default.createElement("div", {
     className: "activity-type-select"
-  }, _react.default.createElement(_select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_select.default, {
     placeholder: multiSelectionPopUpData.placeHolder2,
     onChange: onChangeActivityType,
-    defaultValue: (0, _get.default)(editSelectedData, 'activity', undefined),
-    value: activityInitValue ? activityInitValue : (0, _get.default)(editSelectedData, 'activity', null),
+    value: activityInitValue,
     disabled: isDisabledSecondSelection
   }, activityData.map(function (activity) {
     if (alreadyExists(activity)) {
-      return _react.default.createElement(Option, {
+      return /*#__PURE__*/_react.default.createElement(Option, {
         value: activity,
         disabled: true
       }, activity);
     } else {
-      return _react.default.createElement(Option, {
+      return /*#__PURE__*/_react.default.createElement(Option, {
         key: (0, _get.default)(activity, dropDownKeyLabel2, null),
         value: activity
       }, activity);
     }
-  }))), _react.default.createElement("div", {
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     className: 'add-assigners-label'
-  }, multiSelectionTitle), _react.default.createElement("div", {
+  }, multiSelectionTitle), /*#__PURE__*/_react.default.createElement("div", {
     className: "users-multi-select"
-  }, _react.default.createElement(_FastMultiSelect.default, {
+  }, /*#__PURE__*/_react.default.createElement(_FastMultiSelect.default, {
+    placeholder: multiSelectionPopUpData.placeHolder3,
     optionValues: usersData,
     selectedValues: (0, _get.default)(selectedData, 'users', []),
     onSelectChange: onChangeUsers,
@@ -198,11 +197,10 @@ function MultiSelectionPopUp(_ref) {
       type: selectedData.type,
       activity: value,
       users: selectedData.users
-    }, value && selectedData.type && selectedData.users ? false : true);
+    }, value && selectedData.type && selectedData.users.length > 0 ? false : true);
   }
 
   function onChangeUsers(selectedusers) {
-    debugger;
     var usersIds = [];
     selectedusers.forEach(function (userDetails) {
       if ((0, _has.default)(userDetails, 'id')) {
@@ -254,7 +252,7 @@ MultiSelectionPopUp.propTypes = {
     placeHolder3: _propTypes.default.string.isRequired,
 
     /** selectionData - hold the data for both selection as first selection coupled with the second  */
-    selectionData: _propTypes.default.array.isRequired
+    selectionData: _propTypes.default.object.isRequired
   }),
 
   /** multiSelectionData - hold the data for the multi selection dropdown */
@@ -266,15 +264,15 @@ MultiSelectionPopUp.propTypes = {
   /** isDisabledSecondSelection - is first selection dropdown disabled or not */
   isDisabledSecondSelection: _propTypes.default.bool,
 
-  /** editSelectedData - hold the row selected data which choosed for editing  */
+  /** editSelectedData - hold the row selected data which was chosen for editing */
   editSelectedData: _propTypes.default.object
 };
 MultiSelectionPopUp.defaultProps = {
   isDisabledFirstSelection: false,
   isDisabledSecondSelection: false,
   editSelectedData: {
-    type: null,
-    activity: null,
-    users: []
+    type: undefined,
+    activity: undefined,
+    users: undefined
   }
 };

@@ -22,12 +22,12 @@ var mockOptionValues = ['a', 'b', 'c', 'd'];
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '500px'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     optionValues: mockOptionValues,
     selectedValues: [],
     onSelectChange: function onSelectChange() {},

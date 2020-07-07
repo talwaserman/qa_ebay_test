@@ -21,11 +21,28 @@ var _index = _interopRequireDefault(require("./index"));
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, null));
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
+    jobType: "Duplicates"
+  }));
+}, {
+  notes: 'WorkHistoryPage - page to view all duplicate decisions'
+});
+(0, _react2.storiesOf)('Gizmo/pages/WorkHistoryPage', module).addParameters({
+  viewport: {
+    viewports: _addonViewport.INITIAL_VIEWPORTS
+  }
+}).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('Matching work history', function () {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
+    jobType: "Matching"
+  }));
 }, {
   notes: 'WorkHistoryPage - page to view all duplicate decisions'
 });

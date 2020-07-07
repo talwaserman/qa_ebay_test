@@ -49,19 +49,19 @@ function DateFilter(_ref) {
     setSelectedKeys('');
   };
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       padding: 8
     }
-  }, _react.default.createElement(_datePicker.default, {
+  }, /*#__PURE__*/_react.default.createElement(_datePicker.default, {
     onChange: onChange,
-    value: selectedKeys === '' ? '' : (0, _moment.default)(selectedKeys[0]),
+    value: selectedKeys === '' ? null : (0, _moment.default)(selectedKeys[0]),
     style: {
       width: 188,
       marginBottom: 8,
       display: 'block'
     }
-  }), _react.default.createElement(_button.default, {
+  }), /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "primary",
     onClick: function onClick() {
       return handleSearch(selectedKeys, confirm);
@@ -73,7 +73,7 @@ function DateFilter(_ref) {
       width: 90,
       marginRight: 8
     }
-  }, "Search"), _react.default.createElement(_button.default, {
+  }, "Search"), /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: function onClick() {
       return handleReset(clearFilters);
     },

@@ -36,7 +36,7 @@ function AspectWrapper(_ref) {
       aspectData = _useState2[0],
       setVAspectData = _useState2[1];
 
-  return _react.default.createElement(_index.default, {
+  return /*#__PURE__*/_react.default.createElement(_index.default, {
     aspect: aspectData,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),
@@ -57,12 +57,12 @@ function AspectWrapper(_ref) {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('with_ums', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(AspectWrapper, {
+  }, /*#__PURE__*/_react.default.createElement(AspectWrapper, {
     aspect: _mock.default_aspect,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),
@@ -76,12 +76,12 @@ function AspectWrapper(_ref) {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('no_ums', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     aspect: _mock.no_ums_aspect,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),
@@ -97,12 +97,12 @@ function AspectWrapper(_ref) {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('single_value_aspect', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     aspect: _mock.single_value_aspect,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),
@@ -118,12 +118,12 @@ function AspectWrapper(_ref) {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('required_value_aspect', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     aspect: _mock.required_aspect,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),
@@ -140,12 +140,12 @@ function AspectWrapper(_ref) {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('blank_aspect', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     aspect: _mock.blank_aspect,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),
@@ -162,12 +162,12 @@ function AspectWrapper(_ref) {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('deleted_aspect', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     aspect: _mock.deleted_aspect,
     showSuggestions: (0, _addonKnobs.boolean)('showSuggestions', true),
     showOriginalValues: (0, _addonKnobs.boolean)('showOriginalValues', true),

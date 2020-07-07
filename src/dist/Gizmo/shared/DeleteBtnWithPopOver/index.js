@@ -36,13 +36,13 @@ function DeleteBtnWithPopOver(_ref) {
       isShowingDeletePopover = _useState2[0],
       updateDeletePopover = _useState2[1];
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "deleteBtnWithPopOver-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "delete-btn-wrapper"
-  }, _react.default.createElement(_popover.default, {
+  }, /*#__PURE__*/_react.default.createElement(_popover.default, {
     placement: "top",
-    content: _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_ReasonSelect.default, {
+    content: /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_ReasonSelect.default, {
       changeReason: handleChange,
       options: options,
       title: title
@@ -50,7 +50,7 @@ function DeleteBtnWithPopOver(_ref) {
     trigger: "click",
     visible: isShowingDeletePopover,
     onVisibleChange: onVisibleChange
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     icon: "delete",
     onClick: onVisibleChange

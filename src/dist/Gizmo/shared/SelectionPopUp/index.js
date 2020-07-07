@@ -9,10 +9,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = SelectionPopUp;
 
-require("antd/es/button/style/css");
-
-var _button = _interopRequireDefault(require("antd/es/button"));
-
 require("antd/es/input/style/css");
 
 var _input = _interopRequireDefault(require("antd/es/input"));
@@ -34,12 +30,11 @@ require("./style.less");
 var Option = _select.default.Option;
 
 function SelectionPopUp(_ref) {
-  var handleClose = _ref.handleClose,
-      inputLabel = _ref.inputLabel,
+  var inputLabel = _ref.inputLabel,
       selectPlaceHolder = _ref.selectPlaceHolder,
       dropDownKeyLabel = _ref.dropDownKeyLabel,
       dropDownValuesArray = _ref.dropDownValuesArray,
-      onClickHandler = _ref.onClickHandler,
+      handleModalChange = _ref.handleModalChange,
       loading = _ref.loading;
 
   var _useState = (0, _react.useState)(),
@@ -52,59 +47,46 @@ function SelectionPopUp(_ref) {
       dropDownData = _useState4[0],
       setDropDownData = _useState4[1];
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "selection-popup-wrapper"
-  }, _react.default.createElement(_input.default, {
+  }, /*#__PURE__*/_react.default.createElement(_input.default, {
     addonBefore: inputLabel,
     value: inputData,
     onChange: function onChange(e) {
       return updateInputData(e.target.value);
     }
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "select-wrapper"
-  }, _react.default.createElement(_select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_select.default, {
     placeholder: selectPlaceHolder,
-    onChange: onChange
+    onChange: onChange,
+    loading: loading,
+    disabled: loading
   }, dropDownValuesArray.map(function (item) {
-    return _react.default.createElement(Option, {
+    return /*#__PURE__*/_react.default.createElement(Option, {
       key: (0, _get.default)(item, dropDownKeyLabel, null),
       value: JSON.stringify(item)
     }, item.name);
-  }))), _react.default.createElement("section", {
-    className: "action-btn"
-  }, _react.default.createElement(_button.default, {
-    type: "primary",
-    onClick: handleOk,
-    disabled: !dropDownData || !inputData,
-    loading: loading
-  }, "Ok"), _react.default.createElement(_button.default, {
-    onClick: handleCancel
-  }, "Cancel")));
-
-  function handleOk() {
-    onClickHandler({
-      selectionData: dropDownData,
-      inputData: inputData
-    });
-  }
-
-  function handleCancel() {
-    handleClose();
-  }
+  }))));
 
   function onChange(value) {
     setDropDownData(JSON.parse(value));
+    handleModalChange({
+      selectionData: JSON.parse(value),
+      inputData: inputData
+    }, value ? false : true);
   }
 
   function updateInputData(value) {
     setInputData(value);
+    handleModalChange({
+      selectionData: dropDownData,
+      inputData: value
+    }, value && dropDownData ? false : true);
   }
 }
 
 SelectionPopUp.propTypes = {
-  /** handleClose - function that called when user clicked Cancel */
-  handleClose: _propTypes.default.func.isRequired,
-
   /** inputLabel - Input ui field label */
   inputLabel: _propTypes.default.string.isRequired,
 
@@ -117,12 +99,6 @@ SelectionPopUp.propTypes = {
   /** dropDownValuesArray - array of dropdown values */
   dropDownValuesArray: _propTypes.default.array.isRequired,
 
-  /** onClickHandler - function that called with input of submitted data when user clicked Ok */
-  onClickHandler: _propTypes.default.func.isRequired,
-
-  /** loading - set the loading status of button */
+  /** loading - set the loading status of select data */
   loading: _propTypes.default.bool
-};
-SelectionPopUp.defaultProps = {
-  loading: false
 };

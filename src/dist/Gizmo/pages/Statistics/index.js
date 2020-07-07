@@ -46,6 +46,7 @@ function Statistics(_ref) {
     cardInfoSectionData: null,
     cpiechartDrawDataSuperVisiorData: null,
     cpiechartDrawTaskData: null,
+    cpiechartDrawMovedCurationTaskData: null,
     tableDataSource: null,
     tableColumns: null,
     isLoading: true
@@ -74,6 +75,7 @@ function Statistics(_ref) {
               cardInfoSectionData: extractCardInfoData(res, res.jobHeaderContract.name),
               cpiechartDrawDataSuperVisiorData: extractCpiechartDrawDataSuperVisiorData(res.statisticsContracts[1]),
               cpiechartDrawTaskData: extractCpiechartDrawTaskData(res.statisticsContracts[0]),
+              cpiechartDrawMovedCurationTaskData: extractCpiechartDrawMovedCurationTaskData(res.statisticsContracts[2]),
               tableDataSource: extractTableDataSource(res.assignmentStatisticsContract),
               tableColumns: extractTableColumns(res.assignmentStatisticsContract),
               isLoading: false
@@ -92,30 +94,31 @@ function Statistics(_ref) {
   var cardInfoSectionData = statData.cardInfoSectionData,
       cpiechartDrawDataSuperVisiorData = statData.cpiechartDrawDataSuperVisiorData,
       cpiechartDrawTaskData = statData.cpiechartDrawTaskData,
+      cpiechartDrawMovedCurationTaskData = statData.cpiechartDrawMovedCurationTaskData,
       tableDataSource = statData.tableDataSource,
       tableColumns = statData.tableColumns,
       isLoading = statData.isLoading;
 
   if (isLoading) {
-    return _react.default.createElement(_spin.default, {
+    return /*#__PURE__*/_react.default.createElement(_spin.default, {
       style: spinerStyle
     });
   }
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "statistics-wrapper"
-  }, cardInfoSectionData && _react.default.createElement(_index2.default, {
+  }, cardInfoSectionData && /*#__PURE__*/_react.default.createElement(_index2.default, {
     infoData: cardInfoSectionData
-  }), _react.default.createElement(_divider.default, {
+  }), /*#__PURE__*/_react.default.createElement(_divider.default, {
     className: "statistics-divider"
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "piecharts-wrapper"
-  }, renderTaskPieChart(), renderSuperVisiorPieChart()), _react.default.createElement(LabelDraw, {
+  }, renderTaskPieChart(), renderSuperVisiorPieChart(), renderTaskPieChartMovedCuration()), /*#__PURE__*/_react.default.createElement(LabelDraw, {
     label: 'Records assignment per agent',
     className: 'table-title'
-  }), tableDataSource && tableColumns && _react.default.createElement("div", {
+  }), tableDataSource && tableColumns && /*#__PURE__*/_react.default.createElement("div", {
     className: "table-wrapper"
-  }, _react.default.createElement(_table.default, {
+  }, /*#__PURE__*/_react.default.createElement(_table.default, {
     pagination: {
       pageSize: 10
     },
@@ -125,7 +128,7 @@ function Statistics(_ref) {
   })));
 
   function renderSuperVisiorPieChart() {
-    return cpiechartDrawDataSuperVisiorData && _react.default.createElement(_index.default, {
+    return cpiechartDrawDataSuperVisiorData && /*#__PURE__*/_react.default.createElement(_index.default, {
       width: 500,
       height: 300,
       cx: 240,
@@ -136,7 +139,7 @@ function Statistics(_ref) {
   }
 
   function renderTaskPieChart() {
-    return cpiechartDrawTaskData && _react.default.createElement(_index.default, {
+    return cpiechartDrawTaskData && /*#__PURE__*/_react.default.createElement(_index.default, {
       width: 500,
       height: 300,
       cx: 240,
@@ -146,10 +149,21 @@ function Statistics(_ref) {
     });
   }
 
+  function renderTaskPieChartMovedCuration() {
+    return cpiechartDrawMovedCurationTaskData && /*#__PURE__*/_react.default.createElement(_index.default, {
+      width: 500,
+      height: 300,
+      cx: 240,
+      cy: 150,
+      outerRadius: 85,
+      data: cpiechartDrawMovedCurationTaskData
+    });
+  }
+
   function LabelDraw(_ref3) {
     var className = _ref3.className,
         label = _ref3.label;
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: className
     }, label);
   }
@@ -176,44 +190,77 @@ function Statistics(_ref) {
 
   function extractCpiechartDrawTaskData(data) {
     var CpiechartDrawTaskData = [];
-    CpiechartDrawTaskData.push({
-      label: data.label,
-      drawingData: {
-        innerCircle: {
-          data: data.total,
-          label: 'Total'
+
+    if (data) {
+      CpiechartDrawTaskData.push({
+        label: data.label,
+        drawingData: {
+          innerCircle: {
+            data: data.total,
+            label: 'Total'
+          },
+          outerCircle: data.parts
         },
-        outerCircle: data.parts
-      },
-      drawingConfig: {
-        color: {
-          'In Progress': '#ffe700',
-          Done: '#2cd9c5',
-          'Not Done': '#edf0f4'
+        drawingConfig: {
+          color: {
+            'In Progress': '#ffe700',
+            Done: '#2cd9c5',
+            'Not Done': '#edf0f4'
+          }
         }
-      }
-    });
+      });
+    }
+
     return CpiechartDrawTaskData[0];
   }
 
   function extractCpiechartDrawDataSuperVisiorData(data) {
     var CpiechartDrawTaskData = [];
-    CpiechartDrawTaskData.push({
-      label: data.label,
-      drawingData: {
-        innerCircle: {
-          data: data.total,
-          label: 'Total'
+
+    if (data) {
+      CpiechartDrawTaskData.push({
+        label: data.label,
+        drawingData: {
+          innerCircle: {
+            data: data.total,
+            label: 'Total'
+          },
+          outerCircle: data.parts
         },
-        outerCircle: data.parts
-      },
-      drawingConfig: {
-        color: {
-          'In Progress': '#2cd9c5',
-          Done: '#ff8f6d'
+        drawingConfig: {
+          color: {
+            'In Progress': '#2cd9c5',
+            Done: '#ff8f6d'
+          }
         }
-      }
-    });
+      });
+    }
+
+    return CpiechartDrawTaskData[0];
+  }
+
+  function extractCpiechartDrawMovedCurationTaskData(data) {
+    var CpiechartDrawTaskData = [];
+
+    if (data) {
+      CpiechartDrawTaskData.push({
+        label: data.label,
+        drawingData: {
+          innerCircle: {
+            data: data.total,
+            label: 'Total'
+          },
+          outerCircle: data.parts
+        },
+        drawingConfig: {
+          color: {
+            Curated: '#FF69B4',
+            'Not Curated': '#2cd9c5'
+          }
+        }
+      });
+    }
+
     return CpiechartDrawTaskData[0];
   }
 

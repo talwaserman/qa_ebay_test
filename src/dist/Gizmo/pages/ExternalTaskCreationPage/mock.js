@@ -12,7 +12,6 @@ var mockGetExternalTaskCreationRows = {
   filteredAmlTaskContract: [{
     rowId: '1',
     taskType: 'Product Curation',
-    taskId: '1111',
     subTaskId: '11',
     site: 'US',
     creationDate: 1579688366167,
@@ -32,11 +31,11 @@ var mockGetExternalTaskCreationRows = {
     }],
     candidates: '400',
     gizmoTaskId: '5349',
-    gimzoTaskStatus: 'DONE'
+    gimzoTaskStatus: 'DONE',
+    sampleName: 'sample2'
   }, {
     rowId: '2',
     taskType: 'Product Curation',
-    taskId: '2222',
     subTaskId: '22',
     site: 'UK',
     creationDate: 1579688366167,
@@ -68,11 +67,11 @@ var mockGetExternalTaskCreationRows = {
     }],
     candidates: '400',
     gizmoTaskId: '7654',
-    gimzoTaskStatus: 'IN_PROGRESS'
+    gimzoTaskStatus: 'IN_PROGRESS',
+    sampleName: 'sample1'
   }, {
     rowId: '3',
     taskType: 'Product Curation',
-    taskId: '3333',
     subTaskId: '33',
     site: 'UK',
     creationDate: 1579688366167,
@@ -104,11 +103,11 @@ var mockGetExternalTaskCreationRows = {
     }],
     candidates: '400',
     gizmoTaskId: '8536',
-    gimzoTaskStatus: 'IN_PROGRESS'
+    gimzoTaskStatus: 'IN_PROGRESS',
+    sampleName: 'sample2'
   }, {
     rowId: '4',
     taskType: 'Product Curation',
-    taskId: '4444',
     subTaskId: '44',
     site: 'UK',
     creationDate: 1579688366167,
@@ -140,11 +139,11 @@ var mockGetExternalTaskCreationRows = {
     }],
     candidates: '400',
     gizmoTaskId: null,
-    gimzoTaskStatus: 'IN_PROGRESS'
+    gimzoTaskStatus: 'IN_PROGRESS',
+    sampleName: 'sample4'
   }, {
     rowId: '5',
     taskType: 'Duplicates',
-    taskId: '5555',
     subTaskId: '55',
     site: 'UK',
     creationDate: 1579688366167,
@@ -176,7 +175,8 @@ var mockGetExternalTaskCreationRows = {
     }],
     candidates: '400',
     gizmoTaskId: null,
-    gimzoTaskStatus: 'IN_PROGRESS'
+    gimzoTaskStatus: 'IN_PROGRESS',
+    sampleName: 'sample5'
   }],
   selectOptions: {
     jobStates: [{

@@ -11,9 +11,9 @@ require("../../../../../.storybook/global-style.less");
 var _index = _interopRequireDefault(require("./index"));
 
 (0, _react2.storiesOf)('Gizmo/shared/CategoryTree', module).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: ""
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     jobId: 123,
     submitHandler: function submitHandler() {},
     setLoading: function setLoading() {}

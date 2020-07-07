@@ -21,7 +21,7 @@ var _index = _interopRequireDefault(require("./index"));
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", null, _react.default.createElement(_index.default, null));
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_index.default, null));
 }, {
   notes: 'JobListPage - page used to show all the tasks'
 });

@@ -15,21 +15,29 @@ require("antd/es/notification/style/css");
 
 var _notification2 = _interopRequireDefault(require("antd/es/notification"));
 
-require("antd/es/popover/style/css");
+require("antd/es/drawer/style/css");
 
-var _popover = _interopRequireDefault(require("antd/es/popover"));
+var _drawer = _interopRequireDefault(require("antd/es/drawer"));
 
 require("antd/es/switch/style/css");
 
 var _switch = _interopRequireDefault(require("antd/es/switch"));
 
-require("antd/es/button/style/css");
-
-var _button = _interopRequireDefault(require("antd/es/button"));
-
 require("antd/es/divider/style/css");
 
 var _divider = _interopRequireDefault(require("antd/es/divider"));
+
+require("antd/es/tooltip/style/css");
+
+var _tooltip = _interopRequireDefault(require("antd/es/tooltip"));
+
+require("antd/es/icon/style/css");
+
+var _icon = _interopRequireDefault(require("antd/es/icon"));
+
+require("antd/es/button/style/css");
+
+var _button = _interopRequireDefault(require("antd/es/button"));
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
@@ -39,11 +47,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _get = _interopRequireDefault(require("lodash/get"));
 
+var _union = _interopRequireDefault(require("lodash/union"));
+
+var _cloneDeep = _interopRequireDefault(require("lodash/cloneDeep"));
+
 var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _DecisionMaker = _interopRequireDefault(require("../../../shared/DecisionMaker"));
-
-var _DecisionPopOver = _interopRequireDefault(require("../../../shared/DecisionPopOver"));
 
 var _GenericModal = _interopRequireDefault(require("../../../shared/GenericModal"));
 
@@ -52,6 +60,10 @@ var _utils = require("../../../utils");
 var _EscalatedField = _interopRequireDefault(require("../../../shared/EscalatedField"));
 
 var _shared = require("../../../shared");
+
+var _DrawerContentDuplicate = _interopRequireDefault(require("./DrawerContentDuplicate"));
+
+var _DrawerContentMatching = _interopRequireDefault(require("./DrawerContentMatching"));
 
 require("./style.less");
 
@@ -62,387 +74,536 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function Duplicates(_ref) {
-  var survivorData = _ref.survivorData,
-      victimArray = _ref.victimArray,
-      escalatedInfo = _ref.escalatedInfo,
+  var clusterData = _ref.clusterData,
+      updateClusterData = _ref.updateClusterData,
       rowsDone = _ref.rowsDone,
       decisions = _ref.decisions,
       reasons = _ref.reasons,
-      rowId = _ref.rowId,
       saveTask = _ref.saveTask,
       changeCategory = _ref.changeCategory,
       jobId = _ref.jobId,
       jobTypeConfiguration = _ref.jobTypeConfiguration,
       workMode = _ref.workMode,
-      loggedInUser = _ref.loggedInUser;
+      loggedInUser = _ref.loggedInUser,
+      fetchNextCluster = _ref.fetchNextCluster,
+      currentPage = _ref.currentPage;
+  (0, _react.useEffect)(function () {
+    var scrollCallBack = initializingFixedPositionsAndReturnCallback();
+
+    var popEventFunc = function popEventFunc() {
+      if (!window.location.hash.includes('vendor-management/compared-entity')) {
+        updateShowDrawer(false);
+        window.removeEventListener('popstate', popEventFunc);
+      }
+    };
+
+    window.addEventListener('popstate', popEventFunc);
+    return function () {
+      window.removeEventListener('scroll', scrollCallBack);
+    };
+  }, []);
   var showSendToSupervisor = workMode !== 'edit' && !loggedInUser.isUserSupervisor;
-  var isSurvivorProvided = (0, _get.default)(jobTypeConfiguration, "configurationResponse.survivorProvided", true);
-  var isEnabledForCuration = (0, _get.default)(jobTypeConfiguration, "configurationResponse.enableProductCuration", true);
+  var isSurvivorProvided = (0, _get.default)(jobTypeConfiguration, "configurationResponse.survivorProvided", false);
+  var productIndicationSelectValues = isSurvivorProvided ? ['Victim', 'Survivor', 'Both'] : ['Product 1', 'Product 2', 'Both'];
+  var observationOptions = reasons;
+  var leftEntityProp = (0, _get.default)(clusterData, 'nextRowContract.comparedEntityRowContracts[0].entities[0]', null);
 
-  var _useState = (0, _react.useState)(victimArray),
+  var _useState = (0, _react.useState)(true),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      vArray = _useState2[0],
-      setVarray = _useState2[1];
+      showDrawer = _useState2[0],
+      updateShowDrawer = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(survivorData),
+  var _useState3 = (0, _react.useState)(currentPage),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
-      sData = _useState4[0],
-      setSdata = _useState4[1];
+      page = _useState4[0],
+      setPage = _useState4[1];
 
-  var _useState5 = (0, _react.useState)(decisions),
+  var _useState5 = (0, _react.useState)(clusterData.nextRowContract.comparedEntityRowContracts.map(function (pair) {
+    return pair.entities[1];
+  })),
       _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
-      decisionsData = _useState6[0],
-      setDecisionsData = _useState6[1];
+      entitiesArray = _useState6[0],
+      setEntitiesArray = _useState6[1];
 
-  var _useState7 = (0, _react.useState)(false),
+  var _useState7 = (0, _react.useState)(leftEntityProp),
       _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
-      isSupervisorNewAspectModalOpen = _useState8[0],
-      setSupervisorNewAspectModalOpenVisibility = _useState8[1];
+      leftEntityData = _useState8[0],
+      setLeftEntityData = _useState8[1];
 
-  var _useState9 = (0, _react.useState)(false),
+  var _useState9 = (0, _react.useState)(decisions),
       _useState10 = (0, _slicedToArray2.default)(_useState9, 2),
-      isVictimNewAspectModalOpen = _useState10[0],
-      setVictimNewAspectModalOpenVisibility = _useState10[1];
-
-  var page = 0; //remove this when the cluster page navigation returns, and use this --> const [page, setPage] = useState(0);
-
-  /** Survivor data */
-
-  var survivor_P_Def = sData.product.productDefinition;
+      decisionsData = _useState10[0],
+      setDecisionsData = _useState10[1];
 
   var _useState11 = (0, _react.useState)(false),
       _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
-      showSuggestions = _useState12[0],
-      setShowSuggestions = _useState12[1];
+      isSupervisorNewAspectModalOpen = _useState12[0],
+      setSupervisorNewAspectModalOpenVisibility = _useState12[1];
 
   var _useState13 = (0, _react.useState)(false),
       _useState14 = (0, _slicedToArray2.default)(_useState13, 2),
-      showOriginalValues = _useState14[0],
-      setShowOriginalValues = _useState14[1];
+      isRightEntityNewAspectModalOpen = _useState14[0],
+      setRightEntityNewAspectModalOpenVisibility = _useState14[1];
 
-  var s_newCategoyBreadcrumb = survivor_P_Def.categories.newValues[0];
-  var s_leafCategory = (0, _get.default)(survivor_P_Def, 'categories.newValues[0].categoryBreadcrumb', '> ').substring(s_newCategoyBreadcrumb.categoryBreadcrumb.lastIndexOf('>') + 1);
-  var s_aspects = sData.product.groupToAspectsMap;
-  var s_newImages = survivor_P_Def.images.newImages;
-  var s_entityId = survivor_P_Def.entityId;
-  var s_entityUrl = survivor_P_Def.prpUrl;
-  var s_aspectKeys = Object.keys(s_aspects);
-  s_aspectKeys = [s_aspectKeys.pop()].concat((0, _toConsumableArray2.default)(s_aspectKeys)); // needed to make title aspect first
-
-  var s_isDeleted = sData.product.productStatus.status === 'DELETE'; // delete reason
+  var shouldMakeObservation = clusterData.nextRowContract.comparedEntityRowContracts[page].actionsContract.makeObservation;
+  var shouldMakeDecision = clusterData.nextRowContract.comparedEntityRowContracts[page].actionsContract.makeDecision;
+  var isEnabledForCuration = (0, _get.default)(jobTypeConfiguration, "configurationResponse.enableProductCuration", true) && shouldMakeDecision && !shouldMakeObservation || shouldMakeDecision && !!(0, _get.default)(decisionsData[page], 'decisionInfo.observation.value', false);
+  var jobType = jobTypeConfiguration.taskConfiguration.type.toLowerCase();
+  var isDuplicates = jobType === 'duplicates';
+  var left_Entity_Def = leftEntityData.product.productDefinition;
 
   var _useState15 = (0, _react.useState)(false),
       _useState16 = (0, _slicedToArray2.default)(_useState15, 2),
-      shouldBeVisibleSurvivor = _useState16[0],
-      updateShouldBeVisibleSurvivor = _useState16[1]; // hash map of aspect values
-
-
-  var s_hash = createReadHash(s_aspects);
-  var s_title = getAspectValue('Title', s_hash);
-  /** Victim data */
-
-  var victim_P_Def = vArray[page].product.productDefinition;
-  var v_newImages = victim_P_Def.images.newImages;
-  var v_newCategoyBreadcrumb = victim_P_Def.categories.newValues[0];
-  var v_leafCategory = (0, _get.default)(victim_P_Def, 'categories.newValues[0].categoryBreadcrumb', '> ').substring(v_newCategoyBreadcrumb.categoryBreadcrumb.lastIndexOf('>') + 1);
-  var v_isDeleted = vArray[page].product.productStatus.status === 'DELETE'; //delete reason
+      showSuggestions = _useState16[0],
+      setShowSuggestions = _useState16[1];
 
   var _useState17 = (0, _react.useState)(false),
       _useState18 = (0, _slicedToArray2.default)(_useState17, 2),
-      shouldBeVisibleVictim = _useState18[0],
-      updateShouldBeVisibleVictim = _useState18[1];
+      showOriginalValues = _useState18[0],
+      setShowOriginalValues = _useState18[1];
 
-  var v_aspects = vArray[page].product.groupToAspectsMap; // hash map of aspect values
+  var _useState19 = (0, _react.useState)(false),
+      _useState20 = (0, _slicedToArray2.default)(_useState19, 2),
+      showEmptyAspects = _useState20[0],
+      setShowEmptyAspects = _useState20[1];
 
-  var v_hash = createReadHash(v_aspects);
-  var v_title = getAspectValue('Title', v_hash);
-  var v_entityId = victim_P_Def.entityId;
-  var v_entityUrl = victim_P_Def.prpUrl;
-  var v_aspectKeys = Object.keys(v_aspects);
-  v_aspectKeys = [v_aspectKeys.pop()].concat((0, _toConsumableArray2.default)(v_aspectKeys)); // needed to make title be first aspect
+  var _useState21 = (0, _react.useState)(false),
+      _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
+      isRightDescriptionOpen = _useState22[0],
+      setIsRightDescriptionOpen = _useState22[1];
+
+  var _useState23 = (0, _react.useState)(false),
+      _useState24 = (0, _slicedToArray2.default)(_useState23, 2),
+      isLeftDescriptionOpen = _useState24[0],
+      setIsLeftDescriptionOpen = _useState24[1];
+
+  var le_newCategoyBreadcrumb = left_Entity_Def.categories.newValues[0];
+  var le_leafCategory = (0, _get.default)(left_Entity_Def, 'categories.newValues[0].categoryBreadcrumb', '> ').substring(le_newCategoyBreadcrumb.categoryBreadcrumb.lastIndexOf('>') + 1);
+  var le_aspects = leftEntityData.product.groupToAspectsMap;
+  var le_newImages = left_Entity_Def.images.newImages;
+  var le_entityId = left_Entity_Def.entityId;
+  var le_entityUrl = left_Entity_Def.prpUrl ? left_Entity_Def.prpUrl : left_Entity_Def.itemData.itemUrl;
+  var leftEntityHeader = (0, _get.default)(left_Entity_Def, 'itemData') ? 'Item and adoption method indication' : 'Product';
+  var leftEntityUniqeIdLabel = (0, _get.default)(left_Entity_Def, 'itemData') ? 'Item' : 'EPID';
+  var leftEntityVariationId = (0, _get.default)(left_Entity_Def, 'itemData.variationId', '');
+  var leftEntityIsPremiumQuality = (0, _get.default)(left_Entity_Def, 'productMaturityLevelIndicator.premiumQualityIndicator', false) ? left_Entity_Def.productMaturityLevelIndicator.premiumQualityIndicator === 'MANUAL_HIGH_QUALITY' : false;
+  var isLeftItem = (0, _get.default)(left_Entity_Def, 'itemData') ? true : false;
+  var leftItemDescription = (0, _get.default)(left_Entity_Def, 'itemData.description');
+  var le_aspectKeys = Object.keys(le_aspects);
+  var le_aspects_names = le_aspectKeys.map(function (key) {
+    return le_aspects[key].map(function (aspectData) {
+      return (0, _get.default)(aspectData, 'aspectName');
+    });
+  });
+  le_aspectKeys = [le_aspectKeys.pop()].concat((0, _toConsumableArray2.default)(le_aspectKeys)); // needed to make title aspect first
+
+  var rowId = clusterData.nextRowContract.comparedEntityRowContracts[page].rowId; // hash map of aspect values
+
+  var le_hash = createReadHash(le_aspects);
+  var le_title = getAspectValue('Title', le_hash);
+  var leftHeaderPostfix = isDuplicates ? createDuplicatesLeftHeaderPostfix() : '';
+  /** right entity data */
+
+  var right_Entity_Def = entitiesArray[page].product.productDefinition;
+  var re_newImages = right_Entity_Def.images.newImages;
+  var re_newCategoyBreadcrumb = right_Entity_Def.categories.newValues[0];
+  var re_leafCategory = (0, _get.default)(right_Entity_Def, 'categories.newValues[0].categoryBreadcrumb', '> ').substring(re_newCategoyBreadcrumb.categoryBreadcrumb.lastIndexOf('>') + 1);
+  var re_aspects = entitiesArray[page].product.groupToAspectsMap;
+  var escelatedData = (0, _get.default)(clusterData, "nextRowContract.comparedEntityRowContracts[".concat(page, "].escalationInfo"), null); // hash map of aspect values
+
+  var re_hash = createReadHash(re_aspects);
+  var re_title = getAspectValue('Title', re_hash);
+  var re_entityId = right_Entity_Def.entityId;
+  var re_entityUrl = right_Entity_Def.prpUrl ? right_Entity_Def.prpUrl : right_Entity_Def.itemData.itemUrl;
+  var rightEntityHeader = (0, _get.default)(right_Entity_Def, 'itemData') ? 'Item and adoption method indication' : 'Product';
+  var rightHeaderPostfix = isDuplicates ? createDuplicatesRightHeaderPostfix() : '';
+  var rightEntityUniqeIdLabel = (0, _get.default)(right_Entity_Def, 'itemData') ? 'Item' : 'EPID';
+  var rightEntityVariationId = (0, _get.default)(right_Entity_Def, 'itemData.variationId', '');
+  var rightEntityIsPremiumQuality = (0, _get.default)(right_Entity_Def, 'productMaturityLevelIndicator.premiumQualityIndicator', false) ? right_Entity_Def.productMaturityLevelIndicator.premiumQualityIndicator === 'MANUAL_HIGH_QUALITY' : false;
+  var isRightItem = (0, _get.default)(right_Entity_Def, 'itemData') ? true : false;
+  var rightItemDescription = (0, _get.default)(right_Entity_Def, 'itemData.description');
+  var re_aspectKeys = Object.keys(re_aspects);
+  var re_aspects_names = re_aspectKeys.map(function (key) {
+    return re_aspects[key].map(function (aspectData) {
+      return (0, _get.default)(aspectData, 'aspectName');
+    });
+  });
+  re_aspectKeys = [re_aspectKeys.pop()].concat((0, _toConsumableArray2.default)(re_aspectKeys)); // needed to make title be first aspect
 
   var isTitleDifferent = checkIfTitleIsDifferent();
   var isCategoryPathDifferent = checkCategoryPath();
 
-  var _useState19 = (0, _react.useState)({}),
-      _useState20 = (0, _slicedToArray2.default)(_useState19, 2),
-      hightHash = _useState20[0],
-      updateHightHash = _useState20[1]; // needed to communicate the required hight between correlated aspects
+  var allAspectsName = _union.default.apply(void 0, (0, _toConsumableArray2.default)(le_aspects_names).concat((0, _toConsumableArray2.default)(re_aspects_names)));
+
+  var _useState25 = (0, _react.useState)({}),
+      _useState26 = (0, _slicedToArray2.default)(_useState25, 2),
+      hightHash = _useState26[0],
+      updateHightHash = _useState26[1]; // needed to communicate the required hight between correlated aspects
 
 
-  var aspectsHightHash = Object.keys(hightHash).length > 0 ? hightHash : createHightHash(s_hash, v_hash); // needed to save hight of aspects between renders, use of useState will create a bug
+  var clusterRowIds = clusterData.nextRowContract.comparedEntityRowContracts.map(function (item) {
+    return item.rowId;
+  });
+  var aspectsHightHash = Object.keys(hightHash).length > 0 ? hightHash : createHightHash(le_hash, re_hash); // needed to save hight of aspects between renders, use of useState will create a bug
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "duplicates-wrapper"
-  }, _react.default.createElement(_shared.CBreadcrumb, {
-    path: ['Duplications']
-  }), _react.default.createElement("section", {
+  }, /*#__PURE__*/_react.default.createElement(_shared.CBreadcrumb, {
+    path: jobType === 'duplicates' ? ['Duplications'] : ['Matching']
+  }), /*#__PURE__*/_react.default.createElement("section", {
     className: "title-section"
-  }, _react.default.createElement("div", null, rowsDone && _react.default.createElement(_shared.TotalRowsDone, {
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
+    className: "edit-mode"
+  }, workMode === 'edit' ? 'Work Edit Mode' : ''), escelatedData && /*#__PURE__*/_react.default.createElement(_EscalatedField.default, {
+    escalator: escelatedData.escalatedByUserName
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "rows-done-metrics"
+  }, rowsDone && /*#__PURE__*/_react.default.createElement(_shared.TotalRowsDone, {
     today: rowsDone.totalDoneToday,
     total: rowsDone.totalDone
-  })), _react.default.createElement("div", null, _react.default.createElement("div", {
-    className: "edit-mode"
-  }, workMode === 'edit' ? 'Work Edit Mode' : ''), escalatedInfo && _react.default.createElement(_EscalatedField.default, {
-    escalator: escalatedInfo.escalatedByUserName
-  }))), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement(_button.default, {
+    id: "open-drawer-button",
+    size: "large",
+    icon: showDrawer ? 'down' : 'up',
+    onClick: function onClick() {
+      return updateShowDrawer(!showDrawer);
+    }
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     className: "side-by-side-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "product-wrapper"
-  }, s_isDeleted && _react.default.createElement("div", {
-    className: "deleted-product"
-  }, "Deleted"), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "item-surviving-title-wrapper"
-  }, _react.default.createElement("div", {
-    className: "item-surviving-title"
-  }, _react.default.createElement("strong", null, "Product"), isSurvivorProvided && _react.default.createElement("span", null, " (Survivor)"))), _react.default.createElement(_shared.RegularField, {
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "item-surviving-title",
+    id: "left-title"
+  }, leftEntityIsPremiumQuality && /*#__PURE__*/_react.default.createElement("div", {
+    className: "item-surviving-icon"
+  }, /*#__PURE__*/_react.default.createElement(_tooltip.default, {
+    placement: "top",
+    title: 'Premium Quality Product'
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
+    type: "sketch",
+    style: {
+      color: '#2D69C3'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_tooltip.default, {
+    placement: "bottom",
+    title: le_title
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    className: "text-wrapper"
+  }, /*#__PURE__*/_react.default.createElement("strong", null, leftEntityHeader), /*#__PURE__*/_react.default.createElement("span", null, " ", leftHeaderPostfix))))), !isDuplicates && /*#__PURE__*/_react.default.createElement(_shared.RegularField, {
     label: 'Title',
-    value: s_title,
+    value: le_title,
     isChanged: false,
     isDifferentValue: isTitleDifferent,
     updateValue: function updateValue() {}
-  }), _react.default.createElement(_shared.ImageList, {
-    imageList: s_newImages.filter(function (image) {
+  }), /*#__PURE__*/_react.default.createElement(_shared.ImageList, {
+    imageList: le_newImages.filter(function (image) {
       return !deletedImage(image);
     }),
     isChanged: false,
     isDifferentValue: false,
-    suggestedImagesData: s_newImages.filter(function (image) {
+    suggestedImagesData: le_newImages.filter(function (image) {
       return deletedImage(image);
     }),
     productData: {
-      category: s_newCategoyBreadcrumb.categoryBreadcrumb,
-      title: s_title,
-      brand: getAspectValue('Brand', s_hash),
-      color: getAspectValue('Color', s_hash)
+      category: le_newCategoyBreadcrumb.categoryBreadcrumb,
+      title: le_title,
+      brand: getAspectValue('Brand', le_hash),
+      color: getAspectValue('Color', le_hash)
     },
     handleSelectedImages: handleSurvivorSelectedImages,
-    isEditable: isEnabledForCuration
-  }), _react.default.createElement(_shared.LinkField, {
-    label: "EPID",
-    value: s_entityId,
-    url: s_entityUrl,
+    isEditable: isEnabledForCuration,
+    updateShowDrawer: updateShowDrawer
+  }), /*#__PURE__*/_react.default.createElement(_shared.LinkField, {
+    label: leftEntityUniqeIdLabel,
+    value: le_entityId,
+    url: le_entityUrl,
     isDifferentValue: false
-  }), _react.default.createElement(_shared.RegularField, {
+  }), jobType === 'matching' && /*#__PURE__*/_react.default.createElement(_shared.LinkField, {
+    label: 'VariationId',
+    value: leftEntityVariationId,
+    url: le_entityUrl,
+    isDifferentValue: false
+  }), jobType === 'matching' && /*#__PURE__*/_react.default.createElement(_shared.LinkField, {
+    label: 'Description',
+    value: leftItemDescription ? 'Show Description' : null,
+    onClickCallBack: function onClickCallBack() {
+      updateShowDrawer(false);
+      setIsLeftDescriptionOpen(true);
+    },
+    isDifferentValue: false
+  }), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
+    modalVisibleState: isLeftDescriptionOpen,
+    modalTitle: 'Item Description',
+    isOkDisabledInitialValue: true,
+    modalContent: /*#__PURE__*/_react.default.createElement("div", null, leftItemDescription),
+    width: 1000,
+    onOk: function onOk() {},
+    onCancel: onCancel,
+    okText: '',
+    isOkButtonVisible: false,
+    isCancelButtonVisible: false
+  }), /*#__PURE__*/_react.default.createElement(_shared.RegularField, {
     label: 'Site',
-    value: (0, _utils.getSiteById)(victim_P_Def.siteId).name,
+    value: (0, _utils.getSiteById)(right_Entity_Def.siteId).name,
     isChanged: false,
-    isDifferentValue: survivor_P_Def.siteId !== victim_P_Def.siteId,
+    isDifferentValue: left_Entity_Def.siteId !== right_Entity_Def.siteId,
     updateValue: function updateValue() {}
-  }), _react.default.createElement(_shared.EditField, {
+  }), /*#__PURE__*/_react.default.createElement(_shared.EditField, {
     label: "Category",
-    value: s_leafCategory,
-    tooltipValue: s_newCategoyBreadcrumb.categoryBreadcrumb,
+    value: le_leafCategory,
+    tooltipValue: le_newCategoyBreadcrumb.categoryBreadcrumb,
     updateValue: updateSupervisorCategoryPath,
     isChanged: false,
     isDifferentValue: isCategoryPathDifferent,
     modalTitle: 'Edit category path',
     isEditable: isEnabledForCuration,
-    modalContent: _react.default.createElement(_shared.EditCategoryPath, {
-      currentCategory: s_newCategoyBreadcrumb.categoryBreadcrumb,
-      siteId: survivor_P_Def.siteId
+    updateShowDrawer: updateShowDrawer,
+    modalContent: /*#__PURE__*/_react.default.createElement(_shared.EditCategoryPath, {
+      currentCategory: le_newCategoyBreadcrumb.categoryBreadcrumb,
+      siteId: left_Entity_Def.siteId
     })
-  }), isEnabledForCuration && _react.default.createElement(_divider.default, null), isEnabledForCuration && _react.default.createElement("div", {
+  }), isEnabledForCuration && /*#__PURE__*/_react.default.createElement(_divider.default, null), isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", {
     className: "add-aspect-button-wrapper"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     size: "large",
     icon: "plus",
     onClick: function onClick(e) {
-      return setSupervisorNewAspectModalOpenVisibility(true);
+      setSupervisorNewAspectModalOpenVisibility(true);
+      updateShowDrawer(false);
     }
-  })), isEnabledForCuration && _react.default.createElement("div", null, s_aspectKeys.map(function (key) {
-    return s_aspects[key].map(function (aspectData, index) {
-      return _react.default.createElement(_shared.Aspect, {
-        key: "survivor-aspect-".concat(index),
-        aspect: aspectData,
-        placeholder: '',
-        isMultiSelect: true,
-        showSuggestions: showSuggestions,
-        showOriginalValues: showOriginalValues,
-        onAspectChange: onAspectChangeSurvivor,
-        aspectIdentifier: key,
-        differentValues: checkDiffValues(aspectData, key),
-        clusterPage: page,
-        handleCopy: handleCopySurvivor,
-        hightHash: hightHash,
-        updateAspectHights: updateAspectHights
-      });
+  })), isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", null, le_aspectKeys.map(function (key) {
+    return le_aspects[key].map(function (aspectData, index) {
+      if (!shouldRenderAspect(aspectData, re_hash)) {
+        return false;
+      } else {
+        return /*#__PURE__*/_react.default.createElement(_shared.AspectWrapper, {
+          hightHash: hightHash,
+          aspect: aspectData,
+          showSuggestions: showSuggestions,
+          showOriginalValues: showOriginalValues,
+          updateAspectHights: updateAspectHights
+        }, /*#__PURE__*/_react.default.createElement(_shared.Aspect, {
+          key: "survivor-aspect-".concat(index),
+          aspect: aspectData,
+          showSuggestions: showSuggestions,
+          showOriginalValues: showOriginalValues,
+          onAspectChange: onAspectChangeSurvivor,
+          aspectIdentifier: key,
+          differentValues: checkDiffValues(aspectData, key),
+          clusterPage: page,
+          handleCopy: handleCopySurvivor
+        }));
+      }
     });
-  })), !isEnabledForCuration && _react.default.createElement("div", null, s_aspectKeys.map(function (key) {
-    return s_aspects[key].map(function (aspectData) {
-      return _react.default.createElement("div", {
-        className: "attributes-read-only-section"
-      }, _react.default.createElement(_shared.FieldWithExtraInformation, {
-        label: aspectData.aspectName,
-        value: aspectData.currentValues.map(function (v) {
-          return v.value;
-        }).join(', '),
-        isChanged: false,
-        isDifferentValue: checkDiffValues(aspectData, key),
-        updateValue: function updateValue() {},
-        metadata: aspectData.aspectInformation
-      }));
+  })), !isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", null, le_aspectKeys.map(function (key) {
+    return le_aspects[key].map(function (aspectData) {
+      if (!shouldRenderAspect(aspectData, re_hash)) {
+        return false;
+      } else {
+        return /*#__PURE__*/_react.default.createElement("div", {
+          className: "attributes-read-only-section"
+        }, /*#__PURE__*/_react.default.createElement(_shared.AspectWrapper, {
+          hightHash: hightHash,
+          aspect: aspectData,
+          showSuggestions: showSuggestions,
+          showOriginalValues: showOriginalValues,
+          updateAspectHights: updateAspectHights
+        }, /*#__PURE__*/_react.default.createElement(_shared.FieldWithExtraInformation, {
+          label: aspectData.aspectName,
+          value: aspectData.currentValues.map(function (v) {
+            return v.value;
+          }).join(', '),
+          isChanged: false,
+          isDifferentValue: checkDiffValues(aspectData, key),
+          updateValue: function updateValue() {},
+          metadata: aspectData.aspectInformation
+        })));
+      }
     });
-  })), _react.default.createElement("section", {
+  })), /*#__PURE__*/_react.default.createElement("section", {
     className: "actions-section"
-  }, isEnabledForCuration && !s_isDeleted && _react.default.createElement("div", {
+  }, isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", {
     className: "toggles-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "toggle-btn"
-  }, _react.default.createElement(_switch.default, {
+  }, /*#__PURE__*/_react.default.createElement(_switch.default, {
     checked: showSuggestions,
     onChange: handleShowSuggestions
-  }), _react.default.createElement("label", null, "Show Suggestions")), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Show Suggestions")), /*#__PURE__*/_react.default.createElement("div", {
     className: "toggle-btn"
-  }, _react.default.createElement(_switch.default, {
+  }, /*#__PURE__*/_react.default.createElement(_switch.default, {
     checked: showOriginalValues,
     onChange: handleShowOriginals
-  }), _react.default.createElement("label", null, "Show Original values"))), isEnabledForCuration && _react.default.createElement(_popover.default, {
-    content: _react.default.createElement(_DecisionPopOver.default, {
-      comment: sData.product.productStatus.comment,
-      handleClose: handleCloseDeleteSurvivor,
-      handleSaveClick: handleSaveDeleteSurvivor
-    }),
-    trigger: "click",
-    visible: shouldBeVisibleSurvivor
-  }, _react.default.createElement(_button.default, {
-    className: "delete-left-side",
-    onClick: handleDeleteSupervisor
-  }, !s_isDeleted ? "Delete" : "Undo Delete")))), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Show Original values")), /*#__PURE__*/_react.default.createElement("div", {
+    className: "toggle-btn"
+  }, /*#__PURE__*/_react.default.createElement(_switch.default, {
+    checked: showEmptyAspects,
+    onChange: handleShowEmptyAspects
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Show empty aspects"))), !isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", {
+    className: "toggles-wrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "toggle-btn"
+  }, /*#__PURE__*/_react.default.createElement(_switch.default, {
+    checked: showEmptyAspects,
+    onChange: handleShowEmptyAspects
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Show empty aspects"))))), /*#__PURE__*/_react.default.createElement("div", {
     className: "product-wrapper"
-  }, v_isDeleted && _react.default.createElement("div", {
-    className: "deleted-product"
-  }, "Deleted"), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "item-surviving-title-wrapper"
-  }, _react.default.createElement("div", {
-    className: "item-surviving-title"
-  }, _react.default.createElement("strong", null, "Product"), isSurvivorProvided && _react.default.createElement("span", null, " (Victim)"))), _react.default.createElement(_shared.RegularField, {
-    label: 'Title',
-    value: v_title,
-    isChanged: false,
-    isDifferentValue: isTitleDifferent,
-    updateValue: handleVTitleChange
-  }), _react.default.createElement(_shared.ImageList, {
-    imageList: v_newImages.filter(function (image) {
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "item-surviving-title",
+    id: "right-title"
+  }, rightEntityIsPremiumQuality && /*#__PURE__*/_react.default.createElement("div", {
+    className: "item-surviving-icon"
+  }, /*#__PURE__*/_react.default.createElement(_tooltip.default, {
+    placement: "top",
+    title: 'Premium Quality Product'
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
+    type: "sketch",
+    style: {
+      color: '#2D69C3'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_tooltip.default, {
+    placement: "bottom",
+    title: re_title
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    className: "text-wrapper"
+  }, /*#__PURE__*/_react.default.createElement("strong", null, rightEntityHeader), /*#__PURE__*/_react.default.createElement("span", null, " ", rightHeaderPostfix))))), /*#__PURE__*/_react.default.createElement(_shared.ImageList, {
+    imageList: re_newImages.filter(function (image) {
       return !deletedImage(image);
     }),
     isChanged: false,
     isDifferentValue: false,
-    suggestedImagesData: v_newImages.filter(function (image) {
+    suggestedImagesData: re_newImages.filter(function (image) {
       return deletedImage(image);
     }),
     productData: {
-      category: v_newCategoyBreadcrumb.categoryBreadcrumb,
-      title: s_title,
-      brand: getAspectValue('Brand', v_hash),
-      color: getAspectValue('Color', v_hash)
+      category: re_newCategoyBreadcrumb.categoryBreadcrumb,
+      title: le_title,
+      brand: getAspectValue('Brand', re_hash),
+      color: getAspectValue('Color', re_hash)
     },
     handleSelectedImages: handleVictimSelectedImages,
-    isEditable: isEnabledForCuration
-  }), _react.default.createElement(_shared.LinkField, {
-    label: "EPID",
-    value: v_entityId,
-    url: v_entityUrl,
+    isEditable: isEnabledForCuration,
+    updateShowDrawer: updateShowDrawer
+  }), /*#__PURE__*/_react.default.createElement(_shared.LinkField, {
+    label: rightEntityUniqeIdLabel,
+    value: re_entityId,
+    url: re_entityUrl,
     isDifferentValue: false
-  }), _react.default.createElement(_shared.RegularField, {
+  }), jobType === 'matching' && /*#__PURE__*/_react.default.createElement(_shared.LinkField, {
+    label: 'VariationId',
+    value: rightEntityVariationId,
+    url: re_entityId,
+    isDifferentValue: false
+  }), jobType === 'matching' && /*#__PURE__*/_react.default.createElement(_shared.LinkField, {
+    label: 'Description',
+    value: rightItemDescription ? 'Show Description' : null,
+    onClickCallBack: function onClickCallBack() {
+      updateShowDrawer(false);
+      setIsRightDescriptionOpen(true);
+    },
+    isDifferentValue: false
+  }), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
+    modalVisibleState: isRightDescriptionOpen,
+    modalTitle: 'Item Description',
+    isOkDisabledInitialValue: true,
+    modalContent: /*#__PURE__*/_react.default.createElement("div", null, rightItemDescription),
+    width: 1000,
+    onOk: function onOk() {},
+    onCancel: onCancel,
+    okText: '',
+    isOkButtonVisible: false,
+    isCancelButtonVisible: false
+  }), /*#__PURE__*/_react.default.createElement(_shared.RegularField, {
     label: 'Site',
-    value: (0, _utils.getSiteById)(survivor_P_Def.siteId).name,
+    value: (0, _utils.getSiteById)(left_Entity_Def.siteId).name,
     isChanged: false,
-    isDifferentValue: survivor_P_Def.siteId !== victim_P_Def.siteId,
+    isDifferentValue: left_Entity_Def.siteId !== right_Entity_Def.siteId,
     updateValue: function updateValue() {}
-  }), _react.default.createElement(_shared.EditField, {
+  }), /*#__PURE__*/_react.default.createElement(_shared.EditField, {
     label: "Category",
-    value: v_leafCategory,
-    tooltipValue: v_newCategoyBreadcrumb.categoryBreadcrumb,
+    value: re_leafCategory,
+    tooltipValue: re_newCategoyBreadcrumb.categoryBreadcrumb,
     updateValue: updateVictimCategoryPath,
     isChanged: false,
     isDifferentValue: isCategoryPathDifferent,
     modalTitle: 'Edit category path',
     isEditable: isEnabledForCuration,
-    modalContent: _react.default.createElement(_shared.EditCategoryPath, {
-      currentCategory: s_newCategoyBreadcrumb.categoryBreadcrumb,
-      siteId: victim_P_Def.siteId
+    updateShowDrawer: updateShowDrawer,
+    modalContent: /*#__PURE__*/_react.default.createElement(_shared.EditCategoryPath, {
+      currentCategory: re_newCategoyBreadcrumb.categoryBreadcrumb,
+      siteId: right_Entity_Def.siteId
     })
-  }), isEnabledForCuration && _react.default.createElement(_divider.default, null), isEnabledForCuration && _react.default.createElement("div", {
+  }), isEnabledForCuration && /*#__PURE__*/_react.default.createElement(_divider.default, null), isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", {
     className: "add-aspect-button-wrapper"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     size: "large",
     icon: "plus",
     onClick: function onClick(e) {
-      return setVictimNewAspectModalOpenVisibility(true);
+      setRightEntityNewAspectModalOpenVisibility(true);
+      updateShowDrawer(false);
     }
-  })), isEnabledForCuration && _react.default.createElement("div", null, v_aspectKeys.map(function (key) {
-    return v_aspects[key].map(function (aspectData, index) {
-      return _react.default.createElement(_shared.Aspect, {
-        key: "victim-aspect-".concat(index),
-        aspect: aspectData,
-        placeholder: '',
-        isMultiSelect: true,
-        showSuggestions: showSuggestions,
-        showOriginalValues: showOriginalValues,
-        onAspectChange: onAspectChangeVictim,
-        aspectIdentifier: key,
-        differentValues: checkDiffValues(aspectData, key),
-        clusterPage: page,
-        handleCopy: handleCopyVictim,
-        hightHash: hightHash,
-        updateAspectHights: updateAspectHights
-      });
+  })), isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", null, re_aspectKeys.map(function (key) {
+    return re_aspects[key].map(function (aspectData, index) {
+      if (!shouldRenderAspect(aspectData, le_hash)) {
+        return false;
+      } else {
+        return /*#__PURE__*/_react.default.createElement(_shared.AspectWrapper, {
+          hightHash: hightHash,
+          aspect: aspectData,
+          showSuggestions: showSuggestions,
+          showOriginalValues: showOriginalValues,
+          updateAspectHights: updateAspectHights
+        }, /*#__PURE__*/_react.default.createElement(_shared.Aspect, {
+          key: "victim-aspect-".concat(index),
+          aspect: aspectData,
+          showSuggestions: showSuggestions,
+          showOriginalValues: showOriginalValues,
+          onAspectChange: onAspectChangeVictim,
+          aspectIdentifier: key,
+          differentValues: checkDiffValues(aspectData, key),
+          clusterPage: page,
+          handleCopy: handleCopyVictim
+        }));
+      }
     });
-  })), !isEnabledForCuration && _react.default.createElement("div", null, v_aspectKeys.map(function (key) {
-    return v_aspects[key].map(function (aspectData) {
-      return _react.default.createElement("div", {
-        className: "attributes-read-only-section"
-      }, _react.default.createElement(_shared.FieldWithExtraInformation, {
-        label: aspectData.aspectName,
-        value: aspectData.currentValues.map(function (v) {
-          return v.value;
-        }).join(', '),
-        isChanged: false,
-        isDifferentValue: checkDiffValues(aspectData, key),
-        updateValue: function updateValue() {},
-        metadata: aspectData.aspectInformation
-      }));
+  })), !isEnabledForCuration && /*#__PURE__*/_react.default.createElement("div", null, re_aspectKeys.map(function (key) {
+    return re_aspects[key].map(function (aspectData) {
+      if (!shouldRenderAspect(aspectData, le_hash)) {
+        return false;
+      } else {
+        return /*#__PURE__*/_react.default.createElement("div", {
+          className: "attributes-read-only-section"
+        }, /*#__PURE__*/_react.default.createElement(_shared.AspectWrapper, {
+          hightHash: hightHash,
+          aspect: aspectData,
+          showSuggestions: showSuggestions,
+          showOriginalValues: showOriginalValues,
+          updateAspectHights: updateAspectHights
+        }, /*#__PURE__*/_react.default.createElement(_shared.FieldWithExtraInformation, {
+          label: aspectData.aspectName,
+          value: aspectData.currentValues.map(function (v) {
+            return v.value;
+          }).join(', '),
+          isChanged: false,
+          isDifferentValue: checkDiffValues(aspectData, key),
+          updateValue: function updateValue() {},
+          metadata: aspectData.aspectInformation
+        })));
+      }
     });
-  })), _react.default.createElement("section", {
-    className: "actions-section"
-  }, _react.default.createElement(_DecisionMaker.default, {
-    option1Title: 'Duplicate',
-    option2Title: 'Skip',
-    option3Title: 'Not Duplicate',
-    reasons: reasons,
-    decision: decisionsData[page],
-    survivorEpid: s_entityId,
-    updateDecisions: updateDecisions,
-    buttonsToDisable: s_isDeleted || v_isDeleted ? ['Duplicate', 'Skip'] : [],
-    showSendToSupervisor: showSendToSupervisor
-  }), isEnabledForCuration && _react.default.createElement(_popover.default, {
-    content: _react.default.createElement(_DecisionPopOver.default, {
-      comment: vArray[page].product.productStatus.comment,
-      handleClose: handleCloseDeleteVictim,
-      handleSaveClick: handleSaveDeleteVictim
-    }),
-    trigger: "click",
-    visible: shouldBeVisibleVictim
-  }, _react.default.createElement(_button.default, {
-    onClick: handleDeleteVictim
-  }, !v_isDeleted ? "Delete" : "Undo Delete"))))), _react.default.createElement("div", {
-    className: "submit-wrapper"
-  }, _react.default.createElement(_popover.default, {
-    placement: "left",
-    content: decisionsData[page].selectedOption === null ? 'Decision should be selected before submit' : 'Submit decision and curation'
-  }, _react.default.createElement(_button.default, {
-    type: "primary",
-    disabled: decisionsData[page].selectedOption === null || vArray[page].prodDec.productDuplicateAction !== 'NON_DUPLICATES' && s_isDeleted || vArray[page].prodDec.productDuplicateAction !== 'NON_DUPLICATES' && v_isDeleted,
-    onClick: handleSubmitDuplication
-  }, "Submit"))), _react.default.createElement(_GenericModal.default, {
+  })))), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
     modalVisibleState: isSupervisorNewAspectModalOpen,
     modalTitle: 'Add New Aspect',
-    modalContent: _react.default.createElement(_shared.AddNewAspect, {
+    modalContent: /*#__PURE__*/_react.default.createElement(_shared.AddNewAspect, {
       isNewAspectModalOpen: isSupervisorNewAspectModalOpen,
-      checkAspectIsUnique: checkAspectIsUnique_s
+      checkAspectIsUnique: checkAspectIsUnique_re
     }),
     width: 500,
     onCancel: function onCancel(e) {
@@ -451,21 +612,109 @@ function Duplicates(_ref) {
     onOk: addNewAspectToSurvivor,
     okText: 'Add Aspect',
     isOkDisabledInitialValue: true
-  }), _react.default.createElement(_GenericModal.default, {
-    modalVisibleState: isVictimNewAspectModalOpen,
+  }), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
+    modalVisibleState: isRightEntityNewAspectModalOpen,
     modalTitle: 'Add New Aspect',
-    modalContent: _react.default.createElement(_shared.AddNewAspect, {
-      isNewAspectModalOpen: isVictimNewAspectModalOpen,
+    modalContent: /*#__PURE__*/_react.default.createElement(_shared.AddNewAspect, {
+      isNewAspectModalOpen: isRightEntityNewAspectModalOpen,
       checkAspectIsUnique: checkAspectIsUnique_v
     }),
     width: 500,
     onCancel: function onCancel(e) {
-      return setVictimNewAspectModalOpenVisibility(false);
+      return setRightEntityNewAspectModalOpenVisibility(false);
     },
     onOk: addNewAspectToVictim,
     okText: 'Add Aspect',
     isOkDisabledInitialValue: true
-  }));
+  }), /*#__PURE__*/_react.default.createElement(_drawer.default, {
+    placement: "bottom",
+    closable: true,
+    mask: false,
+    onClose: function onClose() {
+      return updateShowDrawer(!showDrawer);
+    },
+    visible: showDrawer,
+    height: 305
+  }, jobType === 'duplicates' && /*#__PURE__*/_react.default.createElement(_DrawerContentDuplicate.default, {
+    page: page,
+    shouldMakeObservation: shouldMakeObservation,
+    shouldMakeDecision: shouldMakeDecision,
+    rowId: rowId,
+    entitiesArray: entitiesArray,
+    leData: leftEntityData,
+    setPage: setPage,
+    reasons: reasons,
+    decisions: decisionsData,
+    survivorEpid: le_entityId,
+    updateDecisions: updateDecisions,
+    fetchNextCluster: getNextCluster,
+    showSendToSupervisor: showSendToSupervisor,
+    saveTask: startSaving,
+    jobTypeConfiguration: jobTypeConfiguration,
+    aspectsNames: allAspectsName,
+    applyAllCluster: applyAllCluster,
+    observationOptions: observationOptions,
+    removeSubmittedData: removeSubmittedData,
+    productIndicationSelectValues: productIndicationSelectValues,
+    showQaCheckbox: workMode === 'edit',
+    clusterRowIds: clusterRowIds
+  }), jobType === 'matching' && /*#__PURE__*/_react.default.createElement(_DrawerContentMatching.default, {
+    page: page,
+    rowId: rowId,
+    entitiesArray: entitiesArray,
+    leData: leftEntityData,
+    setPage: setPage,
+    reasons: reasons,
+    decisions: decisionsData,
+    survivorEpid: le_entityId,
+    updateDecisions: updateDecisions,
+    fetchNextCluster: getNextCluster,
+    showSendToSupervisor: showSendToSupervisor,
+    saveTask: startSaving,
+    jobTypeConfiguration: jobTypeConfiguration,
+    aspectsNames: allAspectsName,
+    applyAllCluster: applyAllCluster,
+    removeSubmittedData: removeSubmittedData,
+    showQaCheckbox: workMode === 'edit',
+    clusterRowIds: clusterRowIds
+  })));
+
+  function startSaving(shouldGetNextCluster, updatedTaskObject) {
+    if (shouldGetNextCluster) {
+      updateShowDrawer(false);
+    }
+
+    saveTask(shouldGetNextCluster, updatedTaskObject);
+  }
+
+  function initializingFixedPositionsAndReturnCallback() {
+    var rightTitle = document.getElementById('right-title');
+    var leftTitle = document.getElementById('left-title');
+    var openDrawerButton = document.getElementById('open-drawer-button');
+    var titleOffset = leftTitle.offsetHeight;
+    var openDrawerButtonOffset = openDrawerButton.offsetHeight;
+    var scrollCallBack = window.addEventListener('scroll', function () {
+      if (window.pageYOffset > titleOffset + 85) {
+        rightTitle.classList.add('sticky');
+        leftTitle.classList.add('sticky');
+      } else {
+        rightTitle.classList.remove('sticky');
+        leftTitle.classList.remove('sticky');
+      }
+
+      if (window.pageYOffset > openDrawerButtonOffset + 80) {
+        openDrawerButton.classList.add('sticky');
+      } else {
+        openDrawerButton.classList.remove('sticky');
+      }
+    });
+    return scrollCallBack;
+  }
+
+  function getNextCluster() {
+    updateShowDrawer(false);
+    fetchNextCluster();
+  }
 
   function openNotificationWithIcon(type, title, message) {
     _notification2.default[type]({
@@ -474,22 +723,8 @@ function Duplicates(_ref) {
     });
   }
 
-  function handleSubmitDuplication() {
-    saveTask({
-      comparedEntityRowContract: {
-        rowId: rowId,
-        entities: [sData].concat((0, _toConsumableArray2.default)(vArray)),
-        sendToSupervisor: decisionsData[page].decisionInfo.sendToSupervisor,
-        additionalInformationContract: {
-          additionalInformationDataList: decisionsData[page].decisionInfo.additionalInfo
-        }
-      }
-    });
-    window.scrollTo(0, 0);
-  }
-
-  function checkAspectIsUnique_s(newAspectName) {
-    var aspectsArray = sData.product.groupToAspectsMap;
+  function checkAspectIsUnique_re(newAspectName) {
+    var aspectsArray = leftEntityData.product.groupToAspectsMap;
     var allAspectKeys = Object.keys(aspectsArray).map(function (aspectGroupKey) {
       return aspectsArray[aspectGroupKey].map(function (aspectInfo) {
         return aspectInfo.aspectName;
@@ -499,7 +734,7 @@ function Duplicates(_ref) {
   }
 
   function checkAspectIsUnique_v(newAspectName) {
-    var aspectsArray = vArray[page].product.groupToAspectsMap;
+    var aspectsArray = entitiesArray[page].product.groupToAspectsMap;
     var allAspectKeys = Object.keys(aspectsArray).map(function (aspectGroupKey) {
       return aspectsArray[aspectGroupKey].map(function (aspectInfo) {
         return aspectInfo.aspectName;
@@ -509,7 +744,7 @@ function Duplicates(_ref) {
   }
 
   function addNewAspectToSurvivor(newAspectData) {
-    var tempSupervisorData = Object.assign({}, sData);
+    var tempSupervisorData = Object.assign({}, leftEntityData);
     var aspectsArray = tempSupervisorData.product.groupToAspectsMap;
 
     if (aspectsArray['Additional aspects'] === undefined) {
@@ -546,12 +781,12 @@ function Duplicates(_ref) {
         urls: []
       }
     });
-    setSdata(tempSupervisorData);
+    setLeftEntityData(tempSupervisorData);
     setSupervisorNewAspectModalOpenVisibility(false);
   }
 
   function addNewAspectToVictim(newAspectData) {
-    var tempVArray = Object.assign({}, vArray);
+    var tempVArray = Object.assign({}, entitiesArray);
     var aspectsArray = tempVArray[page].product.groupToAspectsMap;
 
     if (aspectsArray['Additional aspects'] === undefined) {
@@ -588,77 +823,109 @@ function Duplicates(_ref) {
         urls: []
       }
     });
-    setVarray(tempVArray);
-    setVictimNewAspectModalOpenVisibility(false);
+    setEntitiesArray(tempVArray);
+    setRightEntityNewAspectModalOpenVisibility(false);
   }
 
   function checkIfTitleIsDifferent() {
-    var v_title = vArray[page].product.groupToAspectsMap.Title[0].currentValues.map(function (item) {
+    var v_title = entitiesArray[page].product.groupToAspectsMap.Title[0].currentValues.map(function (item) {
       return item.value;
     }).join(', ');
-    var s_title = s_aspects.Title[0].currentValues.map(function (item) {
+    var s_title = le_aspects.Title[0].currentValues.map(function (item) {
       return item.value;
     }).join(', ');
     return v_title !== s_title;
   }
 
   function checkCategoryPath() {
-    var v_categoryBreadcrumb = vArray[page].product.productDefinition.categories.currentValues[0].categoryBreadcrumb;
-    var s_categoryBreadcrumb = sData.product.productDefinition.categories.newValues[0].categoryBreadcrumb;
+    var v_categoryBreadcrumb = entitiesArray[page].product.productDefinition.categories.currentValues[0].categoryBreadcrumb;
+    var s_categoryBreadcrumb = leftEntityData.product.productDefinition.categories.newValues[0].categoryBreadcrumb;
     return v_categoryBreadcrumb !== s_categoryBreadcrumb;
   }
 
   function updateVictimCategoryPath(updatedPath) {
-    var tempArray = Object.assign([], vArray);
+    var tempArray = (0, _cloneDeep.default)(entitiesArray);
     var data = JSON.parse(updatedPath.key);
-    tempArray[page].product.productDefinition.categories.categoryId = data.categoryId.toString();
+    tempArray[page].product.productDefinition.categories.newValues[0].categoryId = data.categoryId.toString();
     tempArray[page].product.productDefinition.categories.newValues[0].categoryBreadcrumb = data.categoryBreadcrumb;
     tempArray[page].product.productDefinition.categories.newValues[0].categoryId = Number(data.categoryId);
+    /**
+     * Variables:
+     * 1. updatedTaskObject
+     * 2. currentPage
+     * 3. decisionsData
+     */
+
     changeCategory({
-      comparedEntityRowContract: {
-        rowId: rowId,
-        entities: [sData].concat((0, _toConsumableArray2.default)(vArray))
-      },
+      comparedEntityRowContracts: clusterData.nextRowContract.comparedEntityRowContracts.map(function (contract, pageIndex) {
+        return {
+          rowId: contract.rowId,
+          entities: [leftEntityData, tempArray[pageIndex]],
+          sendToSupervisor: decisionsData[pageIndex].decisionInfo.sendToSupervisor,
+          comparedEntityRowQaContract: {
+            isQaed: decisionsData[pageIndex].decisionInfo.checkedAsQa
+          },
+          additionalInformationContract: {
+            additionalInformationDataList: decisionsData[pageIndex].decisionInfo.additionalInfo
+          }
+        };
+      }),
       changedEpid: tempArray[page].product.productDefinition.entityId,
       jobId: Number(jobId)
-    });
+    }, page, decisionsData);
     window.scrollTo(0, 0);
   }
 
   function updateSupervisorCategoryPath(updatedPath) {
-    var tempSupervisor = Object.assign({}, sData);
+    var tempSupervisor = (0, _cloneDeep.default)(leftEntityData);
     var data = JSON.parse(updatedPath.key);
     tempSupervisor.product.productDefinition.categories.categoryId = data.categoryId.toString();
     tempSupervisor.product.productDefinition.categories.newValues[0].categoryBreadcrumb = data.categoryBreadcrumb;
     tempSupervisor.product.productDefinition.categories.newValues[0].categoryId = Number(data.categoryId);
+    /**
+     * Variables:
+     * 1. updatedTaskObject
+     * 2. currentPage
+     * 3. decisionsData
+     */
+
     changeCategory({
-      comparedEntityRowContract: {
-        rowId: rowId,
-        entities: [sData].concat((0, _toConsumableArray2.default)(vArray))
-      },
+      comparedEntityRowContracts: clusterData.nextRowContract.comparedEntityRowContracts.map(function (contract, pageIndex) {
+        return {
+          rowId: contract.rowId,
+          entities: [tempSupervisor, entitiesArray[pageIndex]],
+          sendToSupervisor: decisionsData[pageIndex].decisionInfo.sendToSupervisor,
+          comparedEntityRowQaContract: {
+            isQaed: decisionsData[pageIndex].decisionInfo.checkedAsQa
+          },
+          additionalInformationContract: {
+            additionalInformationDataList: decisionsData[pageIndex].decisionInfo.additionalInfo
+          }
+        };
+      }),
       changedEpid: tempSupervisor.product.productDefinition.entityId,
       jobId: Number(jobId)
-    });
+    }, page, decisionsData);
     window.scrollTo(0, 0);
   }
 
   function handleSurvivorSelectedImages(updatedImageList) {
-    var tempSupervisor = Object.assign({}, sData);
+    var tempSupervisor = Object.assign({}, leftEntityData);
     tempSupervisor.product.productDefinition.images.newImages = updatedImageList;
     tempSupervisor.product.productDefinition.images.changed = true;
-    setSdata(tempSupervisor);
+    setLeftEntityData(tempSupervisor);
   }
 
   function handleVictimSelectedImages(updatedImageList) {
-    var tempArray = Object.assign([], vArray);
+    var tempArray = Object.assign([], entitiesArray);
     tempArray[page].product.productDefinition.images.newImages = updatedImageList;
     tempArray[page].product.productDefinition.images.changed = true;
-    setVarray(tempArray);
+    setEntitiesArray(tempArray);
   }
 
   function checkDiffValues(aspectData, aspectIdentifier) {
     // victim original aspect
-    var vAspect = vArray[page].product.groupToAspectsMap[aspectIdentifier].find(function (item) {
+    var vAspect = entitiesArray[page].product.groupToAspectsMap[aspectIdentifier].find(function (item) {
       return item.aspectName === aspectData.aspectName;
     });
     if (!vAspect) return false; // victim original values
@@ -667,7 +934,7 @@ function Duplicates(_ref) {
       return item.value;
     }); // survivor original aspect
 
-    var sAspect = survivorData.product.groupToAspectsMap[aspectIdentifier].find(function (item) {
+    var sAspect = leftEntityProp.product.groupToAspectsMap[aspectIdentifier].find(function (item) {
       return item.aspectName === aspectData.aspectName;
     });
     if (!sAspect) return false; // survivor original valus
@@ -706,46 +973,6 @@ function Duplicates(_ref) {
     return flag;
   }
 
-  function handleDeleteVictim() {
-    var tempArray = Object.assign([], vArray);
-    tempArray[page].product.productStatus.comment = '';
-    tempArray[page].product.productStatus.status = v_isDeleted ? null : 'DELETE';
-    setVarray(tempArray);
-    updateShouldBeVisibleVictim(!v_isDeleted);
-  }
-
-  function handleDeleteSupervisor() {
-    var tempSurvivorData = Object.assign({}, sData);
-    tempSurvivorData.product.productStatus.comment = '';
-    tempSurvivorData.product.productStatus.status = s_isDeleted ? null : 'DELETE';
-    setSdata(tempSurvivorData);
-    updateShouldBeVisibleSurvivor(!s_isDeleted);
-  }
-
-  function handleSaveDeleteSurvivor(updatedComment) {
-    var tempSurvivorData = Object.assign({}, sData);
-    tempSurvivorData.product.productStatus.comment = updatedComment;
-    tempSurvivorData.product.productStatus.status = 'DELETE';
-    setSdata(tempSurvivorData);
-    updateShouldBeVisibleSurvivor(false);
-  }
-
-  function handleSaveDeleteVictim(updatedComment) {
-    var tempArray = Object.assign([], vArray);
-    tempArray[page].product.productStatus.comment = updatedComment;
-    tempArray[page].product.productStatus.status = 'DELETE';
-    setVarray(tempArray);
-    updateShouldBeVisibleVictim(false);
-  }
-
-  function handleCloseDeleteVictim() {
-    updateShouldBeVisibleVictim(false);
-  }
-
-  function handleCloseDeleteSurvivor() {
-    updateShouldBeVisibleSurvivor(false);
-  }
-
   function getAspectValue(aspectName, readHashMap) {
     var values = (0, _get.default)(readHashMap[aspectName], 'propertyDecisionContract.suggestedValues', []);
 
@@ -774,51 +1001,127 @@ function Duplicates(_ref) {
     Object.keys(s_hash).forEach(function (key) {
       hightHash[key] = 59;
     });
-    Object.keys(v_hash).forEach(function (key) {
-      hightHash[key] = 59;
-    });
     return hightHash;
   }
 
-  function handleVTitleChange(newValue) {
-    var tempArray = Object.assign([], vArray);
-    tempArray[page].product.groupToAspectsMap.productTitle = newValue;
-    setVarray(tempArray);
-  }
-
   function updateDecisions(updatedDecision) {
-    var updatedCluster = decisionsData.map(function (item) {
-      return item.victimEpid === updatedDecision.victimEpid ? updatedDecision : item;
-    });
-    setDecisionsData(updatedCluster);
-    var reasonHash = {
-      'op-1': 'DUPLICATES',
-      'op-2': 'SKIP',
-      'op-3': 'NON_DUPLICATES'
-    };
-    var tempArray = Object.assign([], vArray);
-    tempArray[page].prodDec = {
-      productDuplicateAction: reasonHash[updatedCluster[page].selectedOption],
-      decisionContract: {
-        reason: updatedCluster[page].decisionInfo.reason.value,
-        reasonDetails: '',
-        comment: updatedCluster[page].decisionInfo.comment.value,
-        urls: updatedCluster[page].decisionInfo.urls.map(function (item) {
-          return {
-            name: item.name,
-            url: item.url
-          };
-        }),
-        additionalInfo: updatedCluster[page].decisionInfo.additionalInfo.map(function (item) {
-          return {
-            name: item.label,
-            value: item.value,
-            mandatory: item.mandatory
-          };
-        })
+    function updateCluster(page, cluster, updatedDecision, isLeftItem) {
+      var rightId = updatedDecision.rightEntityId;
+      var leftId = updatedDecision.leftEntityId;
+
+      switch (jobType) {
+        case 'duplicates':
+          cluster[page] = cluster[page].rightEntityId === rightId ? updatedDecision : cluster;
+          break;
+
+        case 'matching':
+          if (isLeftItem) {
+            cluster[page] = cluster[page].leftEntityId === leftId ? updatedDecision : cluster;
+          } else {
+            cluster[page] = cluster[page].rightEntityId === rightId ? updatedDecision : cluster;
+          }
+
+          break;
+
+        default:
       }
-    };
-    setVarray(tempArray);
+
+      return cluster;
+    }
+
+    var updatedCluster = (0, _cloneDeep.default)(decisionsData);
+    updatedCluster = updateCluster(page, updatedCluster, updatedDecision, isLeftItem);
+    setDecisionsData(updatedCluster);
+
+    if (jobType === 'matching') {
+      var reasonHash = {
+        option1: 'CORRECT',
+        option2: 'SKIP',
+        option3: 'WRONG'
+      };
+
+      if (isLeftItem) {
+        leftEntityData.itemDecision = {
+          itemAction: reasonHash[updatedCluster[page].selectedOption],
+          reason: updatedCluster[page].decisionInfo.reason.value,
+          reasonDetails: (0, _get.default)(updatedCluster[page], 'decisionInfo.reasonDetails.value', ''),
+          comment: updatedCluster[page].decisionInfo.comment.value,
+          urls: updatedCluster[page].decisionInfo.urls.map(function (item) {
+            return {
+              name: item.name,
+              url: item.url
+            };
+          }),
+          additionalInfo: updatedCluster[page].decisionInfo.additionalInfo.map(function (item) {
+            return {
+              name: item.label,
+              value: item.value,
+              mandatory: item.mandatory
+            };
+          })
+        };
+        setLeftEntityData(leftEntityData);
+      }
+
+      if (isRightItem) {
+        var tempArray = Object.assign([], entitiesArray);
+        tempArray[page].itemDecision = {
+          itemAction: reasonHash[updatedCluster[page].selectedOption],
+          reason: updatedCluster[page].decisionInfo.reason.value,
+          reasonDetails: (0, _get.default)(updatedCluster[page], 'decisionInfo.reasonDetails.value', ''),
+          comment: updatedCluster[page].decisionInfo.comment.value,
+          urls: updatedCluster[page].decisionInfo.urls.map(function (item) {
+            return {
+              name: item.name,
+              url: item.url
+            };
+          }),
+          additionalInfo: updatedCluster[page].decisionInfo.additionalInfo.map(function (item) {
+            return {
+              name: item.label,
+              value: item.value,
+              mandatory: item.mandatory
+            };
+          })
+        };
+        setEntitiesArray(tempArray);
+      }
+    }
+
+    if (jobType === 'duplicates') {
+      var _tempArray = Object.assign([], entitiesArray);
+
+      var _reasonHash = {
+        option1: 'DUPLICATES',
+        option2: 'SKIP',
+        option3: 'NON_DUPLICATES'
+      };
+      _tempArray[page].prodDec = {
+        productDuplicateAction: _reasonHash[updatedCluster[page].selectedOption],
+        decisionContract: {
+          reason: null,
+          // used only in matching task
+          observation: updatedCluster[page].decisionInfo.observation.value,
+          reasonDetails: (0, _get.default)(updatedCluster[page], 'decisionInfo.reasonDetails.value', ''),
+          comment: updatedCluster[page].decisionInfo.comment.value,
+          urls: updatedCluster[page].decisionInfo.urls.map(function (item) {
+            return {
+              name: item.name,
+              url: item.url,
+              indication: item.indication
+            };
+          }),
+          additionalInfo: updatedCluster[page].decisionInfo.additionalInfo.map(function (item) {
+            return {
+              name: item.label,
+              value: item.value,
+              mandatory: item.mandatory
+            };
+          })
+        }
+      };
+      setEntitiesArray(_tempArray);
+    }
   }
 
   function updateAspectHights(aspectName, newHight) {
@@ -831,7 +1134,7 @@ function Duplicates(_ref) {
   }
 
   function onAspectChangeVictim(aspectData, aspectIdentifer) {
-    var tempVictimArray = Object.assign([], vArray);
+    var tempVictimArray = Object.assign([], entitiesArray);
     var arr = tempVictimArray[page].product.groupToAspectsMap[aspectIdentifer];
 
     for (var i = 0; i < arr.length; i++) {
@@ -840,11 +1143,11 @@ function Duplicates(_ref) {
       }
     }
 
-    setVarray(tempVictimArray);
+    setEntitiesArray(tempVictimArray);
   }
 
   function onAspectChangeSurvivor(aspectData, aspectIdentifer) {
-    var tempSurvivorData = Object.assign({}, sData);
+    var tempSurvivorData = Object.assign({}, leftEntityData);
     var arr = tempSurvivorData.product.groupToAspectsMap[aspectIdentifer];
 
     for (var i = 0; i < arr.length; i++) {
@@ -853,7 +1156,7 @@ function Duplicates(_ref) {
       }
     }
 
-    setSdata(tempSurvivorData);
+    setLeftEntityData(tempSurvivorData);
   }
 
   function handleShowSuggestions(checked, e) {
@@ -864,8 +1167,12 @@ function Duplicates(_ref) {
     setShowOriginalValues(checked);
   }
 
+  function handleShowEmptyAspects(checked, e) {
+    setShowEmptyAspects(checked);
+  }
+
   function handleCopySurvivor(aspectValue, aspectName, group) {
-    var tempArray = Object.assign([], vArray);
+    var tempArray = Object.assign([], entitiesArray);
     var aspectGroup = (0, _get.default)(tempArray, "[".concat(page, "].product.groupToAspectsMap[").concat(group, "]"), '');
     var indentifierIndex = aspectGroup.map(function (item) {
       return item.aspectName;
@@ -886,11 +1193,11 @@ function Duplicates(_ref) {
         crawlingValue: false
       }
     });
-    return setVarray(tempArray);
+    return setEntitiesArray(tempArray);
   }
 
   function handleCopyVictim(aspectValue, aspectName, group) {
-    var tempArray = Object.assign({}, sData);
+    var tempArray = Object.assign({}, leftEntityData);
     var aspectGroup = (0, _get.default)(tempArray, "product.groupToAspectsMap[".concat(group, "]"), '');
     var indentifierIndex = aspectGroup.map(function (item) {
       return item.aspectName;
@@ -911,21 +1218,75 @@ function Duplicates(_ref) {
         crawlingValue: false
       }
     });
-    return setSdata(tempArray);
+    return setLeftEntityData(tempArray);
   }
 
   function deletedImage(image) {
-    return image.imageDecisionContract && (0, _get.default)(image, 'imageDecisionContract.action', null) && (0, _get.default)(image, 'imageDecisionContract.action', '') === 'DELETED';
+    return image.imageDecisionContract && (0, _get.default)(image, 'imageDecisionContract.action', null) === 'DELETED';
+  }
+
+  function applyAllCluster(currentDecision) {
+    var updatedCluster = decisionsData.map(function (item) {
+      var clonedItem = (0, _cloneDeep.default)(item);
+      clonedItem.decisionInfo.reason = currentDecision.decisionInfo.reason;
+      clonedItem.selectedOption = currentDecision.selectedOption;
+      return clonedItem;
+    });
+    setDecisionsData(updatedCluster);
+
+    _notification2.default.success({
+      message: "Action Success",
+      description: 'Skip was apply to all pairs in cluster ',
+      placement: 'topRight'
+    });
+  }
+
+  function onCancel() {
+    setIsLeftDescriptionOpen(false);
+    setIsRightDescriptionOpen(false);
+  } // remove a single pair from the cluster when it is checked for supervisor.
+  // update all relevant arrays to remove that pair representaiton from the cluster.
+
+
+  function removeSubmittedData() {
+    var tempClusterData = (0, _cloneDeep.default)(clusterData);
+    var tempDecisions = (0, _cloneDeep.default)(decisionsData);
+    var tempEntitiesArray = (0, _cloneDeep.default)(entitiesArray);
+    tempDecisions.splice(page, 1);
+    tempEntitiesArray.splice(page, 1);
+    tempClusterData.nextRowContract.comparedEntityRowContracts.splice(page, 1);
+    setPage(page !== 0 ? page - 1 : page);
+    setDecisionsData(tempDecisions);
+    setEntitiesArray(tempEntitiesArray);
+    updateClusterData(tempClusterData);
+  }
+
+  function shouldRenderAspect(aspect, hash) {
+    //aspect should be hidden if empty (on both products) and showEmptyAspects flag is false
+    if (hash[aspect.aspectName] && isAspectEmptyOnBothProducts(aspect, hash) && !showEmptyAspects) {
+      return false;
+    } else if (!hash[aspect.aspectName] && !aspect.propertyDecisionContract.suggestedValues.length && !showEmptyAspects) {
+      //aspect exists only on one of the products
+      return false;
+    }
+
+    return true;
+  }
+
+  function isAspectEmptyOnBothProducts(aspect, hash) {
+    return !hash[aspect.aspectName].propertyDecisionContract.suggestedValues.length && !aspect.propertyDecisionContract.suggestedValues.length;
+  }
+
+  function createDuplicatesRightHeaderPostfix() {
+    return isSurvivorProvided ? "(Victim) : ".concat(re_title) : "2 : ".concat(re_title);
+  }
+
+  function createDuplicatesLeftHeaderPostfix() {
+    return isSurvivorProvided ? "(Survivor) : ".concat(le_title) : "1 : ".concat(le_title);
   }
 }
 
 Duplicates.propTypes = {
-  /** survivorData - data object for the survivor  */
-  survivorData: _propTypes.default.object.isRequired,
-
-  /** victimArray - array of object for the victims , currently we only have one victim in the array */
-  victimArray: _propTypes.default.array.isRequired,
-
   /** rowsDone - object representing total rows done and total done today */
   rowsDone: _propTypes.default.object.isRequired,
 
@@ -935,17 +1296,14 @@ Duplicates.propTypes = {
   /** reasons - set of reasons for duplicate page, currently supporting duplicate, skip and not duplicate */
   reasons: _propTypes.default.object.isRequired,
 
-  /** rowId - represent the id of the row of the task */
-  rowId: _propTypes.default.string.isRequired,
-
-  /** saveTask - callback function used to save the updated/curated products */
+  /** saveTask - callback function used to save the updated/curated product pair */
   saveTask: _propTypes.default.func.isRequired,
 
   /** changeCategory - callback function used to change the product category */
   changeCategory: _propTypes.default.func.isRequired,
 
   /** jobId - the job id of the task */
-  jobId: _propTypes.default.number.isRequired,
+  jobId: _propTypes.default.string.isRequired,
 
   /** jobTypeConfiguration - the configuration that was used when the task was created */
   jobTypeConfiguration: _propTypes.default.object.isRequired,
@@ -953,16 +1311,16 @@ Duplicates.propTypes = {
   /** workMode - string variable that indicate page mode */
   workMode: _propTypes.default.string,
 
-  /** escalatedInfo - object used to show or hide the escelated by string */
-  escalatedInfo: _propTypes.default.object,
-
   /** loggedInUser - logged in user data */
-  loggedInUser: _propTypes.default.object.isRequired
+  loggedInUser: _propTypes.default.object.isRequired,
+
+  /** currentPage - used in cluster mode to indeicate on which page we are, important when we change category from some page in the cluster and want to return to this page */
+  currentPage: _propTypes.default.number
 };
 Duplicates.defaultProps = {
   workMode: 'regular',
-  escalatedInfo: null,
   loggedInUser: {
     isUserSupervisor: false
-  }
+  },
+  currentPage: 0
 };

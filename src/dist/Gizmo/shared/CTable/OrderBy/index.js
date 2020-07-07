@@ -27,7 +27,7 @@ function OrderBy(_ref) {
     orderByChange(value);
   }
 
-  return _react.default.createElement(_select.default, {
+  return /*#__PURE__*/_react.default.createElement(_select.default, {
     showSearch: true,
     allowClear: false,
     style: {
@@ -43,7 +43,7 @@ function OrderBy(_ref) {
   }, options.filter(function (item) {
     return !item.excludeOrderBy;
   }).map(function (item) {
-    return _react.default.createElement(Option, {
+    return /*#__PURE__*/_react.default.createElement(Option, {
       key: item.dataIndex,
       value: item.dataIndex
     }, item.title);

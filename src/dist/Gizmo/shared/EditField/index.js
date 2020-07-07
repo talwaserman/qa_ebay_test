@@ -36,7 +36,8 @@ function EditField(_ref) {
       isDifferentValue = _ref.isDifferentValue,
       modalTitle = _ref.modalTitle,
       modalContent = _ref.modalContent,
-      isEditable = _ref.isEditable;
+      isEditable = _ref.isEditable,
+      updateShowDrawer = _ref.updateShowDrawer;
 
   var _useState = (0, _react.useState)(false),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -44,27 +45,27 @@ function EditField(_ref) {
       setEditCategoryModalVisible = _useState2[1];
 
   var styleClasses = "edit-field-wrapper ".concat(isChanged && 'changed-value', " ").concat(isDifferentValue && 'different-value');
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: styleClasses
-  }, _react.default.createElement("strong", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("strong", null, /*#__PURE__*/_react.default.createElement("label", {
     className: "label"
-  }, label)), tooltipValue && _react.default.createElement(_tooltip.default, {
+  }, label)), tooltipValue && /*#__PURE__*/_react.default.createElement(_tooltip.default, {
     placement: "top",
     title: tooltipValue
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "field-value"
-  }, value)), !tooltipValue && _react.default.createElement(_tooltip.default, {
+  }, value)), !tooltipValue && /*#__PURE__*/_react.default.createElement(_tooltip.default, {
     placement: "top",
     title: value
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "field-value"
-  }, value)), _react.default.createElement("div", {
+  }, value)), /*#__PURE__*/_react.default.createElement("div", {
     className: "button-wrapper"
-  }, isEditable && _react.default.createElement(_button.default, {
+  }, isEditable && /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     icon: "edit",
     onClick: editCategoryClickHandler
-  })), _react.default.createElement(_GenericModal.default, {
+  })), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
     modalVisibleState: isEditCategoryModalVisible,
     modalTitle: modalTitle,
     modalContent: modalContent,
@@ -76,6 +77,7 @@ function EditField(_ref) {
 
   function editCategoryClickHandler() {
     setEditCategoryModalVisible(true);
+    updateShowDrawer(false);
   }
 
   function onCancelEditModal() {
@@ -111,11 +113,14 @@ EditField.propTypes = {
   isDifferentValue: _propTypes.default.bool,
 
   /**  isEditable - indicates whether the element can be edited or not*/
-  isEditable: _propTypes.default.bool
+  isEditable: _propTypes.default.bool,
+
+  /** updateShowDrawer - funciton used to update the drawer visibility, needed to prevent scrolling stuck */
+  updateShowDrawer: _propTypes.default.func.isRequired
 };
 EditField.defaultProps = {
   isDifferentValue: false,
   modalTitle: '',
-  modalContent: _react.default.createElement("div", null),
+  modalContent: /*#__PURE__*/_react.default.createElement("div", null),
   isEditable: true
 };

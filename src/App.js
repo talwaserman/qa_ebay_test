@@ -1,12 +1,15 @@
 import React from 'react';
 import Duplicates from './dist/Gizmo/pages/DuplicatesPage/Duplicates';
-import { mockDecisions, mockReasons } from './dist/Gizmo/shared/DecisionMaker/mock';
 import {
-  mockSurvivorData,
-  mockVictimArray,
+  reasonDuplicateMock,
+  mockDuplicateDecisions
+} from './dist/Gizmo/pages/DuplicatesPage/Duplicates/DrawerContentMatching/mock';
+
+import {
   mockConfigurationAllEnabled,
-  mockAgent
-} from './dist/Gizmo/pages/DuplicatesPage/Duplicates/mock';
+  mockAgent,
+  clusterMockData
+} from './dist/Gizmo/pages/DuplicatesPage/Duplicates/mockDuplicates.mock';
 
 import 'antd/dist/antd.css';
 
@@ -14,17 +17,21 @@ function App() {
   return (
     <div className="App">
       <Duplicates
-          survivorData={mockSurvivorData}
-          victimArray={mockVictimArray}
-          decisions={mockDecisions}
-          reasons={mockReasons}
+          clusterData={clusterMockData}
+          updateClusterData={() => {}}
+          decisions={mockDuplicateDecisions}
+          reasons={reasonDuplicateMock}
           jobTypeConfiguration={mockConfigurationAllEnabled}
-          jobId={2541}
-          rowsDone={{ totalDoneToday: 10, totalDone: 100 }}
+          jobId={clusterMockData.jobId}
+          rowsDone={{
+            totalDoneToday: clusterMockData.doneRowsContract.totalDoneToday,
+            totalDone: clusterMockData.doneRowsContract.totalDone
+          }}
           loggedInUser={mockAgent}
-          rowId={'123445af764e65fb22a16e'}
           saveTask={() => {}}
+          saveAll={() => {}}
           changeCategory={() => {}}
+          fetchNextCluster={() => {}}
         />
     </div>
   );

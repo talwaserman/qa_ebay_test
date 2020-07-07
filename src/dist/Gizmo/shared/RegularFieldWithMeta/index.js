@@ -7,13 +7,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = RegularFieldWithMeta;
 
-require("antd/es/tooltip/style/css");
-
-var _tooltip = _interopRequireDefault(require("antd/es/tooltip"));
-
 require("antd/es/icon/style/css");
 
 var _icon = _interopRequireDefault(require("antd/es/icon"));
+
+require("antd/es/tooltip/style/css");
+
+var _tooltip = _interopRequireDefault(require("antd/es/tooltip"));
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -27,28 +27,33 @@ function RegularFieldWithMeta(_ref) {
   var label = _ref.label,
       value = _ref.value,
       isDifferentValue = _ref.isDifferentValue,
-      metadata = _ref.metadata;
+      metadata = _ref.metadata,
+      showBlankAspect = _ref.showBlankAspect,
+      blankAspectHight = _ref.blankAspectHight;
   var styleClasses = isDifferentValue ? 'regular-field-wrapper different-value' : 'regular-field-wrapper';
   var aspectMetadata = (0, _utils.getAspectMetadata)(metadata);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: styleClasses
-  }, _react.default.createElement("strong", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("strong", null, /*#__PURE__*/_react.default.createElement("label", {
     className: "aspect-title-wrapper"
-  }, _react.default.createElement("strong", null, label, !aspectMetadata.umsAlignedAspect && _react.default.createElement(_tooltip.default, {
+  }, /*#__PURE__*/_react.default.createElement("strong", null, /*#__PURE__*/_react.default.createElement(_tooltip.default, {
+    placement: "top",
+    title: label
+  }, (0, _utils.shortedText)(label, 18)), !aspectMetadata.umsAlignedAspect && /*#__PURE__*/_react.default.createElement(_tooltip.default, {
     placement: "top",
     title: 'Aspect not aligned with UMS'
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: "aspect-not-aligned"
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     type: "info-circle"
-  }))), aspectMetadata.isRequired && _react.default.createElement("span", {
+  }))), aspectMetadata.isRequired && /*#__PURE__*/_react.default.createElement("span", {
     className: "required-icon"
-  }, "*")), _react.default.createElement("div", {
+  }, "*")), /*#__PURE__*/_react.default.createElement("div", {
     className: "importance-level"
-  }, aspectMetadata.levelOfImportance, _react.default.createElement("span", null, aspectMetadata.isMultiValue ? '[M]' : '')))), _react.default.createElement(_tooltip.default, {
+  }, aspectMetadata.levelOfImportance, /*#__PURE__*/_react.default.createElement("span", null, aspectMetadata.isMultiValue ? '[M]' : '')))), /*#__PURE__*/_react.default.createElement(_tooltip.default, {
     placement: "top",
     title: value
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "field-value"
   }, value)));
 }

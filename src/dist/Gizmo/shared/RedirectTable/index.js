@@ -13,6 +13,8 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _get = _interopRequireDefault(require("lodash/get"));
+
 var _shared = require("../../shared");
 
 var _services = require("./services");
@@ -20,7 +22,10 @@ var _services = require("./services");
 require("./style.less");
 
 function RedirectTable() {
-  var _useState = (0, _react.useState)({}),
+  var _useState = (0, _react.useState)({
+    allSelectedRowIds: {},
+    allSelectedRows: {}
+  }),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       checkBoxData = _useState2[0],
       setCheckBoxData = _useState2[1];
@@ -59,11 +64,11 @@ function RedirectTable() {
     dataIndex: 'total',
     filterType: null
   }];
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "redirect-table"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "export-btn"
-  }, _react.default.createElement(_shared.ControlledBtn, {
+  }, /*#__PURE__*/_react.default.createElement(_shared.ControlledBtn, {
     isDisabled: checkBoxDataValues().length === 0,
     loading: false,
     iconImage: 'file-excel',
@@ -72,12 +77,12 @@ function RedirectTable() {
       return clickHandlerFunctions();
     },
     loadingDelay: 5000
-  })), _react.default.createElement(_shared.CTable, {
+  })), /*#__PURE__*/_react.default.createElement(_shared.CTable, {
     columnConfig: columnConfig,
     fetchData: _services.fetchData,
     initialOrderBy: 'creationDate' //TODO remove this..
     ,
-    checkBoxData: checkBoxData,
+    checkBoxData: checkBoxData.allSelectedRowIds,
     setCheckBoxData: setCheckBoxData,
     checkBoxIdentifier: 'redirectHeaderId',
     extractData: extractData,
@@ -105,10 +110,13 @@ function RedirectTable() {
 
   function clickHandlerFunctions() {
     (0, _services.exportExcelfile)(checkBoxDataValues());
-    setCheckBoxData({});
+    setCheckBoxData({
+      allSelectedRowIds: {},
+      allSelectedRows: {}
+    });
   }
 
   function checkBoxDataValues() {
-    return Object.values(checkBoxData).flat(1);
+    return Object.values((0, _get.default)(checkBoxData, 'allSelectedRowIds', {})).flat(1);
   }
 }

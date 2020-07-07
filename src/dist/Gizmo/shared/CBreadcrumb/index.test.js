@@ -11,7 +11,7 @@ var _addonKnobs = require("@storybook/addon-knobs");
 var _index = _interopRequireDefault(require("./index"));
 
 it('gizmo shared - CBreadcrumb', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     path: (0, _addonKnobs.array)('path', ['test', 'test2', 'test3'])
   })).toJSON();
 

@@ -17,16 +17,16 @@ require("./style.less");
 
 function ReasonSelect(_ref) {
   var deleteAspect = _ref.deleteAspect;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "reason-select-wrapper"
-  }, _react.default.createElement("div", null, "Delete Reason:"), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", null, "Delete Reason:"), /*#__PURE__*/_react.default.createElement("div", {
     className: "delete-btn-wrapper"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "default",
     onClick: function onClick(e) {
       return clickHandler('NA');
     }
-  }, "Not applicable"), _react.default.createElement(_button.default, {
+  }, "Not applicable"), /*#__PURE__*/_react.default.createElement(_button.default, {
     type: "default",
     onClick: function onClick(e) {
       return clickHandler('NF');

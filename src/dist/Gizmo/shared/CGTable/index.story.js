@@ -22,23 +22,27 @@ var sortedInfo = {};
 var columnConfig = [{
   title: 'Notification Type',
   dataIndex: 'type',
-  sortOrder: sortedInfo.columnKey === 'type' && sortedInfo.order
+  sortOrder: sortedInfo.columnKey === 'type' && sortedInfo.order,
+  filterType: 'text'
 }, {
   title: 'Activity',
   dataIndex: 'activity',
-  sortOrder: sortedInfo.columnKey === 'activity' && sortedInfo.order
+  sortOrder: sortedInfo.columnKey === 'activity' && sortedInfo.order,
+  filterType: 'text'
 }, {
   title: 'User Assigned',
   dataIndex: 'users',
   render: function render(assingedUsers) {
-    return _react.default.createElement("p", null, assingedUsers.map(function (assignedUser) {
+    return assingedUsers.map(function (assignedUser) {
       return assignedUser.display + ' ';
-    }));
+    }).join('');
   },
-  sortOrder: sortedInfo.columnKey === 'users' && sortedInfo.order
+  sortOrder: sortedInfo.columnKey === 'users' && sortedInfo.order,
+  filterType: 'text'
 }, {
   title: '',
-  dataIndex: ''
+  dataIndex: '',
+  filterType: ''
 }];
 
 function _onSortInfoChange(sortInfoData) {
@@ -59,12 +63,12 @@ function reloadTable() {
     viewports: _addonViewport.INITIAL_VIEWPORTS
   }
 }).addDecorator(_addonKnobs.withKnobs).addDecorator(_addonInfo.withInfo).add('default', function () {
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "story-wrapper",
     style: {
       width: '100%'
     }
-  }, _react.default.createElement(_index.default, {
+  }, /*#__PURE__*/_react.default.createElement(_index.default, {
     columnConfig: columnConfig,
     tableData: _mock.mockTableData,
     size: 'small',

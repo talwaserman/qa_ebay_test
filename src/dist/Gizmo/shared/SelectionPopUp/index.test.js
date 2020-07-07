@@ -16,7 +16,7 @@ var dropDownValuesArray = [{
   name: 'racheli test 2'
 }];
 it('Gizmo shared - SelectionPopUp', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     dropDownValuesArray: dropDownValuesArray,
     selectPlaceHolder: 'Configuration',
     inputLabel: 'Task Name',

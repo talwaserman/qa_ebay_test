@@ -31,27 +31,27 @@ function CPieChart(_ref) {
   return renderPieChart();
 
   function renderEmptyResults() {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "piechart-wrapper"
-    }, _react.default.createElement(LabelDraw, {
+    }, /*#__PURE__*/_react.default.createElement(LabelDraw, {
       className: 'piechart-label',
       label: data.label
-    }), _react.default.createElement(LabelDraw, {
+    }), /*#__PURE__*/_react.default.createElement(LabelDraw, {
       className: 'piechart-label-na',
       label: 'N/A'
     }));
   }
 
   function renderPieChart() {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "piechart-wrapper"
-    }, _react.default.createElement(LabelDraw, {
+    }, /*#__PURE__*/_react.default.createElement(LabelDraw, {
       className: 'piechart-label',
       label: data.label
-    }), _react.default.createElement(_recharts.PieChart, {
+    }), /*#__PURE__*/_react.default.createElement(_recharts.PieChart, {
       width: width,
       height: height
-    }, _react.default.createElement(_recharts.Pie, {
+    }, /*#__PURE__*/_react.default.createElement(_recharts.Pie, {
       dataKey: "value",
       label: renderActiveShape,
       data: data.drawingData.outerCircle,
@@ -60,7 +60,7 @@ function CPieChart(_ref) {
       innerRadius: innerRadius,
       outerRadius: outerRadius
     }, data.drawingData.outerCircle.map(function (entry, index) {
-      return _react.default.createElement(_recharts.Cell, {
+      return /*#__PURE__*/_react.default.createElement(_recharts.Cell, {
         key: index,
         fill: data.drawingConfig.color[data.drawingData.outerCircle[index].label],
         total: data.drawingData.innerCircle.data,
@@ -72,7 +72,7 @@ function CPieChart(_ref) {
   function LabelDraw(_ref2) {
     var className = _ref2.className,
         label = _ref2.label;
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: className
     }, label);
   }
@@ -100,13 +100,13 @@ function CPieChart(_ref) {
     var ex = mx + (cos >= 0 ? 1 : -1) * 22;
     var ey = my;
     var textAnchor = cos >= 0 ? 'start' : 'end';
-    return _react.default.createElement("g", null, _react.default.createElement("text", {
+    return /*#__PURE__*/_react.default.createElement("g", null, /*#__PURE__*/_react.default.createElement("text", {
       x: cx,
       y: cy - 10,
       dy: 8,
       textAnchor: "middle",
       fill: '#5a687b'
-    }, total), _react.default.createElement("text", {
+    }, total), /*#__PURE__*/_react.default.createElement("text", {
       x: cx,
       y: cy + 10,
       dy: 8,
@@ -116,7 +116,7 @@ function CPieChart(_ref) {
         width: '107.5px',
         height: '27px'
       }
-    }, "Total"), _react.default.createElement(_recharts.Sector, {
+    }, "Total"), /*#__PURE__*/_react.default.createElement(_recharts.Sector, {
       cx: cx,
       cy: cy,
       innerRadius: innerRadius,
@@ -124,22 +124,22 @@ function CPieChart(_ref) {
       startAngle: startAngle,
       endAngle: endAngle,
       fill: fill
-    }), _react.default.createElement("path", {
+    }), /*#__PURE__*/_react.default.createElement("path", {
       d: "M".concat(sx, ",").concat(sy, "L").concat(mx, ",").concat(my, "L").concat(ex, ",").concat(ey),
       stroke: fill,
       fill: "none"
-    }), _react.default.createElement("circle", {
+    }), /*#__PURE__*/_react.default.createElement("circle", {
       cx: ex,
       cy: ey,
       r: 2,
       fill: fill,
       stroke: "none"
-    }), _react.default.createElement("text", {
+    }), /*#__PURE__*/_react.default.createElement("text", {
       x: ex + (cos >= 0 ? 1 : -1) * 12,
       y: ey,
       textAnchor: textAnchor,
       fill: "#333"
-    }, "".concat(jobStatus)), _react.default.createElement("text", {
+    }, "".concat(jobStatus)), /*#__PURE__*/_react.default.createElement("text", {
       x: ex + (cos >= 0 ? 1 : -1) * 12,
       y: ey,
       dy: 18,

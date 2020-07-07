@@ -47,44 +47,44 @@ function SuggestedImageCard(_ref) {
       setDeletePopoverVisible = _useState2[1];
 
   var imageSize = (0, _get.default)(imageData, 'imageSizeContract', null) ? "".concat(imageData.imageSizeContract.heightSize, "x").concat(imageData.imageSizeContract.widthSize) : '';
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "image-card-wrapper"
-  }, _react.default.createElement(_avatar.default, {
+  }, /*#__PURE__*/_react.default.createElement(_avatar.default, {
     className: "image-avatar",
     shape: "square",
     size: 141,
     src: imageData.imageUrl,
     alt: imageData.copyright
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "image-footer-section"
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: "image-size-details"
-  }, imageSize), _react.default.createElement(_popover.default, {
+  }, imageSize), /*#__PURE__*/_react.default.createElement(_popover.default, {
     trigger: "click",
-    content: _react.default.createElement("img", {
+    content: /*#__PURE__*/_react.default.createElement("img", {
       src: imageData.imageUrl,
       alt: 'suggested_image_card'
     })
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     className: "image-search-icon",
     type: "search"
-  })), _react.default.createElement(_popover.default, {
+  })), /*#__PURE__*/_react.default.createElement(_popover.default, {
     trigger: "click",
     placement: "top",
     visible: isDeletePopoverVisible,
     onVisibleChange: deletePopoverVisibleChange,
-    content: _react.default.createElement(_DeleteImagePopover.default, {
-      title: "Update Image",
+    content: /*#__PURE__*/_react.default.createElement(_DeleteImagePopover.default, {
+      title: "Update Image Reject Reasons",
       okText: "Update",
       selectedReasons: (0, _cloneDeep.default)(imageData.imageDecisionContract.rejectReasons),
       handleSave: saveBtn,
       handleCancel: cancelBtn
     })
-  }, _react.default.createElement(_icon.default, {
+  }, /*#__PURE__*/_react.default.createElement(_icon.default, {
     className: "image-edit-icon",
     type: "edit",
     onClick: editBtn
-  })), _react.default.createElement(_icon.default, {
+  })), /*#__PURE__*/_react.default.createElement(_icon.default, {
     className: "image-plus-icon",
     type: "plus",
     onClick: deleteBtn

@@ -112,11 +112,11 @@ function CategoryTree(_ref) {
 
     getCategoryTreeData();
   }, [jobId, setLoading]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "category-tree"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "tree-wrapper"
-  }, _react.default.createElement(_tree.default, {
+  }, /*#__PURE__*/_react.default.createElement(_tree.default, {
     checkable: true,
     onExpand: onExpand,
     expandedKeys: expandedKeys,
@@ -125,13 +125,13 @@ function CategoryTree(_ref) {
     checkedKeys: checkedKeys,
     onSelect: onSelect,
     selectedKeys: selectedKeys
-  }, renderTreeNodes(treeData, 0, 0))), _react.default.createElement("div", {
+  }, renderTreeNodes(treeData, 0, 0))), /*#__PURE__*/_react.default.createElement("div", {
     className: "assign-button"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     className: "regular-mode-btn",
     type: "default",
     onClick: defaultProductSelector
-  }, "Start In Regular Mode"), _react.default.createElement(_button.default, {
+  }, "Start In Regular Mode"), /*#__PURE__*/_react.default.createElement(_button.default, {
     className: "category-mode-btn",
     type: "primary",
     onClick: assignSelectedCategories,
@@ -195,7 +195,7 @@ function CategoryTree(_ref) {
         }
 
         if (item.children) {
-          return _react.default.createElement(TreeNode, {
+          return /*#__PURE__*/_react.default.createElement(TreeNode, {
             title: getNodeTitle(item),
             key: item.nodeId + "_" + site,
             dataRef: item,
@@ -203,7 +203,7 @@ function CategoryTree(_ref) {
           }, renderTreeNodes(item.children, depth, siblingIndex, site));
         }
 
-        return _react.default.createElement(TreeNode, (0, _extends2.default)({
+        return /*#__PURE__*/_react.default.createElement(TreeNode, (0, _extends2.default)({
           key: item.nodeId
         }, item));
       });
@@ -211,7 +211,7 @@ function CategoryTree(_ref) {
   }
 
   function getNodeTitle(node) {
-    return _react.default.createElement("div", null, _react.default.createElement("div", null, node.nodeName + '  (' + node.nodeId + ')', _react.default.createElement(_progress.default, {
+    return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, node.nodeName + '  (' + node.nodeId + ')', /*#__PURE__*/_react.default.createElement(_progress.default, {
       percent: getNodeProgress(node)
     }), '  ' + node.doneProducts + '/' + node.totalProducts));
   }

@@ -24,29 +24,29 @@ function ProductInfoCard(_ref) {
     imageUrl: 'https://ir.ebaystatic.com/cr/v/c1/no_image.png'
   }];
   var imagesArray = productImages.length !== 0 ? productImages : noImage;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "product-info-card-wrapper"
-  }, _react.default.createElement(_carousel.default, {
+  }, /*#__PURE__*/_react.default.createElement(_carousel.default, {
     autoplay: true
   }, imagesArray.map(function (image, index) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       key: "product-info-img-".concat(index)
-    }, _react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement("img", {
       className: "product-info-card-img",
       src: image.imageUrl,
       alt: 'product_info'
     }));
-  })), _react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: "product-info-container"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "product-info"
-  }, _react.default.createElement("label", null, "Category:"), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Category:"), /*#__PURE__*/_react.default.createElement("div", {
     className: "attributeValue"
-  }, productData.category), _react.default.createElement("label", null, "Title:"), _react.default.createElement("div", {
+  }, productData.category), /*#__PURE__*/_react.default.createElement("label", null, "Title:"), /*#__PURE__*/_react.default.createElement("div", {
     className: "attributeValue"
-  }, productData.title), _react.default.createElement("label", null, "Brand:"), _react.default.createElement("div", {
+  }, productData.title), /*#__PURE__*/_react.default.createElement("label", null, "Brand:"), /*#__PURE__*/_react.default.createElement("div", {
     className: "attributeValue"
-  }, productData.brand), _react.default.createElement("label", null, "Color:"), _react.default.createElement("div", {
+  }, productData.brand), /*#__PURE__*/_react.default.createElement("label", null, "Color:"), /*#__PURE__*/_react.default.createElement("div", {
     className: "attributeValue"
   }, productData.color))));
 }

@@ -1,0 +1,138 @@
+.drawer-content-wrapper {
+  display: flex;
+
+  .mandatory {
+    color: red;
+  }
+
+  .left-section {
+    width: 415px;
+    border-right: 1px solid #d8d8d8;
+    padding-right: 10px;
+
+    section {
+      margin-bottom: 10px;
+
+      .observation {
+        display: flex;
+        justify-content: space-between;
+
+        .submit-btn {
+          width: 78px;
+        }
+      }
+
+      .observation-edit-btn {
+        margin-left: 10px;
+      }
+      .reason-select-wrapper {
+        .ant-select-dropdown {
+          max-height: 100px;
+        }
+      }
+    }
+
+    .decision-btns {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .left {
+        button {
+          margin-right: 5px;
+          margin-bottom: 5px;
+        }
+      }
+
+      .selected-btn {
+        &.op-1 {
+          background: #dbff98;
+          color: rgba(0, 0, 0, 0.65);
+          border-color: #ddd;
+        }
+
+        &.op-2 {
+          background: #ededed;
+          color: rgba(0, 0, 0, 0.65);
+          border-color: #ededed;
+        }
+
+        &.op-3 {
+          background: #ffc7b3;
+          color: rgba(0, 0, 0, 0.65);
+          border-color: #ddd;
+        }
+      }
+    }
+  }
+
+  .right-section {
+    margin-left: 5px;
+    display: flex;
+    width: 1000px;
+
+    section {
+      margin-left: 15px;
+    }
+
+    .add-urls {
+      margin-left: 7px;
+    }
+
+    .checkbox-wrapper {
+      margin-top: 10px;
+    }
+
+    .url-list,
+    .additional-info-list {
+      margin-top: 10px;
+      max-height: 148px;
+      overflow: auto;
+
+      .item input {
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 230px;
+      }
+
+      .item {
+        .ant-select {
+          margin-left: 10px;
+          margin-top: 10px;
+          width: 230px;
+        }
+      }
+
+      .item {
+        .additional-field-select-wrapper {
+          .ant-select {
+            margin-left: 10px;
+            width: 230px;
+          }
+          input {
+            margin-left: 10px;
+            width: 230px;
+          }
+          .label-name {
+            display: inline-block;
+            vertical-align: middle;
+            height: 17px;
+
+            label {
+              width: 100px;
+              overflow: hidden;
+              display: inline-block;
+              white-space: pre;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .cluster-section-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}

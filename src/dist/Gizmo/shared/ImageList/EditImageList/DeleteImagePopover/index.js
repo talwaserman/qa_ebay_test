@@ -48,21 +48,21 @@ function DeleteImagePopover(_ref) {
   }, [selectedReasons]);
   var allReasons = ['Size', 'Background', 'Box', 'Body Parts', 'Angle View', 'Watermark', 'Graffiti', 'Placeholder', 'Broken Images', 'Quantity', 'Frame', 'Blur', 'Cropped', 'Additional Elements', 'Product Mismatch', 'Unusable -Other reason'];
   var allReasonsOprions = allReasons.map(function (reason) {
-    return _react.default.createElement(Option, {
+    return /*#__PURE__*/_react.default.createElement(Option, {
       key: reason
     }, reason);
   });
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "image-delete-reasons-wrapper"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "image-delete-reasons-title"
-  }, title), _react.default.createElement(_divider.default, {
+  }, title), /*#__PURE__*/_react.default.createElement(_divider.default, {
     className: "image-delete-reasons-divider"
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "image-delete-reasons-sub-title"
-  }, "Select reasons for image delete"), _react.default.createElement("div", {
+  }, "Select reasons for image delete"), /*#__PURE__*/_react.default.createElement("div", {
     className: "image-delete-reasons-select"
-  }, _react.default.createElement(_select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_select.default, {
     placeholder: "Select reject reasons for image",
     style: {
       width: '100%'
@@ -71,15 +71,15 @@ function DeleteImagePopover(_ref) {
     mode: "multiple",
     onChange: handleSelectedReason,
     onSelectChange: handleCancel
-  }, allReasonsOprions)), _react.default.createElement("div", {
+  }, allReasonsOprions)), /*#__PURE__*/_react.default.createElement("div", {
     className: "image-delete-reasons-actions"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     disabled: !reasons || !reasons.length,
     type: "primary",
     onClick: function onClick() {
       return handleSave(reasons);
     }
-  }, okText), _react.default.createElement(_button.default, {
+  }, okText), /*#__PURE__*/_react.default.createElement(_button.default, {
     onClick: resetImagesAndHandleCancel
   }, "Cancel")));
 

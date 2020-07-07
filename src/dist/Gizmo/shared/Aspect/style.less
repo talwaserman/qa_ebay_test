@@ -22,7 +22,6 @@
 }
 
 .aspect-outer-wrapper {
-    margin-bottom: 10px;
     width: 40vw;
     position: relative;
 
@@ -48,6 +47,10 @@
     padding: 10px;
     border-radius: 3px;
 
+    .reason-select-wrapper {
+        width: 100%;
+    }    
+
     &:hover {
         background: #FAFAF8;
     }
@@ -61,6 +64,7 @@
     }
 
     .aspect-title-wrapper {
+        position: relative;
         display: inline-block;
         text-align: left;
         padding-right: 10px;
@@ -75,6 +79,8 @@
         }
 
         .aspect-not-aligned, .single-value-warning {
+            position: absolute;
+            top: -1px;
             margin-left: 8px;
             color: #999;
             font-size: 16px;
@@ -129,7 +135,6 @@
         font-size: 12px;
         font-family: helvetica;
         font-weight: 300;
-        margin-top: 3px;
 
         .crawling-suggestions, .original-value {
             cursor: pointer;

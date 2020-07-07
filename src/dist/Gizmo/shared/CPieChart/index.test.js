@@ -13,7 +13,7 @@ var _mock = require("../../shared/CPieChart/mock.js");
 var _index = _interopRequireDefault(require("./index"));
 
 it('gizmo shared - CPieChart', function () {
-  var tree = _reactTestRenderer.default.create(_react.default.createElement(_index.default, {
+  var tree = _reactTestRenderer.default.create( /*#__PURE__*/_react.default.createElement(_index.default, {
     data: _mock.CpiechartDrawData,
     cx: (0, _addonKnobs.number)('cx', 300),
     cy: (0, _addonKnobs.number)('cy', 200),

@@ -20,9 +20,9 @@ require("./style.less");
 function PageTitle(_ref) {
   var title = _ref.title,
       subTitle = _ref.subTitle;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "page-title-wrapper"
-  }, _react.default.createElement("div", null, _react.default.createElement("label", null, title), " - ", _react.default.createElement("span", null, subTitle)));
+  }, title && /*#__PURE__*/_react.default.createElement("label", null, title), subTitle && /*#__PURE__*/_react.default.createElement("label", null, " - ", subTitle));
 }
 
 PageTitle.propTypes = {
@@ -30,5 +30,5 @@ PageTitle.propTypes = {
   title: _propTypes.default.string.isRequired,
 
   /** subTitle - subTitle of the page */
-  subTitle: _propTypes.default.string.isRequired
+  subTitle: _propTypes.default.string
 };

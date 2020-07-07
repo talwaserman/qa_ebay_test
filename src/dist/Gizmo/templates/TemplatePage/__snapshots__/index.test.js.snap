@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gizmo shared - TemplatePage 1`] = `
+<div
+  className="template-page-wrapper"
+>
+  <h2>
+    ** This is a template for page component **
+  </h2>
+  <div
+    className="child-b-wrapper"
+  >
+    <input
+      onChange={[Function]}
+      value=""
+    />
+    <button
+      onClick={[Function]}
+    >
+      Add
+    </button>
+  </div>
+  <div
+    className="child-a-wrapper"
+  >
+    <strong>
+      List of todos:
+    </strong>
+    <div>
+      buy dinner
+    </div>
+    <div>
+      run 5 km
+    </div>
+    <div>
+      finish work
+    </div>
+  </div>
+  <div
+    className="child-c-wrapper"
+  >
+    child c - not connected to context
+  </div>
+</div>
+`;

@@ -18,11 +18,11 @@ function RegularField(_ref) {
       value = _ref.value,
       isDifferentValue = _ref.isDifferentValue;
   var styleClasses = isDifferentValue ? 'regular-field-wrapper different-value' : 'regular-field-wrapper';
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: styleClasses
-  }, _react.default.createElement("strong", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("strong", null, /*#__PURE__*/_react.default.createElement("label", {
     className: "label"
-  }, label)), _react.default.createElement("span", null, value));
+  }, label)), /*#__PURE__*/_react.default.createElement("span", null, value));
 }
 
 RegularField.propTypes = {

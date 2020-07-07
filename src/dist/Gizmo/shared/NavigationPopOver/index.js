@@ -31,7 +31,8 @@ require("./style.less");
 
 function popOverContent(indexing, data, itemsInRow, navClickHandler) {
   var items = data.map(function (item) {
-    return _react.default.createElement("span", {
+    return /*#__PURE__*/_react.default.createElement("span", {
+      key: item.label,
       onClick: function onClick(e) {
         return navClickHandler(Number(e.target.innerText));
       },
@@ -44,16 +45,17 @@ function popOverContent(indexing, data, itemsInRow, navClickHandler) {
         margin: '2px',
         textAlign: 'center',
         borderRadius: '2px',
-        border: item.color === 'white' ? '1px solid #d9d9d9' : '',
+        border: "1px solid ".concat(item.borderColor),
         lineHeight: '26px'
       }
     }, item.label);
   });
   var menu = indexing.map(function (menuItem) {
-    return _react.default.createElement(_tooltip.default, {
+    return /*#__PURE__*/_react.default.createElement(_tooltip.default, {
       placement: "bottom",
-      title: menuItem.toolTip
-    }, _react.default.createElement("span", {
+      title: menuItem.toolTip,
+      key: 'tooltip_' + menuItem.toolTip
+    }, /*#__PURE__*/_react.default.createElement("span", {
       className: "menu-item",
       style: {
         background: menuItem.color,
@@ -62,20 +64,20 @@ function popOverContent(indexing, data, itemsInRow, navClickHandler) {
         display: 'inline-block',
         margin: '5px',
         textAlign: 'center',
-        border: menuItem.color === 'white' ? '1px solid #d9d9d9' : '',
+        border: '1px solid #d9d9d9',
         fontSize: '10px',
         verticalAlign: 'top',
         textDecoration: menuItem.textEffect
       }
     }, menuItem.value));
   });
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "navigation-pop-over-content"
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: (itemsInRow + 1) * 26 + 'px'
     }
-  }, items), _react.default.createElement("br", null), menu);
+  }, items), /*#__PURE__*/_react.default.createElement("br", null), menu);
 }
 
 function NavigationPopOver(_ref) {
@@ -91,25 +93,30 @@ function NavigationPopOver(_ref) {
       cPage = _useState2[0],
       setCpage = _useState2[1];
 
-  return _react.default.createElement("div", {
+  (0, _react.useEffect)(function () {
+    setCpage(currentPage);
+  }, [currentPage]);
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "navigation-pop-over-wrapper"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     disabled: cPage === 1,
     onClick: function onClick(e) {
       return navClickHandler(cPage - 1);
-    }
-  }, "< Prev"), _react.default.createElement(_popover.default, {
+    },
+    className: "left-arrow"
+  }, "<"), /*#__PURE__*/_react.default.createElement(_popover.default, {
     placement: "top",
     content: popOverContent(indexing, data, itemsInRow, navClickHandler),
     trigger: "click"
-  }, _react.default.createElement(_button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_button.default, {
     className: "pop-over-open-button"
-  }, cPage, "/", totalPages)), _react.default.createElement(_button.default, {
+  }, cPage, "/", totalPages)), /*#__PURE__*/_react.default.createElement(_button.default, {
     disabled: cPage === totalPages,
     onClick: function onClick(e) {
       return navClickHandler(cPage + 1);
-    }
-  }, "Next >"));
+    },
+    className: "right-arrow"
+  }, ">"));
 
   function navClickHandler(updatedPage) {
     setCpage(updatedPage);

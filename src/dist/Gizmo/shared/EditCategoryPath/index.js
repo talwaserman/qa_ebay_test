@@ -34,19 +34,19 @@ function EditCategoryPath(_ref) {
       exactMatch = _useState2[0],
       updateMatch = _useState2[1];
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "edit-category-path-wrapper"
-  }, _react.default.createElement("label", null, _react.default.createElement("strong", null, "Current Category: "), " ", currentCategory), _react.default.createElement("br", null), _react.default.createElement("section", null, _react.default.createElement("label", null, "Match"), _react.default.createElement(_radio.default.Group, {
+  }, /*#__PURE__*/_react.default.createElement("label", null, /*#__PURE__*/_react.default.createElement("strong", null, "Current Category: "), " ", currentCategory), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement("label", null, "Match"), /*#__PURE__*/_react.default.createElement(_radio.default.Group, {
     name: "match_radiogroup",
     defaultValue: exactMatch,
     onChange: handelRadioChange
-  }, _react.default.createElement(_radio.default, {
+  }, /*#__PURE__*/_react.default.createElement(_radio.default, {
     value: true
-  }, "Exact"), _react.default.createElement(_radio.default, {
+  }, "Exact"), /*#__PURE__*/_react.default.createElement(_radio.default, {
     value: false
-  }, "Contains"))), _react.default.createElement("section", null, _react.default.createElement("label", null, "Category"), _react.default.createElement("div", {
+  }, "Contains"))), /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement("label", null, "Category"), /*#__PURE__*/_react.default.createElement("div", {
     className: "remote-select-wrapper"
-  }, _react.default.createElement(_RemoteSelect.default, {
+  }, /*#__PURE__*/_react.default.createElement(_RemoteSelect.default, {
     placeholder: 'Select category path',
     mode: 'default',
     parseDataFunction: parseDataFunction,

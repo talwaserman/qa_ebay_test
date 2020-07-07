@@ -61,28 +61,28 @@ function AddNewAspect(_ref) {
     setValues([]);
     setInputVal('');
   }, [isNewAspectModalOpen]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: "add-new-aspect-wrapper"
-  }, _react.default.createElement("section", null, _react.default.createElement("label", null, "Aspect name:"), _react.default.createElement(_input.default, {
+  }, /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement("label", null, "Aspect name:"), /*#__PURE__*/_react.default.createElement(_input.default, {
     type: "text",
     autoFocus: true,
     placeholder: "Enter Aspect Name",
     value: aspectName,
     onChange: handleAspectNameChange
-  }), isAspectUnique && _react.default.createElement("div", {
+  }), isAspectUnique && /*#__PURE__*/_react.default.createElement("div", {
     className: "unique-warning"
-  }, "This aspect name is already used, please enter a different name")), _react.default.createElement("form", {
+  }, "This aspect name is already used, please enter a different name")), /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: handleSubmit
-  }, _react.default.createElement("label", null, "Aspect values:"), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Aspect values:"), /*#__PURE__*/_react.default.createElement("div", {
     className: "values-wrapper"
   }, values.map(function (item) {
-    return _react.default.createElement("span", {
+    return /*#__PURE__*/_react.default.createElement("span", {
       className: "selected-item",
       key: item
-    }, _react.default.createElement(_tooltip.default, {
+    }, /*#__PURE__*/_react.default.createElement(_tooltip.default, {
       placement: "top",
       title: item
-    }, item), _react.default.createElement("svg", {
+    }, item), /*#__PURE__*/_react.default.createElement("svg", {
       onClick: function onClick(e) {
         return handleDelete(item);
       },
@@ -93,15 +93,15 @@ function AddNewAspect(_ref) {
       height: "1em",
       fill: "currentColor",
       "aria-hidden": "true"
-    }, _react.default.createElement("path", {
+    }, /*#__PURE__*/_react.default.createElement("path", {
       d: "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
     })));
-  }), _react.default.createElement("input", {
+  }), /*#__PURE__*/_react.default.createElement("input", {
     type: "text",
     value: inputVal,
     onChange: handleInputChange,
     onBlur: handleOnBlur
-  }))), _react.default.createElement("br", null), _react.default.createElement("section", null, _react.default.createElement(_alert.default, {
+  }))), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement(_alert.default, {
     message: "New aspect will be added at the bottom of the aspect list",
     type: "info",
     showIcon: true

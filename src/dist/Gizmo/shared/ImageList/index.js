@@ -42,7 +42,8 @@ function ImageList(_ref) {
       suggestedImagesData = _ref.suggestedImagesData,
       productData = _ref.productData,
       handleSelectedImages = _ref.handleSelectedImages,
-      isEditable = _ref.isEditable;
+      isEditable = _ref.isEditable,
+      updateShowDrawer = _ref.updateShowDrawer;
 
   var _useState = (0, _react.useState)(false),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -50,17 +51,17 @@ function ImageList(_ref) {
       setModalVisibility = _useState2[1];
 
   var styleClasses = "image-list-wrapper ".concat(isChanged && 'changed-value', " ").concat(isDifferentValue && 'different-value');
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: styleClasses
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "img-list-container"
   }, imageList.map(function (item, index) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: "img-item",
       key: "img-item-".concat(index)
-    }, _react.default.createElement(_popover.default, {
+    }, /*#__PURE__*/_react.default.createElement(_popover.default, {
       placement: "bottomRight",
-      content: _react.default.createElement("img", {
+      content: /*#__PURE__*/_react.default.createElement("img", {
         alt: 'image_list',
         src: item.imageUrl,
         style: {
@@ -68,29 +69,27 @@ function ImageList(_ref) {
           maxHeight: '500px'
         }
       })
-    }, _react.default.createElement(_avatar.default, {
+    }, /*#__PURE__*/_react.default.createElement(_avatar.default, {
       shape: "square",
       size: 105,
       src: item.imageUrl
     })));
-  }), !imageList || imageList.length === 0 && _react.default.createElement("div", {
+  }), !imageList || imageList.length === 0 && /*#__PURE__*/_react.default.createElement("div", {
     className: "noImageContainer"
-  }, _react.default.createElement("img", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
     alt: 'no_image',
     className: "noPrimaryImage",
     src: 'https://ir.ebaystatic.com/cr/v/c1/no_image.png'
-  }))), _react.default.createElement("div", {
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     className: "button-wrapper"
-  }, isEditable && _react.default.createElement(_button.default, {
+  }, isEditable && /*#__PURE__*/_react.default.createElement(_button.default, {
     shape: "circle",
     icon: "edit",
-    onClick: function onClick(e) {
-      return setModalVisibility(true);
-    }
-  })), _react.default.createElement(_GenericModal.default, {
+    onClick: onClickBtn
+  })), /*#__PURE__*/_react.default.createElement(_GenericModal.default, {
     modalVisibleState: isModalOpen,
     modalTitle: 'Edit Images',
-    modalContent: _react.default.createElement(_EditImageList.default, {
+    modalContent: /*#__PURE__*/_react.default.createElement(_EditImageList.default, {
       imagesData: (0, _cloneDeep.default)(imageList),
       imageDataSize: imageList.length,
       suggestedImagesData: (0, _cloneDeep.default)(suggestedImagesData),
@@ -98,12 +97,19 @@ function ImageList(_ref) {
       handleModalChange: function handleModalChange() {}
     }),
     width: 1056,
-    onCancel: function onCancel(e) {
-      return setModalVisibility(false);
-    },
+    onCancel: onCancel,
     onOk: handleOnOk,
     okText: 'Save'
   }));
+
+  function onClickBtn() {
+    updateShowDrawer(false);
+    setModalVisibility(true);
+  }
+
+  function onCancel() {
+    setModalVisibility(false);
+  }
 
   function handleOnOk(data) {
     setModalVisibility(false);
@@ -112,6 +118,9 @@ function ImageList(_ref) {
 }
 
 ImageList.propTypes = {
+  /** updateShowDrawer - funciton used to update the drawer visibility, needed to prevent scrolling stuck */
+  updateShowDrawer: _propTypes.default.func.isRequired,
+
   /** imageList - list of images*/
   imageList: _propTypes.default.array,
 
