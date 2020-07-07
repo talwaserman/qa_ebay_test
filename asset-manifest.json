@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/qa_ebay_test/static/css/main.c6be3951.chunk.css",
-    "main.js": "/qa_ebay_test/static/js/main.84fd2199.chunk.js",
-    "main.js.map": "/qa_ebay_test/static/js/main.84fd2199.chunk.js.map",
+    "main.css": "/qa_ebay_test/static/css/main.4b50c200.chunk.css",
+    "main.js": "/qa_ebay_test/static/js/main.da6035d2.chunk.js",
+    "main.js.map": "/qa_ebay_test/static/js/main.da6035d2.chunk.js.map",
     "runtime-main.js": "/qa_ebay_test/static/js/runtime-main.44d0c10d.js",
     "runtime-main.js.map": "/qa_ebay_test/static/js/runtime-main.44d0c10d.js.map",
-    "static/css/2.53113f47.chunk.css": "/qa_ebay_test/static/css/2.53113f47.chunk.css",
-    "static/js/2.a4aacc23.chunk.js": "/qa_ebay_test/static/js/2.a4aacc23.chunk.js",
-    "static/js/2.a4aacc23.chunk.js.map": "/qa_ebay_test/static/js/2.a4aacc23.chunk.js.map",
+    "static/css/2.bb29f815.chunk.css": "/qa_ebay_test/static/css/2.bb29f815.chunk.css",
+    "static/js/2.9463d910.chunk.js": "/qa_ebay_test/static/js/2.9463d910.chunk.js",
+    "static/js/2.9463d910.chunk.js.map": "/qa_ebay_test/static/js/2.9463d910.chunk.js.map",
     "index.html": "/qa_ebay_test/index.html",
-    "precache-manifest.140b6b0c96d82fef4bd441cfa344dc91.js": "/qa_ebay_test/precache-manifest.140b6b0c96d82fef4bd441cfa344dc91.js",
+    "precache-manifest.22d2628c62a33372c41c146cb1930d55.js": "/qa_ebay_test/precache-manifest.22d2628c62a33372c41c146cb1930d55.js",
     "service-worker.js": "/qa_ebay_test/service-worker.js",
-    "static/css/2.53113f47.chunk.css.map": "/qa_ebay_test/static/css/2.53113f47.chunk.css.map",
-    "static/css/main.c6be3951.chunk.css.map": "/qa_ebay_test/static/css/main.c6be3951.chunk.css.map",
-    "static/js/2.a4aacc23.chunk.js.LICENSE.txt": "/qa_ebay_test/static/js/2.a4aacc23.chunk.js.LICENSE.txt"
+    "static/css/2.bb29f815.chunk.css.map": "/qa_ebay_test/static/css/2.bb29f815.chunk.css.map",
+    "static/css/main.4b50c200.chunk.css.map": "/qa_ebay_test/static/css/main.4b50c200.chunk.css.map",
+    "static/js/2.9463d910.chunk.js.LICENSE.txt": "/qa_ebay_test/static/js/2.9463d910.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.44d0c10d.js",
-    "static/css/2.53113f47.chunk.css",
-    "static/js/2.a4aacc23.chunk.js",
-    "static/css/main.c6be3951.chunk.css",
-    "static/js/main.84fd2199.chunk.js"
+    "static/css/2.bb29f815.chunk.css",
+    "static/js/2.9463d910.chunk.js",
+    "static/css/main.4b50c200.chunk.css",
+    "static/js/main.da6035d2.chunk.js"
   ]
 }
